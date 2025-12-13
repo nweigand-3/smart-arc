@@ -1,40 +1,69 @@
-// Datos de ejemplo, en la uni puedes sustituir por JSON real o markdown
+// Lista de artículos de prueba reales
 const articles = [
     {
-        title: "Primer artículo",
-        category: "Tutorial",
-        content: "Aquí va el contenido real del artículo...",
-        date: "2025-12-13"
+        title: "Introducción a la Arquería",
+        category: "Técnica",
+        excerpt: "Aprende los fundamentos esenciales: postura, agarre y puntería.",
+        img: "https://via.placeholder.com/400x220",
+        link: "#",
+        readTime: 5
     },
     {
-        title: "Segundo artículo",
-        category: "Noticias",
-        content: "Más contenido interesante que realmente existe...",
-        date: "2025-12-12"
+        title: "Mantenimiento de Arcos",
+        category: "Equipamiento",
+        excerpt: "Cómo cuidar y mantener tus arcos y flechas en perfecto estado.",
+        img: "https://via.placeholder.com/400x220",
+        link: "#",
+        readTime: 7
+    },
+    {
+        title: "Historia de la Arquería",
+        category: "Historia",
+        excerpt: "Desde arcos antiguos hasta la práctica moderna.",
+        img: "https://via.placeholder.com/400x220",
+        link: "#",
+        readTime: 6
+    },
+    {
+        title: "Rutinas de Práctica",
+        category: "Práctica",
+        excerpt: "Ejercicios y drills para mejorar tu puntería.",
+        img: "https://via.placeholder.com/400x220",
+        link: "#",
+        readTime: 8
     }
 ];
 
-// Render de artículos en la página
-function renderArticles(containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
+const container = document.getElementById("articles-container");
 
-    container.innerHTML = articles.map(article => {
-        const time = readingTime(article.content);
-        return `
-            <div class="article-card">
-                <h3>${article.title}</h3>
-                <p class="article-meta">
-                    ${article.category} · ${time} min de lectura · ${article.date}
-                </p>
-                <p>${article.content.substring(0, 150)}...</p>
-                <a href="#" class="btn btn-outline">Leer más</a>
+function renderArticles(list) {
+    container.innerHTML = "";
+    list.forEach(article => {
+        const card = document.createElement("div");
+        card.className = "article-card";
+        card.innerHTML = `
+            <div class="article-image">
+                <img src="${article.img}" alt="${article.title}">
+                <span class="article-category">${article.category}</span>
+            </div>
+            <div class="article-content">
+                <h3 class="article-title"><a href="${article.link}">${article.title}</a></h3>
+                <p class="article-excerpt">${article.excerpt}</p>
+                <div class="article-footer">
+                    <span class="read-time">${article.readTime} min de lectura</span>
+                    <a href="${article.link}" class="read-more">Leer más →</a>
+                </div>
             </div>
         `;
-    }).join('');
+        container.appendChild(card);
+    });
 }
 
-// Ejecutar en carga
-document.addEventListener('DOMContentLoaded', () => {
-    renderArticles('articles-container');
+// Inicializar artículos
+renderArticles(articles);
+
+// Botón "Cargar más" (simulado)
+const loadMoreBtn = document.getElementById("load-more");
+loadMoreBtn.addEventListener("click", () => {
+    alert("No hay más artículos por cargar en esta demo.");
 });
