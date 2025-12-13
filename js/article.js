@@ -53,7 +53,7 @@ class ArticlePage {
                 date: "2024-01-15",
                 readTime: 8,
                 excerpt: "La postura correcta es la base de un tiro preciso y consistente.",
-                content: "<h2>Fundamentos de la Postura en Arquería</h2><p>La postura correcta es el cimiento sobre el cual se construye cada tiro exitoso. En este artículo exploraremos los elementos esenciales de una postura adecuada.</p><h3>1. Posición de los Pies</h3><p>Los pies deben estar separados al ancho de los hombros, con el peso distribuido uniformemente. La línea de tiro debe pasar entre ambos pies.</p><h3>2. Alineación del Cuerpo</h3><p>El cuerpo debe formar una línea perpendicular al objetivo. Los hombros deben estar relajados y alineados con la cadera.</p><h3>3. Estabilidad</h3><p>Mantén una ligera flexión en las rodillas para absorber el movimiento y proporcionar estabilidad.</p><p>Recuerda practicar estos fundamentos regularmente para desarrollar memoria muscular.</p>",
+                content: "# Fundamentos de la Postura en Arquería\n\nLa postura correcta es el cimiento sobre el cual se construye cada tiro exitoso. En este artículo exploraremos los elementos esenciales de una postura adecuada.\n\n## 1. Posición de los Pies\n\nLos pies deben estar separados al ancho de los hombros, con el peso distribuido uniformemente. La línea de tiro debe pasar entre ambos pies.\n\n## 2. Alineación del Cuerpo\n\nEl cuerpo debe formar una línea perpendicular al objetivo. Los hombros deben estar relajados y alineados con la cadera.\n\n## 3. Estabilidad\n\nMantén una ligera flexión en las rodillas para absorber el movimiento y proporcionar estabilidad.\n\nRecuerda practicar estos fundamentos regularmente para desarrollar memoria muscular.",
                 image: "https://images.unsplash.com/photo-1550747534-2a5c93d59d9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 tags: ["postura", "fundamentos", "técnica básica"]
             },
@@ -64,7 +64,7 @@ class ArticlePage {
                 date: "2024-01-20",
                 readTime: 10,
                 excerpt: "Guía completa para mantener tu arco recurvo en óptimas condiciones y prolongar su vida útil.",
-                content: "<h2>Mantenimiento Básico del Arco Recurvo</h2><p>Un arco bien mantenido no solo dura más tiempo, sino que también ofrece un rendimiento más consistente.</p><h3>Limpieza Regular</h3><p>1. Limpia las palas con un paño suave y seco después de cada uso.</p><p>2. Revisa periódicamente el estado de la cuerda.</p><p>3. Comprueba que las flechas estén rectas y sin daños.</p><h3>Almacenamiento</h3><p>Guarda el arco en un lugar seco y templado, preferiblemente en una funda protectora.</p><h3>Inspección Visual</h3><p>Realiza una inspección mensual buscando:</p><ul><li>Grietas en las palas</li><li>Desgaste en la cuerda</li><li>Tornillos flojos</li></ul><p>El mantenimiento preventivo es clave para la seguridad y el rendimiento.</p>",
+                content: "# Mantenimiento Básico del Arco Recurvo\n\nUn arco bien mantenido no solo dura más tiempo, sino que también ofrece un rendimiento más consistente.\n\n## Limpieza Regular\n\n1. Limpia las palas con un paño suave y seco después de cada uso.\n2. Revisa periódicamente el estado de la cuerda.\n3. Comprueba que las flechas estén rectas y sin daños.\n\n## Almacenamiento\n\nGuarda el arco en un lugar seco y templado, preferiblemente en una funda protectora.\n\n## Inspección Visual\n\nRealiza una inspección mensual buscando:\n- Grietas en las palas\n- Desgaste en la cuerda\n- Tornillos flojos\n\nEl mantenimiento preventivo es clave para la seguridad y el rendimiento.",
                 image: "https://images.unsplash.com/photo-1586972750140-4d680ae17e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 tags: ["mantenimiento", "recurvo", "equipamiento"]
             }
@@ -105,205 +105,178 @@ class ArticlePage {
     }
 
     displayArticle(article) {
-    const container = document.getElementById('article-content');
-    if (!container) {
-        console.error('Article content container not found!');
-        return;
-    }
-    
-    // Convert markdown content to HTML
-    const formattedContent = this.markdownToHtml(article.content);
-    
-    // Create the article HTML
-    container.innerHTML = `
-        <div class="article-header">
-            <nav class="breadcrumb">
-                <a href="index.html">Inicio</a> / 
-                <a href="index.html?category=${article.category}" class="category-link">${this.getCategoryName(article.category)}</a> / 
-                <span>${article.title}</span>
-            </nav>
-            <h1 class="article-title">${article.title}</h1>
-            <div class="article-meta">
-                <span class="category-badge">${this.getCategoryName(article.category)}</span>
-                <span class="article-date">${article.date}</span>
-                <span class="read-time">${article.readTime} min de lectura</span>
-            </div>
-        </div>
-        
-        <div class="article-hero">
-            <img src="${article.image}" alt="${article.title}" loading="lazy">
-        </div>
-        
-        <div class="article-body">
-            ${formattedContent}
-        </div>
-        
-        ${article.tags && article.tags.length > 0 ? `
-        <div class="article-tags">
-            ${article.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-        </div>
-        ` : ''}
-        
-        <div class="article-navigation">
-            <a href="index.html" class="btn btn-outline">
-                <i class="fas fa-arrow-left"></i>
-                Volver al inicio
-            </a>
-            <a href="index.html?category=${article.category}" class="btn btn-primary">
-                <i class="fas fa-th-large"></i>
-                Más de ${this.getCategoryName(article.category)}
-            </a>
-        </div>
-    `;
-    
-    // Update page title
-    document.title = `${article.title} - SmartArc`;
-    
-    console.log('Article displayed successfully');
-}
-
-// Markdown to HTML converter
-markdownToHtml(markdown) {
-    if (!markdown) return '';
-    
-    console.log('Converting markdown to HTML...');
-    
-    // Split into lines
-    const lines = markdown.split('\n');
-    let html = '';
-    let inList = false;
-    let inOrderedList = false;
-    let listItems = [];
-    
-    lines.forEach((line, index) => {
-        const trimmedLine = line.trim();
-        
-        // Empty line - reset list state
-        if (trimmedLine === '') {
-            if (inList) {
-                if (inOrderedList) {
-                    html += '<ol>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ol>';
-                } else {
-                    html += '<ul>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ul>';
-                }
-                inList = false;
-                inOrderedList = false;
-                listItems = [];
-            }
+        const container = document.getElementById('article-content');
+        if (!container) {
+            console.error('Article content container not found!');
             return;
         }
         
-        // Check for headers
-        if (trimmedLine.startsWith('# ')) {
-            if (inList) {
-                if (inOrderedList) {
-                    html += '<ol>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ol>';
-                } else {
-                    html += '<ul>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ul>';
-                }
-                inList = false;
-                inOrderedList = false;
-                listItems = [];
-            }
-            const text = trimmedLine.substring(2);
-            html += `<h1>${text}</h1>`;
-        }
-        else if (trimmedLine.startsWith('## ')) {
-            if (inList) {
-                if (inOrderedList) {
-                    html += '<ol>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ol>';
-                } else {
-                    html += '<ul>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ul>';
-                }
-                inList = false;
-                inOrderedList = false;
-                listItems = [];
-            }
-            const text = trimmedLine.substring(3);
-            html += `<h2>${text}</h2>`;
-        }
-        else if (trimmedLine.startsWith('### ')) {
-            if (inList) {
-                if (inOrderedList) {
-                    html += '<ol>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ol>';
-                } else {
-                    html += '<ul>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ul>';
-                }
-                inList = false;
-                inOrderedList = false;
-                listItems = [];
-            }
-            const text = trimmedLine.substring(4);
-            html += `<h3>${text}</h3>`;
-        }
-        // Check for numbered list items (1., 2., 3., etc.)
-        else if (/^\d+\.\s/.test(trimmedLine)) {
-            if (!inList || !inOrderedList) {
-                if (inList) {
-                    html += '<ul>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ul>';
-                }
-                inList = true;
-                inOrderedList = true;
-                listItems = [];
-            }
-            const text = trimmedLine.replace(/^\d+\.\s/, '');
-            listItems.push(text);
-        }
-        // Check for unordered list items (- or * or •)
-        else if (trimmedLine.startsWith('- ') || trimmedLine.startsWith('* ') || trimmedLine.startsWith('• ')) {
-            if (!inList || inOrderedList) {
-                if (inList) {
-                    html += '<ol>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ol>';
-                }
-                inList = true;
-                inOrderedList = false;
-                listItems = [];
-            }
-            const text = trimmedLine.substring(2);
-            listItems.push(text);
-        }
-        // Regular paragraph text
-        else {
-            if (inList) {
-                if (inOrderedList) {
-                    html += '<ol>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ol>';
-                } else {
-                    html += '<ul>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ul>';
-                }
-                inList = false;
-                inOrderedList = false;
-                listItems = [];
-            }
+        // Convert markdown content to HTML
+        const formattedContent = this.markdownToHtml(article.content);
+        
+        // Create the article HTML
+        container.innerHTML = `
+            <div class="article-header">
+                <nav class="breadcrumb">
+                    <a href="index.html">Inicio</a> / 
+                    <a href="index.html?category=${article.category}" class="category-link">${this.getCategoryName(article.category)}</a> / 
+                    <span>${article.title}</span>
+                </nav>
+                <h1 class="article-title">${article.title}</h1>
+                <div class="article-meta">
+                    <span class="category-badge">${this.getCategoryName(article.category)}</span>
+                    <span class="article-date">${article.date}</span>
+                    <span class="read-time">${article.readTime} min de lectura</span>
+                </div>
+            </div>
             
-            // Check if it's the first line after a header
-            const prevLine = lines[index - 1] ? lines[index - 1].trim() : '';
-            const isAfterHeader = prevLine.startsWith('#') || prevLine.startsWith('##') || prevLine.startsWith('###');
+            <div class="article-hero">
+                <img src="${article.image}" alt="${article.title}" loading="lazy">
+            </div>
             
-            if (isAfterHeader || html.endsWith('</h1>') || html.endsWith('</h2>') || html.endsWith('</h3>')) {
-                html += `<p>${trimmedLine}</p>`;
-            } else {
-                // Check if we need to close previous paragraph
-                if (!html.endsWith('</p>')) {
-                    html += `<p>${trimmedLine}</p>`;
-                } else {
-                    // Add to existing paragraph with space
-                    html = html.slice(0, -4) + ' ' + trimmedLine + '</p>';
+            <div class="article-body">
+                ${formattedContent}
+            </div>
+            
+            ${article.tags && article.tags.length > 0 ? `
+            <div class="article-tags">
+                ${article.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            </div>
+            ` : ''}
+            
+            <div class="article-navigation">
+                <a href="index.html" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i>
+                    Volver al inicio
+                </a>
+                <a href="index.html?category=${article.category}" class="btn btn-primary">
+                    <i class="fas fa-th-large"></i>
+                    Más de ${this.getCategoryName(article.category)}
+                </a>
+            </div>
+        `;
+        
+        // Update page title
+        document.title = `${article.title} - SmartArc`;
+        
+        console.log('Article displayed successfully');
+    }
+
+    // Markdown to HTML converter - IMPROVED VERSION
+    markdownToHtml(markdown) {
+        if (!markdown) return '';
+        
+        console.log('Converting markdown to HTML...');
+        
+        // Step 1: Handle headers
+        let html = markdown
+            // Convert headers
+            .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+            .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+            .replace(/^### (.*$)/gm, '<h3>$1</h3>');
+        
+        // Step 2: Handle lists
+        const lines = html.split('\n');
+        let inList = false;
+        let listType = ''; // 'ul' or 'ol'
+        let listItems = [];
+        let result = [];
+        
+        lines.forEach(line => {
+            const trimmed = line.trim();
+            
+            // Check for numbered list (1., 2., etc.)
+            if (/^\d+\.\s+/.test(trimmed)) {
+                if (!inList || listType !== 'ol') {
+                    // Close previous list if any
+                    if (inList) {
+                        result.push(this.closeList(listType, listItems));
+                        listItems = [];
+                    }
+                    inList = true;
+                    listType = 'ol';
+                }
+                // Remove the number and add to list items
+                const listItem = trimmed.replace(/^\d+\.\s+/, '');
+                listItems.push(`<li>${listItem}</li>`);
+            }
+            // Check for unordered list (- or *)
+            else if (/^[-*•]\s+/.test(trimmed)) {
+                if (!inList || listType !== 'ul') {
+                    // Close previous list if any
+                    if (inList) {
+                        result.push(this.closeList(listType, listItems));
+                        listItems = [];
+                    }
+                    inList = true;
+                    listType = 'ul';
+                }
+                // Remove the bullet and add to list items
+                const listItem = trimmed.replace(/^[-*•]\s+/, '');
+                listItems.push(`<li>${listItem}</li>`);
+            }
+            // Regular line
+            else {
+                // Close any open list
+                if (inList) {
+                    result.push(this.closeList(listType, listItems));
+                    inList = false;
+                    listType = '';
+                    listItems = [];
+                }
+                
+                // Add the line if it's not empty
+                if (trimmed) {
+                    // Check if it's already a header tag
+                    if (trimmed.startsWith('<h')) {
+                        result.push(trimmed);
+                    } else {
+                        // Wrap in paragraph if not empty
+                        result.push(`<p>${trimmed}</p>`);
+                    }
                 }
             }
+        });
+        
+        // Close any remaining list
+        if (inList) {
+            result.push(this.closeList(listType, listItems));
         }
-    });
-    
-    // Handle any remaining list items
-    if (inList) {
-        if (inOrderedList) {
-            html += '<ol>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ol>';
-        } else {
-            html += '<ul>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ul>';
-        }
+        
+        // Join everything
+        html = result.join('\n');
+        
+        // Step 3: Handle multiple consecutive newlines (paragraph breaks)
+        // Replace multiple </p> tags with a single one
+        html = html.replace(/<\/p>\s*<p>/g, '</p>\n<p>');
+        
+        return html;
     }
     
-    return html;
-}
+    closeList(type, items) {
+        if (type === 'ol') {
+            return `<ol>\n${items.join('\n')}\n</ol>`;
+        } else {
+            return `<ul>\n${items.join('\n')}\n</ul>`;
+        }
+    }
+
+    showError(message) {
+        const container = document.getElementById('article-content');
+        if (container) {
+            container.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h2>Error</h2>
+                    <p>${message}</p>
+                    <a href="index.html" class="btn btn-primary">
+                        <i class="fas fa-home"></i>
+                        Volver al inicio
+                    </a>
+                </div>
+            `;
+        }
+    }
 }
 
 // Initialize article page when DOM is loaded
