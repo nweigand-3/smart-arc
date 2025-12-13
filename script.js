@@ -205,38 +205,69 @@ function performSearch() {
 }
 
 // ===== CARGA DE ARTÍCULOS INDIVIDUALES =====
+// ===== CARGA DE ARTÍCULOS INDIVIDUALES =====
 function loadArticleContent() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const articleId = urlParams.get('id');
+    console.log('Función loadArticleContent() ejecutándose...');
     
-    if (!articleId) {
-        // Si no hay ID, mostrar un artículo por defecto o redirigir
-        displayArticle(articles[0]);
+    // Verificar si estamos en la página correcta
+    if (!window.location.pathname.includes('article.html')) {
+        console.log('No estamos en article.html, saliendo...');
         return;
     }
     
-    const article = articles.find(a => a.id === parseInt(articleId));
+    const urlParams = new URLSearchParams(window.location.search);
+    const articleId = urlParams.get('id');
+    
+    console.log('ID del artículo desde URL:', articleId);
+    
+    if (!articleId) {
+        console.log('No hay ID en la URL, mostrando error...');
+        showArticleError('No se especificó un artículo');
+        return;
+    }
+    
+    // Verificar que articles existe
+    if (!window.articles || !Array.isArray(window.articles)) {
+        console.error('window.articles no está definido o no es un array');
+        showArticleError('Error al cargar los artículos');
+        return;
+    }
+    
+    console.log('Total de artículos disponibles:', window.articles.length);
+    
+    const article = window.articles.find(a => a.id === parseInt(articleId));
     
     if (article) {
+        console.log('Artículo encontrado:', article.title);
         displayArticle(article);
         updateBreadcrumb(article);
         loadRelatedArticles(article);
     } else {
-        // Artículo no encontrado
-        const mainContent = document.querySelector('main') || document.querySelector('.article-page');
-        if (mainContent) {
-            mainContent.innerHTML = `
-                <div class="container" style="min-height: 50vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px;">
-                    <div class="error-message" style="text-align: center;">
-                        <h2>Artículo no encontrado</h2>
-                        <p>El artículo que buscas no existe o ha sido movido.</p>
-                        <a href="index.html" class="btn btn-primary" style="margin-top: 20px;">Volver al inicio</a>
-                    </div>
-                </div>
-            `;
-        }
+        console.error('Artículo no encontrado con ID:', articleId);
+        showArticleError('Artículo no encontrado');
     }
-}}
+}
+
+function showArticleError(message) {
+    const mainContent = document.querySelector('.article-page') || document.querySelector('main');
+    if (mainContent) {
+        mainContent.innerHTML = `
+            <div class="container" style="min-height: 70vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px;">
+                <div style="text-align: center; max-width: 500px;">
+                    <div style="font-size: 4rem; color: #ef4444; margin-bottom: 20px;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h2 style="color: #1f2937; margin-bottom: 15px; font-size: 1.8rem;">Error</h2>
+                    <p style="color: #6b7280; margin-bottom: 25px; font-size: 1.1rem;">${message}</p>
+                    <a href="index.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px;">
+                        <i class="fas fa-arrow-left"></i>
+                        Volver al inicio
+                    </a>
+                </div>
+            </div>
+        `;
+    }
+}
 
 function displayArticle(article) {
     // Actualizar título de la página
