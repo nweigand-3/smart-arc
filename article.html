@@ -1,1 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artículo - SmartArc</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏹</text></svg>">
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                    <div class="logo-icon">🏹</div>
+                    <div class="logo-text">
+                        <h1>SmartArc</h1>
+                        <span class="logo-subtitle">Biblioteca de Arquería</span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </a>
+                <a href="index.html#categorias" class="nav-link">
+                    <i class="fas fa-th-large"></i>
+                    <span>Categorías</span>
+                </a>
+                <a href="index.html#articulos" class="nav-link active">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Artículos</span>
+                </a>
+                <a href="about.html" class="nav-link">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Acerca de</span>
+                </a>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="theme-toggle">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
 
+    <!-- Breadcrumb -->
+    <div class="breadcrumb container" style="margin-top: 90px; padding: 15px 0; font-size: 0.9rem;">
+        <a href="index.html">Inicio</a>
+        <span class="separator">/</span>
+        <a href="index.html#articulos">Artículos</a>
+    </div>
+
+    <!-- Contenido del artículo -->
+    <main class="article-page">
+        <div class="container">
+            <article class="article-main">
+                <header class="article-header">
+                    <div class="article-meta" id="article-meta">
+                        <!-- Cargado por JavaScript -->
+                    </div>
+                    <h1 id="article-title">Cargando artículo...</h1>
+                    <div class="article-excerpt" id="article-excerpt">
+                        <!-- Cargado por JavaScript -->
+                    </div>
+                </header>
+                
+                <div class="article-content" id="article-content">
+                    <div class="loading" style="text-align: center; padding: 60px;">
+                        <div class="spinner" style="width: 40px; height: 40px; border: 3px solid #e5e7eb; border-top-color: #3b82f6; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
+                        <p>Cargando contenido del artículo...</p>
+                    </div>
+                </div>
+                
+                <aside class="article-sidebar">
+                    <div class="sidebar-section">
+                        <h4>Sobre el autor</h4>
+                        <div class="author-card">
+                            <div class="author-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="author-info">
+                                <h5>Nils Weigand</h5>
+                                <p>Estudiante de Grado Multimedia especializado en IA generativa y arquería tradicional.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sidebar-section" id="related-articles">
+                        <!-- Cargado por JavaScript -->
+                    </div>
+                    
+                    <div class="sidebar-section">
+                        <h4>Categorías</h4>
+                        <div class="categories-list">
+                            <a href="article.html?category=tecnica" class="category-tag">Técnica</a>
+                            <a href="article.html?category=equipamiento" class="category-tag">Equipamiento</a>
+                            <a href="article.html?category=historia" class="category-tag">Historia</a>
+                            <a href="article.html?category=practica" class="category-tag">Práctica</a>
+                            <a href="article.html?category=seguridad" class="category-tag">Seguridad</a>
+                            <a href="article.html?category=competicion" class="category-tag">Competición</a>
+                        </div>
+                    </div>
+                </aside>
+            </article>
+        </div>
+    </main>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>¿Te gustó este artículo?</h2>
+                <p>Suscríbete para recibir notificaciones de nuevos contenidos y actualizaciones de la biblioteca.</p>
+                
+                <form class="newsletter-form">
+                    <div class="form-group">
+                        <input type="email" placeholder="Tu correo electrónico" required>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Suscribirse
+                        </button>
+                    </div>
+                    <p class="form-note">Sin spam, solo contenido valioso sobre arquería.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">🏹</div>
+                        <div>
+                            <h3>SmartArc</h3>
+                            <p>Biblioteca Digital de Arquería</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">Un proyecto educativo creado con IA generativa para democratizar el acceso al conocimiento sobre arquería.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Enlaces rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="index.html#categorias">Categorías</a></li>
+                        <li><a href="index.html#articulos">Artículos</a></li>
+                        <li><a href="about.html">Acerca de</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 SmartArc. Todos los derechos reservados.</p>
+                <p class="credits">R2 | Diseño y Planificación | Nils Weigand | Grado Multimedia</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="articles.js"></script>
+    <script src="script.js"></script>
+    
+    <style>
+        .article-page {
+            padding: 40px 0;
+        }
+        
+        .article-main {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 50px;
+        }
+        
+        @media (max-width: 1024px) {
+            .article-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        #article-content .loading {
+            text-align: center;
+            padding: 60px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</body>
+</html>
