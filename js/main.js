@@ -62,16 +62,4 @@ function renderArticle(container) {
     <p>Tags: ${article.tags.join(", ")}</p>
     <a href="index.html">← Volver</a>
   `;
-
-  const params = new URLSearchParams(window.location.search);
-let article;
-
-if (params.get("id")) {
-  const id = Number(params.get("id"));
-  article = window.articles.find(a => a.id === id);
-} else if (params.get("category")) {
-  const cat = params.get("category").toLowerCase();
-  article = window.articles.find(a => a.category.toLowerCase() === cat);
-}
-
 }
