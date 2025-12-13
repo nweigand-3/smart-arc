@@ -22,14 +22,21 @@ function renderIndex(container) {
     const el = document.createElement("article");
     el.className = "article-card";
     el.innerHTML = `
-      <img src="${article.image}" alt="${article.title}">
-      <h3>${article.title}</h3>
-      <p>${article.excerpt}</p>
-      <a href="article.html?id=${article.id}">Leer más</a>
+      <div class="article-image">
+        <img src="${article.image}" alt="${article.title}">
+        <span class="article-category">${article.category}</span>
+      </div>
+      <div class="article-content">
+        <h3 class="article-title">
+          <a href="article.html?id=${article.id}">${article.title}</a>
+        </h3>
+        <p class="article-excerpt">${article.excerpt}</p>
+      </div>
     `;
     container.appendChild(el);
   });
 }
+
 
 /* =======================
    ARTICLE
