@@ -3,8 +3,8 @@ class ArticleManager {
     constructor() {
         this.articles = [];
         this.currentCategory = 'all';
-        this.articlesPerPage = 4;
-        this.currentPage = 1;
+        this.articlesPerPage = 8;  // Increased to show more initially
+        this.currentPage = 0;      // Start at 0 for better pagination
         console.log('ArticleManager initialized');
     }
 
@@ -78,7 +78,7 @@ class ArticleManager {
         }
     }
 
-    // NEW METHOD: Process categories and update counts
+    // Process categories and update counts
     processCategories() {
         const categories = ['tecnica', 'equipamiento', 'historia', 'practica', 'seguridad', 'competicion'];
         const counts = {};
@@ -151,9 +151,10 @@ class ArticleManager {
         }
 
         console.log('Loading all articles...');
+        this.currentPage = 0; // Reset to first page
         const articlesToShow = this.articles.slice(0, this.articlesPerPage);
         this.renderArticles(articlesToShow, container);
-        this.updateLoadMoreButton(this.articles.length);
+        this.updateLoadMoreButton();
         
         // Reset section title
         const sectionTitle = document.querySelector('.section-title');
@@ -165,7 +166,7 @@ class ArticleManager {
     showCategory(category) {
         console.log('Showing category:', category);
         this.currentCategory = category;
-        this.currentPage = 1;
+        this.currentPage = 0;
         
         const container = document.getElementById('articles-container');
         if (!container) return;
@@ -181,7 +182,7 @@ class ArticleManager {
         }
         
         this.renderArticles(articlesToShow, container);
-        this.updateLoadMoreButton(categoryArticles.length);
+        this.updateLoadMoreButton();
         
         // Scroll to articles section
         const articlesSection = document.getElementById('articulos');
@@ -201,13 +202,39 @@ class ArticleManager {
             articles = this.articles.filter(article => article.category === this.currentCategory);
         }
 
-        const start = this.currentPage * this.articlesPerPage;
+        const start = (this.currentPage + 1) * this.articlesPerPage;
         const end = start + this.articlesPerPage;
         const moreArticles = articles.slice(start, end);
         
-        this.renderArticles(moreArticles, container, true);
-        this.currentPage++;
-        this.updateLoadMoreButton(articles.length);
+        if (moreArticles.length > 0) {
+            this.renderArticles(moreArticles, container, true);
+            this.currentPage++;
+        }
+        
+        this.updateLoadMoreButton();
+    }
+
+    updateLoadMoreButton() {
+        const loadMoreBtn = document.getElementById('load-more');
+        if (!loadMoreBtn) return;
+
+        let articles;
+        if (this.currentCategory === 'all') {
+            articles = this.articles;
+        } else {
+            articles = this.articles.filter(article => article.category === this.currentCategory);
+        }
+
+        const loadedCount = (this.currentPage + 1) * this.articlesPerPage;
+        
+        if (loadedCount >= articles.length) {
+            loadMoreBtn.style.display = 'none';
+            loadMoreBtn.innerHTML = '<i class="fas fa-check"></i> Todos los artículos cargados';
+        } else {
+            loadMoreBtn.style.display = 'inline-flex';
+            const remaining = articles.length - loadedCount;
+            loadMoreBtn.innerHTML = `<i class="fas fa-plus"></i> Cargar más artículos (${remaining} restantes)`;
+        }
     }
 
     renderArticles(articles, container, append = false) {
@@ -292,18 +319,6 @@ class ArticleManager {
         const loadMoreBtn = document.getElementById('load-more');
         if (loadMoreBtn) {
             loadMoreBtn.style.display = 'none';
-        }
-    }
-
-    updateLoadMoreButton(totalArticles) {
-        const loadMoreBtn = document.getElementById('load-more');
-        if (loadMoreBtn) {
-            const loadedCount = this.currentPage * this.articlesPerPage;
-            if (loadedCount >= totalArticles) {
-                loadMoreBtn.style.display = 'none';
-            } else {
-                loadMoreBtn.style.display = 'inline-flex';
-            }
         }
     }
 
