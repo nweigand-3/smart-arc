@@ -206,32 +206,41 @@ class ArticleManager {
     }
 
     createArticleCard(article) {
-        const card = document.createElement('div');
-        card.className = 'article-card';
-        card.innerHTML = `
-            <div class="article-image">
-                <img src="${article.image}" alt="${article.title}" loading="lazy">
-                <span class="article-category">${this.getCategoryName(article.category)}</span>
+    const card = document.createElement('div');
+    card.className = 'article-card';
+    card.innerHTML = `
+        <div class="article-image">
+            <img src="${article.image}" alt="${article.title}" loading="lazy">
+            <span class="article-category">${this.getCategoryName(article.category)}</span>
+        </div>
+        <div class="article-content">
+            <h3 class="article-title">
+                <a href="article.html?id=${article.id}" class="article-link">${article.title}</a>
+            </h3>
+            <p class="article-excerpt">${article.excerpt}</p>
+            <div class="article-meta">
+                <span class="article-date">${article.date}</span>
+                <span class="article-read-time">${article.readTime} min de lectura</span>
             </div>
-            <div class="article-content">
-                <h3 class="article-title">
-                    <a href="article.html?id=${article.id}">${article.title}</a>
-                </h3>
-                <p class="article-excerpt">${article.excerpt}</p>
-                <div class="article-meta">
-                    <span class="article-date">${article.date}</span>
-                    <span class="article-read-time">${article.readTime} min de lectura</span>
-                </div>
-                <div class="article-footer">
-                    <a href="article.html?id=${article.id}" class="read-more">
-                        Leer artículo
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
+            <div class="article-footer">
+                <a href="article.html?id=${article.id}" class="read-more">
+                    Leer artículo
+                    <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
-        `;
-        return card;
-    }
+        </div>
+    `;
+    
+    // Add click handler for the entire card (optional)
+    card.addEventListener('click', (e) => {
+        // Don't navigate if clicking on a link (let the link handle it)
+        if (!e.target.closest('a')) {
+            window.location.href = `article.html?id=${article.id}`;
+        }
+    });
+    
+    return card;
+}
 
     searchArticles(query) {
         console.log('Searching for:', query);
