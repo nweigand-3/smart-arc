@@ -109,8 +109,43 @@ class ArticleManager {
     }
 
     loadArticlesByCategory(category) {
-        this.loadArticles(category);
+    this.currentCategory = category;
+    const container = document.getElementById('articles-container');
+    
+    if (!container) return;
+    
+    // Filter articles by category
+    const filteredArticles = this.articles.filter(article => 
+        article.category === category
+    );
+    
+    // Clear container
+    container.innerHTML = '';
+    
+    if (filteredArticles.length === 0) {
+        container.innerHTML = `
+            <div class="no-results" style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                <i class="fas fa-inbox" style="font-size: 3rem; color: var(--text-light); margin-bottom: 1rem;"></i>
+                <h3>No hay artículos en esta categoría</h3>
+                <p>Prueba con otra categoría o vuelve más tarde.</p>
+            </div>
+        `;
+        return;
     }
+    
+    // Load initial articles
+    this.loadedArticles = Math.min(filteredArticles.length, this.articlesPerLoad);
+    
+    for (let i = 0; i < this.loadedArticles; i++) {
+        this.createArticleCard(filteredArticles[i], container);
+    }
+    
+    // Update load more button
+    this.updateLoadMoreButton(filteredArticles.length);
+    
+    // Update section title
+    this.updateCategoryTitle(category);
+}
 
     loadMoreArticles() {
         let filteredArticles = this.articles;
