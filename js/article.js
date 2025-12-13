@@ -30,19 +30,48 @@ class ArticlePage {
     }
 
     async loadArticleData() {
-        try {
-            const response = await fetch('articles.json');
-            if (!response.ok) {
-                throw new Error('Failed to load articles.json');
-            }
-            this.articles = await response.json();
-            console.log('Articles data loaded:', this.articles.length, 'articles');
-        } catch (error) {
-            console.error('Error loading articles data:', error);
-            // Use fallback data if JSON fails
-            this.articles = this.getFallbackArticles();
+    try {
+        console.log('Loading articles from JSON file...');
+        const response = await fetch('articles.json');
+        
+        if (!response.ok) {
+            throw new Error(`Failed to load articles.json: ${response.status}`);
         }
+        
+        this.articles = await response.json();
+        console.log('Successfully loaded', this.articles.length, 'articles from JSON');
+        
+    } catch (error) {
+        console.error('Error loading articles data:', error);
+        console.log('Using local fallback articles instead...');
+        
+        // Fallback that matches your JSON structure
+        this.articles = [
+            {
+                id: 1,
+                title: "Fundamentos de la Postura en Arquería",
+                category: "tecnica",
+                date: "2024-01-15",
+                readTime: 8,
+                excerpt: "La postura correcta es la base de un tiro preciso y consistente.",
+                content: "# Fundamentos de la Postura en Arquería\n\nLa postura correcta es el cimiento sobre el cual se construye cada tiro exitoso.",
+                image: "https://images.unsplash.com/photo-1550747534-2a5c93d59d9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                tags: ["postura", "fundamentos"]
+            },
+            {
+                id: 2,
+                title: "Mantenimiento Básico del Arco Recurvo",
+                category: "equipamiento",
+                date: "2024-01-20",
+                readTime: 10,
+                excerpt: "Guía completa para mantener tu arco recurvo en óptimas condiciones.",
+                content: "# Mantenimiento Básico del Arco Recurvo\n\nUn arco bien mantenido no solo dura más tiempo.",
+                image: "https://images.unsplash.com/photo-1586972750140-4d680ae17e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                tags: ["mantenimiento", "recurvo"]
+            }
+        ];
     }
+}
 
     getFallbackArticles() {
         return [
