@@ -1,43 +1,40 @@
-// Base de datos de artículos
-window.articles = [
-  {
-    id: 1,
-    title: "Guía Completa de Equipamiento: Arcos Recurvo vs. Compuesto",
-    excerpt: "Comparativa detallada entre los dos tipos principales de arcos modernos.",
-    content: `
-      <h2>Introducción</h2>
-      <p>Elegir el arco correcto es clave para cualquier arquero.</p>
-
-      <h3>Arco Recurvo</h3>
-      <p>Sencillo, fiable y el de toda la vida. Ideal para aprender técnica.</p>
-
-      <h3>Arco Compuesto</h3>
-      <p>Más preciso, más complejo, más mantenimiento.</p>
-    `,
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b",
-    category: "equipamiento",
-    author: "Nils Weigand",
-    date: "2025-03-15",
-    readTime: 8,
-    views: 1245,
-    tags: ["arcos", "equipamiento"],
-    featured: true
-  },
-  {
-    id: 2,
-    title: "Técnica de Postura Perfecta",
-    excerpt: "Fundamentos esenciales para mejorar la precisión.",
-    content: `
-      <h2>Postura</h2>
-      <p>La base de todo tiro consistente.</p>
-    `,
-    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348",
-    category: "tecnica",
-    author: "Nils Weigand",
-    date: "2025-03-10",
-    readTime: 6,
-    views: 1890,
-    tags: ["técnica"],
-    featured: true
-  }
+// Datos de ejemplo, en la uni puedes sustituir por JSON real o markdown
+const articles = [
+    {
+        title: "Primer artículo",
+        category: "Tutorial",
+        content: "Aquí va el contenido real del artículo...",
+        date: "2025-12-13"
+    },
+    {
+        title: "Segundo artículo",
+        category: "Noticias",
+        content: "Más contenido interesante que realmente existe...",
+        date: "2025-12-12"
+    }
 ];
+
+// Render de artículos en la página
+function renderArticles(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    container.innerHTML = articles.map(article => {
+        const time = readingTime(article.content);
+        return `
+            <div class="article-card">
+                <h3>${article.title}</h3>
+                <p class="article-meta">
+                    ${article.category} · ${time} min de lectura · ${article.date}
+                </p>
+                <p>${article.content.substring(0, 150)}...</p>
+                <a href="#" class="btn btn-outline">Leer más</a>
+            </div>
+        `;
+    }).join('');
+}
+
+// Ejecutar en carga
+document.addEventListener('DOMContentLoaded', () => {
+    renderArticles('articles-container');
+});
