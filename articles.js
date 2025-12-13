@@ -257,3 +257,7 @@ const articles = [
 
 // Exportar para uso global
 window.articles = articles;
+
+// Disparar evento cuando los artículos estén cargados
+console.log(`${articles.length} artículos cargados correctamente`);
+document.dispatchEvent(new Event('articlesLoaded'));
