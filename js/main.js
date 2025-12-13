@@ -1,48 +1,59 @@
-// Initialize theme
 // Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('SmartArc initializing...');
+    
+    // Initialize theme
     initTheme();
+    
+    // Initialize search
     initSearch();
+    
+    // Initialize mobile menu
     initMobileMenu();
+    
+    // Initialize newsletter
     initNewsletter();
     
     // Initialize navigation
-    window.navigation = new Navigation();
+    initNavigation();
     
-    // Initialize article manager
-    if (typeof ArticleManager !== 'undefined') {
-        window.articleManager = new ArticleManager();
-    }
+    console.log('SmartArc initialized successfully');
 });
 
-// Initialize theme
+// Theme toggle function
 function initTheme() {
     const themeToggle = document.querySelector('.theme-toggle');
-    if (!themeToggle) return;
+    if (!themeToggle) {
+        console.error('Theme toggle button not found!');
+        return;
+    }
     
     // Check saved theme
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
     // Set initial theme
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-        document.documentElement.classList.add('dark-mode');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
         themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        console.log('Dark mode enabled');
     } else {
-        document.documentElement.classList.remove('dark-mode');
+        document.body.classList.remove('dark-mode');
         themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        console.log('Light mode enabled');
     }
     
     // Theme toggle functionality
-    themeToggle.addEventListener('click', () => {
-        if (document.documentElement.classList.contains('dark-mode')) {
-            document.documentElement.classList.remove('dark-mode');
+    themeToggle.addEventListener('click', function() {
+        if (document.body.classList.contains('dark-mode')) {
+            document.body.classList.remove('dark-mode');
             themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
             localStorage.setItem('theme', 'light');
+            console.log('Switched to light mode');
         } else {
-            document.documentElement.classList.add('dark-mode');
+            document.body.classList.add('dark-mode');
             themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
             localStorage.setItem('theme', 'dark');
+            console.log('Switched to dark mode');
         }
     });
 }
@@ -52,41 +63,56 @@ function initSearch() {
     const searchBtn = document.querySelector('.search-btn');
     const searchBar = document.querySelector('.search-bar');
     const searchClose = document.querySelector('.search-close');
-    const searchInput = document.querySelector('.search-input');
     
-    if (!searchBtn) return;
+    if (!searchBtn || !searchBar) {
+        console.error('Search elements not found!');
+        return;
+    }
+    
+    console.log('Search initialized');
     
     // Toggle search bar
-    searchBtn.addEventListener('click', () => {
+    searchBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         searchBar.classList.toggle('active');
+        console.log('Search bar toggled:', searchBar.classList.contains('active'));
+        
+        // Focus input when search bar opens
         if (searchBar.classList.contains('active')) {
-            searchInput.focus();
+            const searchInput = searchBar.querySelector('.search-input');
+            if (searchInput) {
+                setTimeout(function() {
+                    searchInput.focus();
+                }, 100);
+            }
         }
     });
     
-    // Close search
+    // Close search button
     if (searchClose) {
-        searchClose.addEventListener('click', () => {
+        searchClose.addEventListener('click', function(e) {
+            e.preventDefault();
             searchBar.classList.remove('active');
+            console.log('Search bar closed');
         });
     }
     
-    // Handle search input
-    if (searchInput) {
-        searchInput.addEventListener('input', debounce((e) => {
-            const query = e.target.value.toLowerCase().trim();
-            if (window.articleManager && query.length > 0) {
-                window.articleManager.searchArticles(query);
-            } else if (window.articleManager) {
-                window.articleManager.loadArticles();
-            }
-        }, 300));
-    }
+    // Close search when clicking outside
+    document.addEventListener('click', function(e) {
+        if (searchBar.classList.contains('active') && 
+            !searchBar.contains(e.target) && 
+            !searchBtn.contains(e.target)) {
+            searchBar.classList.remove('active');
+            console.log('Search bar closed (clicked outside)');
+        }
+    });
     
-    // Close search on escape
-    document.addEventListener('keydown', (e) => {
+    // Close search on escape key
+    document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && searchBar.classList.contains('active')) {
             searchBar.classList.remove('active');
+            console.log('Search bar closed (escape key)');
         }
     });
 }
@@ -96,87 +122,56 @@ function initMobileMenu() {
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navMenu = document.querySelector('.nav-menu');
     
-    if (mobileMenuBtn && navMenu) {
-        mobileMenuBtn.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            mobileMenuBtn.classList.toggle('active');
-        });
-        
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+    if (!mobileMenuBtn || !navMenu) return;
+    
+    mobileMenuBtn.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+        mobileMenuBtn.classList.toggle('active');
+        console.log('Mobile menu toggled');
+    });
+    
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('.nav-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
                 navMenu.classList.remove('active');
                 mobileMenuBtn.classList.remove('active');
             }
         });
-    }
-}
-
-// Search toggle
-function initSearch() {
-    const searchBtn = document.querySelector('.search-btn');
-    const searchBar = document.querySelector('.search-bar');
-    const searchClose = document.querySelector('.search-close');
-    
-    if (searchBtn && searchBar) {
-        searchBtn.addEventListener('click', () => {
-            searchBar.classList.toggle('active');
-            if (searchBar.classList.contains('active')) {
-                const searchInput = searchBar.querySelector('.search-input');
-                if (searchInput) {
-                    searchInput.focus();
-                }
-            }
-        });
-        
-        if (searchClose) {
-            searchClose.addEventListener('click', () => {
-                searchBar.classList.remove('active');
-                // Clear search if on index page
-                if (window.articleDisplay) {
-                    const searchInput = document.querySelector('.search-input');
-                    if (searchInput) {
-                        searchInput.value = '';
-                    }
-                    window.articleDisplay.loadArticles();
-                }
-            });
-        }
-        
-        // Close search on escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && searchBar.classList.contains('active')) {
-                searchBar.classList.remove('active');
-            }
-        });
-    }
+    });
 }
 
 // Newsletter form
 function initNewsletter() {
     const newsletterForm = document.querySelector('.newsletter-form');
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = newsletterForm.querySelector('input[type="email"]').value;
-            alert(`¡Gracias por suscribirte con ${email}! Te notificaremos sobre nuevos artículos.`);
+    if (!newsletterForm) return;
+    
+    newsletterForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const emailInput = newsletterForm.querySelector('input[type="email"]');
+        const email = emailInput.value;
+        
+        if (email) {
+            alert('¡Gracias por suscribirte con ' + email + '! Te notificaremos sobre nuevos artículos.');
             newsletterForm.reset();
-        });
-    }
+        }
+    });
 }
 
 // Navigation active state
 function initNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
     
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+    navLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
             // Only handle internal navigation
-            if (link.getAttribute('href')?.startsWith('#')) {
+            if (link.getAttribute('href').startsWith('#')) {
                 e.preventDefault();
                 
                 // Remove active class from all links
-                navLinks.forEach(l => l.classList.remove('active'));
+                navLinks.forEach(function(l) {
+                    l.classList.remove('active');
+                });
                 
                 // Add active class to clicked link
                 link.classList.add('active');
@@ -185,18 +180,12 @@ function initNavigation() {
                 const targetId = link.getAttribute('href').substring(1);
                 const target = document.getElementById(targetId);
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
                 }
             }
         });
     });
 }
-
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    initTheme();
-    initMobileMenu();
-    initSearch();
-    initNewsletter();
-    initNavigation();
-});
