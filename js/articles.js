@@ -51,25 +51,30 @@ class ArticleManager {
     }
 
     setupEventListeners() {
-        // Load more button
-        const loadMoreBtn = document.getElementById('load-more');
-        if (loadMoreBtn) {
-            loadMoreBtn.addEventListener('click', () => this.loadMoreArticles());
-        }
-        
-        // Category links
-        document.querySelectorAll('.category-card').forEach(card => {
-            card.addEventListener('click', (e) => {
-                e.preventDefault();
-                const category = card.getAttribute('href').split('=')[1];
-                if (window.router) {
-                    window.router.goToCategory(category);
-                } else {
-                    this.loadArticlesByCategory(category);
-                }
-            });
-        });
+    // Load more button
+    const loadMoreBtn = document.getElementById('load-more');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => this.loadMoreArticles());
     }
+    
+    // Handle category cards clicks
+    document.querySelectorAll('.category-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            e.preventDefault();
+            const href = card.getAttribute('href');
+            const category = href.split('=')[1];
+            
+            // Use navigation system if available
+            if (window.navigation) {
+                window.navigation.showCategory(category);
+            } else {
+                // Fallback
+                this.loadArticlesByCategory(category);
+                this.updateActiveNav('categorias');
+            }
+        });
+    });
+}
 
     loadArticles(category = 'all') {
         this.currentCategory = category;
