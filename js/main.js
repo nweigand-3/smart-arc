@@ -102,27 +102,54 @@ function initMobileMenu() {
             mobileMenuBtn.classList.toggle('active');
         });
         
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
                 navMenu.classList.remove('active');
                 mobileMenuBtn.classList.remove('active');
-            });
+            }
         });
     }
 }
 
-// Debounce utility
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
+// Search toggle
+function initSearch() {
+    const searchBtn = document.querySelector('.search-btn');
+    const searchBar = document.querySelector('.search-bar');
+    const searchClose = document.querySelector('.search-close');
+    
+    if (searchBtn && searchBar) {
+        searchBtn.addEventListener('click', () => {
+            searchBar.classList.toggle('active');
+            if (searchBar.classList.contains('active')) {
+                const searchInput = searchBar.querySelector('.search-input');
+                if (searchInput) {
+                    searchInput.focus();
+                }
+            }
+        });
+        
+        if (searchClose) {
+            searchClose.addEventListener('click', () => {
+                searchBar.classList.remove('active');
+                // Clear search if on index page
+                if (window.articleDisplay) {
+                    const searchInput = document.querySelector('.search-input');
+                    if (searchInput) {
+                        searchInput.value = '';
+                    }
+                    window.articleDisplay.loadArticles();
+                }
+            });
+        }
+        
+        // Close search on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && searchBar.classList.contains('active')) {
+                searchBar.classList.remove('active');
+            }
+        });
+    }
 }
 
 // Newsletter form
@@ -132,26 +159,44 @@ function initNewsletter() {
         newsletterForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = newsletterForm.querySelector('input[type="email"]').value;
-            
-            // In a real app, you would send this to a server
             alert(`¡Gracias por suscribirte con ${email}! Te notificaremos sobre nuevos artículos.`);
             newsletterForm.reset();
         });
     }
 }
 
+// Navigation active state
+function initNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            // Only handle internal navigation
+            if (link.getAttribute('href')?.startsWith('#')) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                navLinks.forEach(l => l.classList.remove('active'));
+                
+                // Add active class to clicked link
+                link.classList.add('active');
+                
+                // Scroll to section
+                const targetId = link.getAttribute('href').substring(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    });
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
-    initSearch();
     initMobileMenu();
+    initSearch();
     initNewsletter();
-    
-    // Initialize router
-    window.router = new Router();
-    
-    // Initialize article manager
-    if (typeof ArticleManager !== 'undefined') {
-        window.articleManager = new ArticleManager();
-    }
+    initNavigation();
 });
