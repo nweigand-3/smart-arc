@@ -105,76 +105,205 @@ class ArticlePage {
     }
 
     displayArticle(article) {
-        const container = document.getElementById('article-content');
-        if (!container) {
-            console.error('Article content container not found!');
+    const container = document.getElementById('article-content');
+    if (!container) {
+        console.error('Article content container not found!');
+        return;
+    }
+    
+    // Convert markdown content to HTML
+    const formattedContent = this.markdownToHtml(article.content);
+    
+    // Create the article HTML
+    container.innerHTML = `
+        <div class="article-header">
+            <nav class="breadcrumb">
+                <a href="index.html">Inicio</a> / 
+                <a href="index.html?category=${article.category}" class="category-link">${this.getCategoryName(article.category)}</a> / 
+                <span>${article.title}</span>
+            </nav>
+            <h1 class="article-title">${article.title}</h1>
+            <div class="article-meta">
+                <span class="category-badge">${this.getCategoryName(article.category)}</span>
+                <span class="article-date">${article.date}</span>
+                <span class="read-time">${article.readTime} min de lectura</span>
+            </div>
+        </div>
+        
+        <div class="article-hero">
+            <img src="${article.image}" alt="${article.title}" loading="lazy">
+        </div>
+        
+        <div class="article-body">
+            ${formattedContent}
+        </div>
+        
+        ${article.tags && article.tags.length > 0 ? `
+        <div class="article-tags">
+            ${article.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+        </div>
+        ` : ''}
+        
+        <div class="article-navigation">
+            <a href="index.html" class="btn btn-outline">
+                <i class="fas fa-arrow-left"></i>
+                Volver al inicio
+            </a>
+            <a href="index.html?category=${article.category}" class="btn btn-primary">
+                <i class="fas fa-th-large"></i>
+                Más de ${this.getCategoryName(article.category)}
+            </a>
+        </div>
+    `;
+    
+    // Update page title
+    document.title = `${article.title} - SmartArc`;
+    
+    console.log('Article displayed successfully');
+}
+
+// Markdown to HTML converter
+markdownToHtml(markdown) {
+    if (!markdown) return '';
+    
+    console.log('Converting markdown to HTML...');
+    
+    // Split into lines
+    const lines = markdown.split('\n');
+    let html = '';
+    let inList = false;
+    let inOrderedList = false;
+    let listItems = [];
+    
+    lines.forEach((line, index) => {
+        const trimmedLine = line.trim();
+        
+        // Empty line - reset list state
+        if (trimmedLine === '') {
+            if (inList) {
+                if (inOrderedList) {
+                    html += '<ol>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ol>';
+                } else {
+                    html += '<ul>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ul>';
+                }
+                inList = false;
+                inOrderedList = false;
+                listItems = [];
+            }
             return;
         }
         
-        // Create the article HTML
-        container.innerHTML = `
-            <div class="article-header">
-                <nav class="breadcrumb">
-                    <a href="index.html">Inicio</a> / 
-                    <a href="index.html?category=${article.category}" class="category-link">${this.getCategoryName(article.category)}</a> / 
-                    <span>${article.title}</span>
-                </nav>
-                <h1 class="article-title">${article.title}</h1>
-                <div class="article-meta">
-                    <span class="category-badge">${this.getCategoryName(article.category)}</span>
-                    <span class="article-date">${article.date}</span>
-                    <span class="read-time">${article.readTime} min de lectura</span>
-                </div>
-            </div>
+        // Check for headers
+        if (trimmedLine.startsWith('# ')) {
+            if (inList) {
+                if (inOrderedList) {
+                    html += '<ol>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ol>';
+                } else {
+                    html += '<ul>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ul>';
+                }
+                inList = false;
+                inOrderedList = false;
+                listItems = [];
+            }
+            const text = trimmedLine.substring(2);
+            html += `<h1>${text}</h1>`;
+        }
+        else if (trimmedLine.startsWith('## ')) {
+            if (inList) {
+                if (inOrderedList) {
+                    html += '<ol>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ol>';
+                } else {
+                    html += '<ul>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ul>';
+                }
+                inList = false;
+                inOrderedList = false;
+                listItems = [];
+            }
+            const text = trimmedLine.substring(3);
+            html += `<h2>${text}</h2>`;
+        }
+        else if (trimmedLine.startsWith('### ')) {
+            if (inList) {
+                if (inOrderedList) {
+                    html += '<ol>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ol>';
+                } else {
+                    html += '<ul>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ul>';
+                }
+                inList = false;
+                inOrderedList = false;
+                listItems = [];
+            }
+            const text = trimmedLine.substring(4);
+            html += `<h3>${text}</h3>`;
+        }
+        // Check for numbered list items (1., 2., 3., etc.)
+        else if (/^\d+\.\s/.test(trimmedLine)) {
+            if (!inList || !inOrderedList) {
+                if (inList) {
+                    html += '<ul>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ul>';
+                }
+                inList = true;
+                inOrderedList = true;
+                listItems = [];
+            }
+            const text = trimmedLine.replace(/^\d+\.\s/, '');
+            listItems.push(text);
+        }
+        // Check for unordered list items (- or * or •)
+        else if (trimmedLine.startsWith('- ') || trimmedLine.startsWith('* ') || trimmedLine.startsWith('• ')) {
+            if (!inList || inOrderedList) {
+                if (inList) {
+                    html += '<ol>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ol>';
+                }
+                inList = true;
+                inOrderedList = false;
+                listItems = [];
+            }
+            const text = trimmedLine.substring(2);
+            listItems.push(text);
+        }
+        // Regular paragraph text
+        else {
+            if (inList) {
+                if (inOrderedList) {
+                    html += '<ol>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ol>';
+                } else {
+                    html += '<ul>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ul>';
+                }
+                inList = false;
+                inOrderedList = false;
+                listItems = [];
+            }
             
-            <div class="article-hero">
-                <img src="${article.image}" alt="${article.title}" loading="lazy">
-            </div>
+            // Check if it's the first line after a header
+            const prevLine = lines[index - 1] ? lines[index - 1].trim() : '';
+            const isAfterHeader = prevLine.startsWith('#') || prevLine.startsWith('##') || prevLine.startsWith('###');
             
-            <div class="article-body">
-                ${article.content}
-            </div>
-            
-            ${article.tags && article.tags.length > 0 ? `
-            <div class="article-tags">
-                ${article.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-            </div>
-            ` : ''}
-            
-            <div class="article-navigation">
-                <a href="index.html" class="btn btn-outline">
-                    <i class="fas fa-arrow-left"></i>
-                    Volver al inicio
-                </a>
-                <a href="index.html?category=${article.category}" class="btn btn-primary">
-                    <i class="fas fa-th-large"></i>
-                    Más de ${this.getCategoryName(article.category)}
-                </a>
-            </div>
-        `;
-        
-        // Update page title
-        document.title = `${article.title} - SmartArc`;
-        
-        console.log('Article displayed successfully');
-    }
-
-    showError(message) {
-        const container = document.getElementById('article-content');
-        if (container) {
-            container.innerHTML = `
-                <div class="error-message">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <h2>Error</h2>
-                    <p>${message}</p>
-                    <a href="index.html" class="btn btn-primary">
-                        <i class="fas fa-home"></i>
-                        Volver al inicio
-                    </a>
-                </div>
-            `;
+            if (isAfterHeader || html.endsWith('</h1>') || html.endsWith('</h2>') || html.endsWith('</h3>')) {
+                html += `<p>${trimmedLine}</p>`;
+            } else {
+                // Check if we need to close previous paragraph
+                if (!html.endsWith('</p>')) {
+                    html += `<p>${trimmedLine}</p>`;
+                } else {
+                    // Add to existing paragraph with space
+                    html = html.slice(0, -4) + ' ' + trimmedLine + '</p>';
+                }
+            }
+        }
+    });
+    
+    // Handle any remaining list items
+    if (inList) {
+        if (inOrderedList) {
+            html += '<ol>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ol>';
+        } else {
+            html += '<ul>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ul>';
         }
     }
+    
+    return html;
+}
 }
 
 // Initialize article page when DOM is loaded
