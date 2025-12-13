@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Sitio Clásico - Universidad</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/utilities.css">
+</head>
+<body>
+    <!-- NAV -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">🏹</div>
+                <div class="logo-text">
+                    <h1>Arquería Uni</h1>
+                    <div class="logo-subtitle">Estudios clásicos</div>
+                </div>
+            </a>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link active"><i>🏠</i><span>Inicio</span></a>
+                <a href="article.html" class="nav-link"><i>📝</i><span>Artículos</span></a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle">🌙</button>
+                <button class="mobile-menu-btn">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-container container">
+            <div>
+                <span class="hero-badge">Bienvenido</span>
+                <h1 class="hero-title">Estudios Clásicos y Arquería Mediterránea</h1>
+                <p class="hero-description">
+                    Un sitio de referencia para estudiantes que quieren aprender de manera honesta y clara.
+                </p>
+                <div class="hero-actions">
+                    <a href="#articles" class="btn btn-primary">Leer Artículos</a>
+                    <a href="#newsletter" class="btn btn-outline">Suscribirse</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="visual-circle">
+                    <div class="circle-inner"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORÍAS -->
+    <section class="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Categorías</h2>
+                <p class="section-subtitle">Explora temas de historia, técnicas y teoría</p>
+            </div>
+            <div class="categories-grid">
+                <a href="#" class="category-card" style="--card-color:#8B4513;">
+                    <div class="category-icon">🏹</div>
+                    <h3 class="category-title">Técnicas</h3>
+                    <p class="category-description">Aprende el arte del tiro con arco y su historia.</p>
+                    <div class="category-count">5 artículos</div>
+                </a>
+                <a href="#" class="category-card" style="--card-color:#556B2F;">
+                    <div class="category-icon">📜</div>
+                    <h3 class="category-title">Historia</h3>
+                    <p class="category-description">Sumérgete en los eventos y figuras clásicas.</p>
+                    <div class="category-count">8 artículos</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARTÍCULOS DESTACADOS -->
+    <section id="articles" class="featured-articles">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Artículos Recientes</h2>
+                <a href="article.html" class="view-all">Ver todos →</a>
+            </div>
+            <div class="articles-grid" id="articles-grid">
+                <!-- JS inyectará artículos reales -->
+            </div>
+            <div class="load-more-container">
+                <button id="load-more" class="btn btn-primary">Cargar más</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section id="newsletter" class="newsletter">
+        <div class="newsletter-content container">
+            <h2>Suscríbete a nuestro boletín</h2>
+            <p>Recibe artículos y noticias directamente en tu correo.</p>
+            <form class="newsletter-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Tu correo electrónico" required>
+                    <button type="submit" class="btn btn-primary">Suscribirse</button>
+                </div>
+                <p class="form-note">Prometemos no enviar spam.</p>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p><i>📧</i> info@arqueriauni.com</p>
+                <p><i>📍</i> Ciudad Universitaria</p>
+            </div>
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <div class="social-links">
+                    <a href="#">🐦</a>
+                    <a href="#">📘</a>
+                    <a href="#">📸</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Arquería Uni. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/articles.js"></script>
+</body>
+</html>
