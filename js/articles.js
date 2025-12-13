@@ -15,7 +15,7 @@ window.articles = [
       <p>Más preciso, más complejo, más mantenimiento.</p>
     `,
     image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b",
-    category: "Equipamiento",
+    category: "equipamiento",
     author: "Nils Weigand",
     date: "2025-03-15",
     readTime: 8,
@@ -32,7 +32,7 @@ window.articles = [
       <p>La base de todo tiro consistente.</p>
     `,
     image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348",
-    category: "Técnica",
+    category: "tecnica",
     author: "Nils Weigand",
     date: "2025-03-10",
     readTime: 6,
