@@ -270,73 +270,74 @@ function showArticleError(message) {
 }
 
 function displayArticle(article) {
+    console.log('displayArticle() ejecutándose para:', article.title);
+    
     // Actualizar título de la página
     document.title = `${article.title} - SmartArc`;
     
-    // Buscar contenedores principales
+    // Buscar elementos - ahora con IDs más específicos
+    const categoryElement = document.getElementById('article-category');
     const titleElement = document.getElementById('article-title');
+    const dateElement = document.getElementById('article-date');
+    const authorElement = document.getElementById('article-author');
+    const readTimeElement = document.getElementById('article-read-time');
+    const viewsElement = document.getElementById('article-views');
+    const heroElement = document.getElementById('article-hero');
     const contentElement = document.getElementById('article-content');
-    const metaElement = document.getElementById('article-meta');
+    const tagsContainer = document.getElementById('article-tags');
     
+    // Verificar que los elementos existen
+    const elements = {
+        categoryElement, titleElement, dateElement, authorElement,
+        readTimeElement, viewsElement, heroElement, contentElement, tagsContainer
+    };
+    
+    console.log('Elementos encontrados:', elements);
+    
+    // Actualizar cada elemento si existe
+    if (categoryElement) categoryElement.textContent = article.category;
     if (titleElement) titleElement.textContent = article.title;
     
-    if (contentElement) {
-        // Crear contenido del artículo
-        let contentHTML = `
-            <div class="article-hero">
-                <img src="${article.image}" alt="${article.title}" class="hero-image">
-                <div class="hero-overlay">
-                    <div class="hero-badge">${article.category}</div>
-                </div>
-            </div>
-            
-            <div class="article-body">
-                ${article.content}
-            </div>
-            
-            <div class="article-tags">
-                ${article.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-            </div>
-            
-            <div class="article-share">
-                <h4>Compartir artículo</h4>
-                <div class="share-buttons">
-                    <button class="share-btn" data-platform="twitter">
-                        <i class="fab fa-twitter"></i> Twitter
-                    </button>
-                    <button class="share-btn" data-platform="facebook">
-                        <i class="fab fa-facebook"></i> Facebook
-                    </button>
-                    <button class="share-btn" data-platform="linkedin">
-                        <i class="fab fa-linkedin"></i> LinkedIn
-                    </button>
-                    <button class="share-btn copy-link">
-                        <i class="fas fa-link"></i> Copiar enlace
-                    </button>
-                </div>
-            </div>
-        `;
-        
-        contentElement.innerHTML = contentHTML;
-        
-        // Inicializar botones de compartir
-        initShareButtons(article);
-    }
-    
-    if (metaElement) {
+    if (dateElement) {
         const date = new Date(article.date).toLocaleDateString('es-ES', {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
         });
-        
-        metaElement.innerHTML = `
-            <span><i class="far fa-calendar"></i> ${date}</span>
-            <span><i class="far fa-user"></i> ${article.author}</span>
-            <span><i class="far fa-clock"></i> ${article.readTime} min de lectura</span>
-            <span><i class="far fa-eye"></i> ${article.views.toLocaleString()} vistas</span>
+        dateElement.textContent = date;
+    }
+    
+    if (authorElement) authorElement.textContent = article.author;
+    if (readTimeElement) readTimeElement.textContent = article.readTime;
+    if (viewsElement) viewsElement.textContent = article.views.toLocaleString();
+    
+    // Actualizar imagen hero
+    if (heroElement) {
+        heroElement.innerHTML = `
+            <img src="${article.image}" alt="${article.title}" class="hero-image" loading="lazy">
+            <div class="hero-overlay">
+                <div class="hero-badge">${article.category}</div>
+            </div>
         `;
     }
+    
+    // Actualizar contenido
+    if (contentElement) {
+        contentElement.innerHTML = `
+            <div class="article-body">
+                ${article.content}
+            </div>
+        `;
+    }
+    
+    // Actualizar etiquetas
+    if (tagsContainer) {
+        tagsContainer.innerHTML = article.tags.map(tag => 
+            `<a href="index.html#articulos" class="article-tag">${tag}</a>`
+        ).join('');
+    }
+    
+    console.log('Artículo mostrado correctamente');
 }
 
 function updateBreadcrumb(article) {
