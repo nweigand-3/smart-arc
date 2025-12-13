@@ -1,5 +1,10 @@
 // Sistema de plantillas para SmartArc
+// Añadir al inicio del DOMContentLoaded:
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('SmartArc cargado correctamente');
+    console.log('Ruta actual:', window.location.pathname);
+    console.log('Repositorio:', window.location.hostname);
+    
     // Inicializar tema
     initTheme();
     
@@ -16,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Cargar artículo específico si estamos en article.html
     if (window.location.pathname.includes('article.html')) {
+        console.log('Cargando artículo con ID:', new URLSearchParams(window.location.search).get('id'));
         loadArticleContent();
     }
     
