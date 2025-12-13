@@ -4,276 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artículo - SmartArc</title>
+    <!-- Ruta CORRECTA al CSS -->
     <link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏹</text></svg>">
-    <style>
-        /* Estilos específicos para artículo */
-        .article-page {
-            padding: 100px 0 60px;
-            background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
-            min-height: 100vh;
-        }
-        
-        .article-main {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 50px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .article-header {
-            grid-column: 1 / -1;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-        
-        .article-category {
-            display: inline-block;
-            background-color: #3b82f6;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-        
-        .article-title {
-            font-size: 2.8rem;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            color: #1f2937;
-        }
-        
-        .article-meta {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            color: #6b7280;
-            font-size: 0.95rem;
-            margin-bottom: 30px;
-        }
-        
-        .article-meta span {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .article-hero {
-            width: 100%;
-            height: 400px;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .hero-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .article-content {
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-        
-        .article-content h2 {
-            color: #1f2937;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-        }
-        
-        .article-content h3 {
-            color: #374151;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            font-size: 1.4rem;
-        }
-        
-        .article-content p {
-            margin-bottom: 20px;
-            color: #4b5563;
-        }
-        
-        .article-content ul, .article-content ol {
-            margin-left: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .article-content li {
-            margin-bottom: 10px;
-        }
-        
-        .article-sidebar {
-            position: sticky;
-            top: 100px;
-            height: fit-content;
-        }
-        
-        .sidebar-section {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .sidebar-section h3 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: #1f2937;
-        }
-        
-        .author-card {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .author-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-        }
-        
-        .author-info h4 {
-            margin-bottom: 5px;
-            font-size: 1.1rem;
-        }
-        
-        .author-info p {
-            font-size: 0.9rem;
-            color: #6b7280;
-        }
-        
-        .related-article {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        
-        .related-article:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        
-        .related-article img {
-            width: 80px;
-            height: 60px;
-            border-radius: 8px;
-            object-fit: cover;
-        }
-        
-        .related-content h4 {
-            font-size: 1rem;
-            margin-bottom: 5px;
-        }
-        
-        .related-content h4 a {
-            color: #1f2937;
-            text-decoration: none;
-        }
-        
-        .related-content h4 a:hover {
-            color: #3b82f6;
-        }
-        
-        .related-meta {
-            font-size: 0.85rem;
-            color: #6b7280;
-        }
-        
-        .article-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid #e5e7eb;
-        }
-        
-        .article-tag {
-            padding: 8px 16px;
-            background-color: #f3f4f6;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            color: #4b5563;
-            text-decoration: none;
-        }
-        
-        .article-tag:hover {
-            background-color: #3b82f6;
-            color: white;
-        }
-        
-        @media (max-width: 1024px) {
-            .article-main {
-                grid-template-columns: 1fr;
-            }
-            
-            .article-sidebar {
-                position: static;
-                order: -1;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .article-page {
-                padding: 80px 0 40px;
-            }
-            
-            .article-title {
-                font-size: 2.2rem;
-            }
-            
-            .article-meta {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-            }
-            
-            .article-content {
-                padding: 25px;
-            }
-            
-            .article-hero {
-                height: 300px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .article-title {
-                font-size: 1.8rem;
-            }
-            
-            .article-main {
-                padding: 0 15px;
-            }
-        }
-    </style>
 </head>
 <body>
     <!-- Navegación -->
@@ -320,76 +57,29 @@
     </nav>
 
     <!-- Contenido principal del artículo -->
-    <main class="article-page">
-        <div class="article-main">
-            <!-- Contenido principal (75%) -->
-            <div class="article-primary">
-                <header class="article-header">
-                    <div class="article-category" id="article-category">Cargando...</div>
-                    <h1 class="article-title" id="article-title">Cargando artículo...</h1>
-                    <div class="article-meta" id="article-meta">
-                        <span><i class="far fa-calendar"></i> <span id="article-date">--</span></span>
-                        <span><i class="far fa-user"></i> <span id="article-author">--</span></span>
-                        <span><i class="far fa-clock"></i> <span id="article-read-time">--</span> min</span>
-                        <span><i class="far fa-eye"></i> <span id="article-views">--</span> vistas</span>
-                    </div>
-                </header>
-                
-                <div class="article-hero" id="article-hero">
-                    <div class="loading-placeholder" style="width: 100%; height: 100%; background: #f3f4f6; display: flex; align-items: center; justify-content: center; color: #9ca3af;">
-                        <i class="fas fa-image" style="font-size: 3rem;"></i>
-                    </div>
-                </div>
-                
-                <div class="article-content" id="article-content">
-                    <div class="loading-content" style="text-align: center; padding: 60px 0;">
-                        <div class="spinner" style="width: 40px; height: 40px; border: 3px solid #e5e7eb; border-top-color: #3b82f6; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
-                        <p>Cargando contenido del artículo...</p>
-                    </div>
-                </div>
-                
-                <div class="article-tags" id="article-tags">
-                    <!-- Las etiquetas se cargarán aquí -->
-                </div>
+    <main class="article-page" style="padding-top: 100px; min-height: 100vh; background: #f9fafb;">
+        <div class="container">
+            <div id="article-loading" style="text-align: center; padding: 100px 20px;">
+                <div style="width: 60px; height: 60px; border: 4px solid #e5e7eb; border-top-color: #3b82f6; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
+                <h2 style="color: #1f2937; margin-bottom: 15px;">Cargando artículo...</h2>
+                <p style="color: #6b7280;">Por favor espera un momento</p>
             </div>
             
-            <!-- Sidebar (25%) -->
-            <aside class="article-sidebar">
-                <div class="sidebar-section">
-                    <h3>Sobre el autor</h3>
-                    <div class="author-card">
-                        <div class="author-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="author-info">
-                            <h4>Nils Weigand</h4>
-                            <p>Estudiante de Grado Multimedia especializado en IA generativa y arquería tradicional.</p>
-                        </div>
-                    </div>
+            <div id="article-content" style="display: none;">
+                <!-- El contenido se cargará aquí -->
+            </div>
+            
+            <div id="article-error" style="display: none; text-align: center; padding: 100px 20px;">
+                <div style="font-size: 4rem; color: #ef4444; margin-bottom: 20px;">
+                    <i class="fas fa-exclamation-triangle"></i>
                 </div>
-                
-                <div class="sidebar-section">
-                    <h3>Artículos relacionados</h3>
-                    <div id="related-articles">
-                        <!-- Los artículos relacionados se cargarán aquí -->
-                        <div class="loading-related" style="color: #6b7280; text-align: center; padding: 20px 0;">
-                            <p>Cargando artículos relacionados...</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="sidebar-section">
-                    <h3>Categorías</h3>
-                    <div class="categories-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        <a href="index.html#categorias" class="article-tag">Técnica</a>
-                        <a href="index.html#categorias" class="article-tag">Equipamiento</a>
-                        <a href="index.html#categorias" class="article-tag">Historia</a>
-                        <a href="index.html#categorias" class="article-tag">Práctica</a>
-                        <a href="index.html#categorias" class="article-tag">Seguridad</a>
-                        <a href="index.html#categorias" class="article-tag">Competición</a>
-                    </div>
-                </div>
-            </aside>
+                <h2 style="color: #1f2937; margin-bottom: 15px;">Error al cargar el artículo</h2>
+                <p style="color: #6b7280; margin-bottom: 25px;" id="error-message">Ha ocurrido un error</p>
+                <a href="index.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px;">
+                    <i class="fas fa-arrow-left"></i>
+                    Volver al inicio
+                </a>
+            </div>
         </div>
     </main>
 
@@ -426,138 +116,130 @@
         </div>
     </footer>
 
-    <script src="articles.js"></script>
-    <script src="script.js"></script>
+    <!-- Scripts con rutas CORRECTAS -->
+    <script src="js/articles.js"></script>
+    <script src="js/script.js"></script>
     
     <script>
-        // Función específica para cargar artículo
-        function loadCurrentArticle() {
-            console.log('Cargando artículo actual...');
+        // Script específico para article.html
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Article page loaded');
             
+            // Obtener ID del artículo de la URL
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get('id');
             
-            console.log('ID del artículo:', articleId);
+            console.log('Article ID from URL:', articleId);
             
-            if (!articleId || !window.articles) {
-                console.error('No se encontró ID o no hay artículos cargados');
-                showError('No se pudo cargar el artículo');
+            if (!articleId) {
+                showError('No se especificó un artículo');
                 return;
             }
             
-            const article = window.articles.find(a => a.id === parseInt(articleId));
+            // Esperar a que articles.js cargue
+            setTimeout(() => {
+                loadArticle(parseInt(articleId));
+            }, 100);
+        });
+        
+        function loadArticle(id) {
+            console.log('Loading article with ID:', id);
+            console.log('Available articles:', window.articles ? window.articles.length : 'none');
+            
+            if (!window.articles || !Array.isArray(window.articles)) {
+                showError('No se pudieron cargar los artículos');
+                return;
+            }
+            
+            const article = window.articles.find(a => a.id === id);
             
             if (!article) {
-                console.error('Artículo no encontrado con ID:', articleId);
                 showError('Artículo no encontrado');
                 return;
             }
             
-            console.log('Artículo encontrado:', article.title);
-            displayCurrentArticle(article);
+            // Mostrar el artículo
+            displayArticle(article);
         }
         
-        function displayCurrentArticle(article) {
+        function displayArticle(article) {
+            console.log('Displaying article:', article.title);
+            
+            // Ocultar loading
+            document.getElementById('article-loading').style.display = 'none';
+            
+            // Mostrar contenido
+            const contentDiv = document.getElementById('article-content');
+            contentDiv.style.display = 'block';
+            
             // Actualizar título de la página
             document.title = `${article.title} - SmartArc`;
             
-            // Actualizar elementos
-            document.getElementById('article-category').textContent = article.category;
-            document.getElementById('article-title').textContent = article.title;
-            document.getElementById('article-date').textContent = new Date(article.date).toLocaleDateString('es-ES', {
+            // Crear HTML del artículo
+            const date = new Date(article.date).toLocaleDateString('es-ES', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
             });
-            document.getElementById('article-author').textContent = article.author;
-            document.getElementById('article-read-time').textContent = article.readTime;
-            document.getElementById('article-views').textContent = article.views.toLocaleString();
             
-            // Actualizar imagen hero
-            const hero = document.getElementById('article-hero');
-            hero.innerHTML = `<img src="${article.image}" alt="${article.title}" class="hero-image" loading="lazy">`;
-            
-            // Actualizar contenido
-            const content = document.getElementById('article-content');
-            content.innerHTML = article.content;
-            
-            // Actualizar etiquetas
-            const tagsContainer = document.getElementById('article-tags');
-            tagsContainer.innerHTML = article.tags.map(tag => 
-                `<a href="index.html#articulos" class="article-tag">${tag}</a>`
-            ).join('');
-            
-            // Cargar artículos relacionados
-            loadRelatedArticles(article);
-            
-            console.log('Artículo cargado correctamente');
-        }
-        
-        function loadRelatedArticles(currentArticle) {
-            const container = document.getElementById('related-articles');
-            
-            if (!container || !window.articles) return;
-            
-            // Encontrar artículos relacionados (misma categoría, excluyendo el actual)
-            const related = window.articles
-                .filter(a => a.category === currentArticle.category && a.id !== currentArticle.id)
-                .slice(0, 3);
-            
-            if (related.length === 0) {
-                container.innerHTML = '<p style="color: #6b7280;">No hay artículos relacionados por el momento.</p>';
-                return;
-            }
-            
-            let html = '';
-            related.forEach(article => {
-                html += `
-                    <div class="related-article">
-                        <img src="${article.image}" alt="${article.title}">
-                        <div class="related-content">
-                            <h4><a href="article.html?id=${article.id}">${article.title}</a></h4>
-                            <div class="related-meta">${article.readTime} min de lectura</div>
+            contentDiv.innerHTML = `
+                <article class="article-full">
+                    <header class="article-header" style="text-align: center; margin-bottom: 40px;">
+                        <span class="article-category" style="display: inline-block; background: #3b82f6; color: white; padding: 8px 20px; border-radius: 30px; font-weight: 600; margin-bottom: 20px;">
+                            ${article.category}
+                        </span>
+                        <h1 style="font-size: 2.8rem; line-height: 1.2; margin-bottom: 20px; color: #1f2937;">
+                            ${article.title}
+                        </h1>
+                        <div class="article-meta" style="display: flex; justify-content: center; gap: 25px; color: #6b7280; font-size: 0.95rem; margin-bottom: 30px;">
+                            <span><i class="far fa-calendar"></i> ${date}</span>
+                            <span><i class="far fa-user"></i> ${article.author}</span>
+                            <span><i class="far fa-clock"></i> ${article.readTime} min de lectura</span>
+                            <span><i class="far fa-eye"></i> ${article.views.toLocaleString()} vistas</span>
                         </div>
+                    </header>
+                    
+                    <div class="article-hero" style="width: 100%; height: 400px; border-radius: 16px; overflow: hidden; margin-bottom: 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+                        <img src="${article.image}" alt="${article.title}" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
-                `;
-            });
-            
-            container.innerHTML = html;
+                    
+                    <div class="article-body" style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); line-height: 1.8; font-size: 1.1rem;">
+                        ${article.content}
+                    </div>
+                    
+                    <div class="article-tags" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; padding-top: 30px; border-top: 1px solid #e5e7eb;">
+                        ${article.tags.map(tag => `
+                            <span style="padding: 8px 16px; background-color: #f3f4f6; border-radius: 30px; font-size: 0.9rem; color: #4b5563;">
+                                ${tag}
+                            </span>
+                        `).join('')}
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 40px;">
+                        <a href="index.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-arrow-left"></i>
+                            Volver a todos los artículos
+                        </a>
+                    </div>
+                </article>
+            `;
         }
         
         function showError(message) {
-            const content = document.getElementById('article-content');
-            if (content) {
-                content.innerHTML = `
-                    <div style="text-align: center; padding: 60px 20px;">
-                        <div style="font-size: 3rem; color: #ef4444; margin-bottom: 20px;">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <h2 style="color: #1f2937; margin-bottom: 15px;">Error al cargar el artículo</h2>
-                        <p style="color: #6b7280; margin-bottom: 25px;">${message}</p>
-                        <a href="index.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-arrow-left"></i>
-                            Volver al inicio
-                        </a>
-                    </div>
-                `;
+            document.getElementById('article-loading').style.display = 'none';
+            document.getElementById('article-error').style.display = 'block';
+            document.getElementById('error-message').textContent = message;
+        }
+        
+        // Animación del spinner
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
             }
-        }
-        
-        // Cargar el artículo cuando el DOM esté listo
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM cargado, iniciando carga de artículo...');
-            loadCurrentArticle();
-        });
-        
-        // También cargar si window.articles se carga después
-        window.addEventListener('articlesLoaded', loadCurrentArticle);
+        `;
+        document.head.appendChild(style);
     </script>
-    
-    <style>
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
 </body>
 </html>
