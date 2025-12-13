@@ -1,4 +1,4 @@
-// Article Manager
+// Article Manager for Homepage
 class ArticleManager {
     constructor() {
         this.articles = [];
@@ -21,9 +21,6 @@ class ArticleManager {
             // Load initial articles
             this.loadArticles();
             
-            // Update category counts
-            this.updateCategoryCounts();
-            
             console.log('Articles loaded successfully:', this.articles.length);
         } catch (error) {
             console.error('Error loading articles:', error);
@@ -31,81 +28,75 @@ class ArticleManager {
     }
 
     async loadArticlesData() {
-    try {
-        console.log('Loading articles from JSON file...');
-        const response = await fetch('articles.json');
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        try {
+            console.log('Loading articles from JSON file...');
+            const response = await fetch('articles.json');
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            this.articles = await response.json();
+            console.log('Successfully loaded', this.articles.length, 'articles from JSON');
+            
+            // Process categories for the homepage
+            this.processCategories();
+            
+            return this.articles;
+        } catch (error) {
+            console.error('Error loading articles.json:', error);
+            console.log('Using local fallback articles instead...');
+            
+            // Use these fallback articles
+            this.articles = [
+                {
+                    id: 1,
+                    title: "Fundamentos de la Postura en Arquería",
+                    category: "tecnica",
+                    date: "2024-01-15",
+                    readTime: 8,
+                    excerpt: "La postura correcta es la base de un tiro preciso y consistente.",
+                    content: "# Fundamentos de la Postura en Arquería\n\nLa postura correcta es el cimiento sobre el cual se construye cada tiro exitoso.",
+                    image: "https://images.unsplash.com/photo-1550747534-2a5c93d59d9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    tags: ["postura", "fundamentos"]
+                },
+                {
+                    id: 2,
+                    title: "Mantenimiento Básico del Arco Recurvo",
+                    category: "equipamiento",
+                    date: "2024-01-20",
+                    readTime: 10,
+                    excerpt: "Guía completa para mantener tu arco recurvo en óptimas condiciones.",
+                    content: "# Mantenimiento Básico del Arco Recurvo\n\nUn arco bien mantenido no solo dura más tiempo.",
+                    image: "https://images.unsplash.com/photo-1586972750140-4d680ae17e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    tags: ["mantenimiento", "recurvo"]
+                }
+            ];
+            
+            this.processCategories();
+            return this.articles;
         }
-        
-        this.articles = await response.json();
-        console.log('Successfully loaded', this.articles.length, 'articles from JSON');
-        
-        // Process categories for the homepage
-        this.processCategories();
-        
-        return this.articles;
-    } catch (error) {
-        console.error('Error loading articles.json:', error);
-        console.log('Using local fallback articles instead...');
-        
-        // Use these fallback articles that match your JSON structure
-        this.articles = [
-            {
-                id: 1,
-                title: "Fundamentos de la Postura en Arquería",
-                category: "tecnica",
-                date: "2024-01-15",
-                readTime: 8,
-                excerpt: "La postura correcta es la base de un tiro preciso y consistente.",
-                content: "# Fundamentos de la Postura en Arquería\n\nLa postura correcta es el cimiento sobre el cual se construye cada tiro exitoso.",
-                image: "https://images.unsplash.com/photo-1550747534-2a5c93d59d9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                tags: ["postura", "fundamentos"]
-            },
-            {
-                id: 2,
-                title: "Mantenimiento Básico del Arco Recurvo",
-                category: "equipamiento",
-                date: "2024-01-20",
-                readTime: 10,
-                excerpt: "Guía completa para mantener tu arco recurvo en óptimas condiciones.",
-                content: "# Mantenimiento Básico del Arco Recurvo\n\nUn arco bien mantenido no solo dura más tiempo.",
-                image: "https://images.unsplash.com/photo-1586972750140-4d680ae17e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                tags: ["mantenimiento", "recurvo"]
-            }
-        ];
-        
-        this.processCategories();
-        return this.articles;
     }
-}
 
-    getFallbackArticles() {
-        return [
-            {
-                id: 1,
-                title: "Fundamentos de la Postura en Arquería",
-                category: "tecnica",
-                date: "2024-01-15",
-                readTime: 8,
-                excerpt: "La postura correcta es la base de un tiro preciso y consistente.",
-                content: "Contenido del artículo sobre postura en arquería...",
-                image: "https://images.unsplash.com/photo-1550747534-2a5c93d59d9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                tags: ["postura", "fundamentos"]
-            },
-            {
-                id: 2,
-                title: "Mantenimiento Básico del Arco Recurvo",
-                category: "equipamiento",
-                date: "2024-01-20",
-                readTime: 10,
-                excerpt: "Guía completa para mantener tu arco recurvo en óptimas condiciones.",
-                content: "Contenido del artículo sobre mantenimiento...",
-                image: "https://images.unsplash.com/photo-1586972750140-4d680ae17e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                tags: ["mantenimiento", "recurvo"]
+    // NEW METHOD: Process categories and update counts
+    processCategories() {
+        const categories = ['tecnica', 'equipamiento', 'historia', 'practica', 'seguridad', 'competicion'];
+        const counts = {};
+        
+        // Count articles per category
+        this.articles.forEach(article => {
+            counts[article.category] = (counts[article.category] || 0) + 1;
+        });
+        
+        // Update category cards in the UI
+        categories.forEach(category => {
+            const countElement = document.querySelector(`[data-category="${category}"] .category-count`);
+            if (countElement) {
+                countElement.textContent = `${counts[category] || 0} artículos`;
             }
-        ];
+        });
+        
+        console.log('Category counts updated:', counts);
     }
 
     setupEventListeners() {
@@ -242,41 +233,41 @@ class ArticleManager {
     }
 
     createArticleCard(article) {
-    const card = document.createElement('div');
-    card.className = 'article-card';
-    card.innerHTML = `
-        <div class="article-image">
-            <img src="${article.image}" alt="${article.title}" loading="lazy">
-            <span class="article-category">${this.getCategoryName(article.category)}</span>
-        </div>
-        <div class="article-content">
-            <h3 class="article-title">
-                <a href="article.html?id=${article.id}" class="article-link">${article.title}</a>
-            </h3>
-            <p class="article-excerpt">${article.excerpt}</p>
-            <div class="article-meta">
-                <span class="article-date">${article.date}</span>
-                <span class="article-read-time">${article.readTime} min de lectura</span>
+        const card = document.createElement('div');
+        card.className = 'article-card';
+        card.innerHTML = `
+            <div class="article-image">
+                <img src="${article.image}" alt="${article.title}" loading="lazy">
+                <span class="article-category">${this.getCategoryName(article.category)}</span>
             </div>
-            <div class="article-footer">
-                <a href="article.html?id=${article.id}" class="read-more">
-                    Leer artículo
-                    <i class="fas fa-arrow-right"></i>
-                </a>
+            <div class="article-content">
+                <h3 class="article-title">
+                    <a href="article.html?id=${article.id}">${article.title}</a>
+                </h3>
+                <p class="article-excerpt">${article.excerpt}</p>
+                <div class="article-meta">
+                    <span class="article-date">${article.date}</span>
+                    <span class="article-read-time">${article.readTime} min de lectura</span>
+                </div>
+                <div class="article-footer">
+                    <a href="article.html?id=${article.id}" class="read-more">
+                        Leer artículo
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
             </div>
-        </div>
-    `;
-    
-    // Add click handler for the entire card (optional)
-    card.addEventListener('click', (e) => {
-        // Don't navigate if clicking on a link (let the link handle it)
-        if (!e.target.closest('a')) {
-            window.location.href = `article.html?id=${article.id}`;
-        }
-    });
-    
-    return card;
-}
+        `;
+        
+        // Add click handler for the entire card
+        card.addEventListener('click', (e) => {
+            // Don't navigate if clicking on a link (let the link handle it)
+            if (!e.target.closest('a')) {
+                window.location.href = `article.html?id=${article.id}`;
+            }
+        });
+        
+        return card;
+    }
 
     searchArticles(query) {
         console.log('Searching for:', query);
@@ -314,18 +305,6 @@ class ArticleManager {
                 loadMoreBtn.style.display = 'inline-flex';
             }
         }
-    }
-
-    updateCategoryCounts() {
-        const categories = ['tecnica', 'equipamiento', 'historia', 'practica', 'seguridad', 'competicion'];
-        
-        categories.forEach(category => {
-            const count = this.articles.filter(article => article.category === category).length;
-            const countElement = document.querySelector(`[data-category="${category}"] .category-count`);
-            if (countElement) {
-                countElement.textContent = `${count} artículos`;
-            }
-        });
     }
 
     getCategoryName(category) {
