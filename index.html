@@ -4,362 +4,365 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartArc — Biblioteca Digital de Arquería</title>
-    <meta name="description" content="Biblioteca digital estática sobre arquería con textos, diagramas, imágenes y recursos audiovisuales organizados por secciones.">
+    <meta name="description" content="Biblioteca digital especializada en arquería con recursos multimedia organizados para todos los niveles.">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏹</text></svg>">
 </head>
 <body>
-    <!-- Header / Navegación -->
-    <header class="header" aria-label="Cabecera SmartArc">
-        <div class="container">
-            <div class="brand">
-                <div class="logo" aria-hidden="true">
-                    <span>SA</span>
-                </div>
-                <div class="brand-text">
+    <!-- Navegación principal -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-icon">🏹</div>
+                <div class="logo-text">
                     <h1>SmartArc</h1>
-                    <div class="subtitle">Biblioteca Digital de Arquería</div>
+                    <span class="logo-subtitle">Biblioteca de Arquería</span>
                 </div>
             </div>
-
-            <nav class="site-nav" aria-label="Navegación principal">
-                <ul>
-                    <li><a href="#inicio" class="active">Inicio</a></li>
-                    <li><a href="#tecnica">Técnica</a></li>
-                    <li><a href="#equipamiento">Equipamiento</a></li>
-                    <li><a href="#historia">Historia</a></li>
-                    <li><a href="#practica">Práctica</a></li>
-                    <li><a href="#galeria">Galería</a></li>
-                </ul>
-            </nav>
             
-            <button class="mobile-menu-btn" aria-label="Abrir menú">
-                <i class="fas fa-bars"></i>
-            </button>
+            <div class="nav-menu">
+                <a href="#inicio" class="nav-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </a>
+                <a href="#categorias" class="nav-link">
+                    <i class="fas fa-th-large"></i>
+                    <span>Categorías</span>
+                </a>
+                <a href="#articulos" class="nav-link">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Artículos</span>
+                </a>
+                <a href="#recursos" class="nav-link">
+                    <i class="fas fa-book-open"></i>
+                    <span>Recursos</span>
+                </a>
+                <a href="about.html" class="nav-link">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Acerca de</span>
+                </a>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="theme-toggle">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
         </div>
-    </header>
+        
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <div class="search-container">
+                <input type="text" placeholder="Buscar artículos, técnicas, equipamiento..." class="search-input">
+                <button class="search-submit">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="search-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
 
-    <!-- Hero / Presentación -->
-    <section class="hero" id="inicio" aria-label="Presentación">
-        <div class="container">
+    <!-- Hero Section - Rediseñada -->
+    <header class="hero" id="inicio">
+        <div class="hero-container">
             <div class="hero-content">
-                <div class="hero-text">
-                    <h2>Introducción a SmartArc</h2>
-                    <p>SmartArc es una biblioteca digital estática sobre la arquería: encontrarás textos, diagramas, imágenes y piezas audiovisuales organizadas por secciones. La navegación es simple: pulsa una tarjeta para abrir el contenido.</p>
-                    <p>Disfruta de un aprendizaje sin perfiles ni servicios detrás.</p>
-                    
-                    <div class="tags">
-                        <span class="tag">Estático (sin backend)</span>
-                        <span class="tag">Contenido multimedia</span>
-                        <span class="tag">Accesible</span>
-                        <span class="tag">Gratuito</span>
-                    </div>
+                <div class="hero-badge">Biblioteca Digital</div>
+                <h2 class="hero-title">El arte de la <span class="highlight">arquería</span>, al alcance de todos</h2>
+                <p class="hero-description">Explora nuestra colección de más de 50 artículos especializados, guías técnicas, videos tutoriales y recursos multimedia para todos los niveles.</p>
+                
+                <div class="hero-actions">
+                    <a href="#articulos" class="btn btn-primary">
+                        <i class="fas fa-arrow-right"></i>
+                        Explorar Artículos
+                    </a>
+                    <a href="#categorias" class="btn btn-outline">
+                        <i class="fas fa-th-large"></i>
+                        Ver Categorías
+                    </a>
                 </div>
                 
                 <div class="hero-stats">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-play-circle"></i>
+                    <div class="stat">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Artículos</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">Categorías</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Gratuito</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="visual-circle">
+                    <div class="circle-inner">
+                        <div class="circle-element" style="--delay: 0s;">
+                            <i class="fas fa-bullseye"></i>
                         </div>
-                        <div class="stat-info">
-                            <h3>Intro Vídeo</h3>
-                            <p>1 recurso disponible</p>
+                        <div class="circle-element" style="--delay: 0.2s;">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                        <div class="circle-element" style="--delay: 0.4s;">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="circle-element" style="--delay: 0.6s;">
+                            <i class="fas fa-running"></i>
                         </div>
                     </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-book"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>Guía Técnica</h3>
-                            <p>1 recurso disponible</p>
-                        </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Olas decorativas -->
+        <div class="wave-container">
+            <svg class="wave" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Categorías destacadas -->
+    <section class="categories" id="categorias">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Explora por Categoría</h2>
+                <p class="section-subtitle">Encuentra recursos organizados por temas específicos de arquería</p>
+            </div>
+            
+            <div class="categories-grid">
+                <a href="article.html?category=tecnica" class="category-card" style="--card-color: #3b82f6;">
+                    <div class="category-icon">
+                        <i class="fas fa-user-check"></i>
                     </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-images"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>Galería</h3>
-                            <p>20+ recursos disponibles</p>
-                        </div>
+                    <h3 class="category-title">Técnica</h3>
+                    <p class="category-description">Postura, agarre, puntería y fundamentos técnicos</p>
+                    <div class="category-count">12 artículos</div>
+                </a>
+                
+                <a href="article.html?category=equipamiento" class="category-card" style="--card-color: #10b981;">
+                    <div class="category-icon">
+                        <i class="fas fa-tools"></i>
                     </div>
+                    <h3 class="category-title">Equipamiento</h3>
+                    <p class="category-description">Arcos, flechas, accesorios y mantenimiento</p>
+                    <div class="category-count">18 artículos</div>
+                </a>
+                
+                <a href="article.html?category=historia" class="category-card" style="--card-color: #8b5cf6;">
+                    <div class="category-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3 class="category-title">Historia</h3>
+                    <p class="category-description">Orígenes, evolución y tradición de la arquería</p>
+                    <div class="category-count">8 artículos</div>
+                </a>
+                
+                <a href="article.html?category=practica" class="category-card" style="--card-color: #f59e0b;">
+                    <div class="category-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h3 class="category-title">Práctica</h3>
+                    <p class="category-description">Drills, rutinas y ejercicios de entrenamiento</p>
+                    <div class="category-count">15 artículos</div>
+                </a>
+                
+                <a href="article.html?category=seguridad" class="category-card" style="--card-color: #ef4444;">
+                    <div class="category-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="category-title">Seguridad</h3>
+                    <p class="category-description">Normas, prevención y mejores prácticas</p>
+                    <div class="category-count">7 artículos</div>
+                </a>
+                
+                <a href="article.html?category=competicion" class="category-card" style="--card-color: #ec4899;">
+                    <div class="category-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="category-title">Competición</h3>
+                    <p class="category-description">Reglamentos, estrategias y preparación</p>
+                    <div class="category-count">9 artículos</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Artículos destacados -->
+    <section class="featured-articles" id="articulos">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Artículos Destacados</h2>
+                <p class="section-subtitle">Los recursos más populares y recomendados de nuestra biblioteca</p>
+                <a href="#todos" class="view-all">
+                    Ver todos los artículos
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <div class="articles-grid" id="articles-container">
+                <!-- Los artículos se cargarán dinámicamente desde JavaScript -->
+            </div>
+            
+            <div class="load-more-container">
+                <button class="btn btn-outline" id="load-more">
+                    <i class="fas fa-plus"></i>
+                    Cargar más artículos
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Características especiales -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Enfoque Mediterráneo</h3>
+                    <p>Inspirado en la tradición arquerística mediterránea, combinando técnicas ancestrales con métodos modernos.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>IA Generativa</h3>
+                    <p>Contenido creado y revisado con herramientas de IA para garantizar precisión y claridad técnica.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-universal-access"></i>
+                    </div>
+                    <h3>Totalmente Accesible</h3>
+                    <p>Diseño inclusivo que sigue las mejores prácticas de accesibilidad web (WCAG 2.1).</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Responsive Total</h3>
+                    <p>Experiencia optimizada para todos los dispositivos, desde móviles hasta pantallas de escritorio.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Secciones principales -->
-    <main class="main-content">
+    <!-- Newsletter -->
+    <section class="newsletter">
         <div class="container">
-            <section class="sections-grid" aria-label="Secciones principales">
-                <h2 class="section-title">Recursos Disponibles</h2>
-                <p class="section-subtitle">Explora los diferentes tipos de contenido multimedia sobre arquería</p>
+            <div class="newsletter-content">
+                <h2>Mantente al día</h2>
+                <p>Recibe notificaciones cuando añadamos nuevos artículos y recursos a la biblioteca.</p>
                 
-                <div class="cards-grid">
-                    <article class="card" data-category="video">
-                        <div class="card-icon">
-                            <i class="fas fa-video"></i>
-                        </div>
-                        <h3>Introducción</h3>
-                        <p>Vídeo de bienvenida y texto breve que explica el propósito del sitio y cómo navegar por la biblioteca.</p>
-                        <a href="#recursos" class="card-link" aria-label="Ver recursos de Introducción">Explorar <i class="fas fa-arrow-right"></i></a>
-                    </article>
-                    
-                    <article class="card" data-category="texto">
-                        <div class="card-icon">
-                            <i class="fas fa-scroll"></i>
-                        </div>
-                        <h3>Historia y Valores</h3>
-                        <p>Sección con textos y recursos históricos que contextualizan la práctica del tiro con arco.</p>
-                        <a href="#recursos" class="card-link" aria-label="Ver recursos de Historia y Valores">Explorar <i class="fas fa-arrow-right"></i></a>
-                    </article>
-                    
-                    <article class="card" data-category="imagen">
-                        <div class="card-icon">
-                            <i class="fas fa-image"></i>
-                        </div>
-                        <h3>Equipamiento</h3>
-                        <p>Listado visual y comparativo: arcos, flechas, accesorios y guías de compra ilustradas.</p>
-                        <a href="#recursos" class="card-link" aria-label="Ver recursos de Equipamiento">Explorar <i class="fas fa-arrow-right"></i></a>
-                    </article>
-                    
-                    <article class="card" data-category="diagrama">
-                        <div class="card-icon">
-                            <i class="fas fa-project-diagram"></i>
-                        </div>
-                        <h3>Técnica y Postura</h3>
-                        <p>Diagramas, secuencias y textos explicativos sobre agarre, postura, puntería y errores comunes.</p>
-                        <a href="#recursos" class="card-link" aria-label="Ver recursos de Técnica y Postura">Explorar <i class="fas fa-arrow-right"></i></a>
-                    </article>
-                    
-                    <article class="card" data-category="animacion">
-                        <div class="card-icon">
-                            <i class="fas fa-film"></i>
-                        </div>
-                        <h3>Animaciones</h3>
-                        <p>Micro-animaciones que ilustran la trayectoria de la flecha y fases del disparo para aclarar conceptos físicos.</p>
-                        <a href="#recursos" class="card-link" aria-label="Ver recursos de Animaciones">Explorar <i class="fas fa-arrow-right"></i></a>
-                    </article>
-                    
-                    <article class="card" data-category="lista">
-                        <div class="card-icon">
-                            <i class="fas fa-list-check"></i>
-                        </div>
-                        <h3>Práctica y <i>Drills</i></h3>
-                        <p>Listado de ejercicios cortos y cronogramas de práctica con textos y audios para acompañar sesiones de entrenamiento.</p>
-                        <a href="#recursos" class="card-link" aria-label="Ver recursos de Práctica y Drills">Explorar <i class="fas fa-arrow-right"></i></a>
-                    </article>
-                </div>
-            </section>
-            
-            <!-- Vista previa de recurso -->
-            <section class="preview-section" aria-label="Vista previa de recurso">
-                <div class="preview-container">
-                    <div class="preview-main">
-                        <h2>Vista previa de recurso</h2>
-                        <p>Cuando el usuario pulsa una tarjeta, se mostraría una vista con: título, contenido principal (texto y/o vídeo), imágenes relacionadas, y enlaces al glosario y recursos de compra.</p>
-                        
-                        <div class="resource-preview">
-                            <div class="resource-icon">
-                                <i class="fas fa-user-check"></i>
-                            </div>
-                            <div class="resource-info">
-                                <h4>Guía de Postura (Texto)</h4>
-                                <p>Explicación de la técnica básica, paso a paso. Incluye diagramas y recomendaciones para evitar lesiones.</p>
-                            </div>
-                        </div>
+                <form class="newsletter-form">
+                    <div class="form-group">
+                        <input type="email" placeholder="Tu correo electrónico" required>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Suscribirse
+                        </button>
                     </div>
-                    
-                    <aside class="preview-sidebar">
-                        <h3>Créditos</h3>
-                        <p>Listado de herramientas IA empleadas (p.ej. ChatGPT para redacción, DALL·E para imágenes de referencia), referencias y licencias.</p>
-                        <ul class="tools-list">
-                            <li><i class="fas fa-robot"></i> ChatGPT - Textos</li>
-                            <li><i class="fas fa-palette"></i> DALL·E - Imágenes</li>
-                            <li><i class="fas fa-wave-square"></i> ElevenLabs - Audio</li>
-                            <li><i class="fas fa-video"></i> Runway ML - Vídeo</li>
-                        </ul>
-                    </aside>
-                </div>
-            </section>
-            
-            <!-- Bocetos del proyecto -->
-            <section class="sketches-section" aria-label="Bocetos del proyecto">
-                <h2 class="section-title">Bocetos del Proyecto</h2>
-                <p class="section-subtitle">Visualización de las diferentes secciones de la biblioteca digital</p>
-                
-                <div class="sketches-grid">
-                    <article class="sketch-card">
-                        <div class="sketch-visual" style="background: linear-gradient(135deg, #4a90e2, #63b3ed);">
-                            <i class="fas fa-home"></i>
-                            <span>Página de Inicio</span>
-                        </div>
-                        <div class="sketch-info">
-                            <h3>Página de Inicio</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula mauris et libero ultricies, vitae ultricies purus volutpat. Aquí se presentaría el vídeo de bienvenida y el texto introductorio del sitio.</p>
-                        </div>
-                    </article>
-                    
-                    <article class="sketch-card">
-                        <div class="sketch-visual" style="background: linear-gradient(135deg, #9f7aea, #b794f4);">
-                            <i class="fas fa-history"></i>
-                            <span>Historia y Valores</span>
-                        </div>
-                        <div class="sketch-info">
-                            <h3>Historia y Valores</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aquí iría el texto histórico y los recursos visuales que contextualizan la arquería.</p>
-                        </div>
-                    </article>
-                    
-                    <article class="sketch-card">
-                        <div class="sketch-visual" style="background: linear-gradient(135deg, #38b2ac, #4fd1c7);">
-                            <i class="fas fa-tools"></i>
-                            <span>Equipamiento</span>
-                        </div>
-                        <div class="sketch-info">
-                            <h3>Equipamiento</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Visualización comparativa de diferentes tipos de arcos, flechas y accesorios.</p>
-                        </div>
-                    </article>
-                    
-                    <article class="sketch-card">
-                        <div class="sketch-visual" style="background: linear-gradient(135deg, #ed8936, #f6ad55);">
-                            <i class="fas fa-user"></i>
-                            <span>Técnica y Postura</span>
-                        </div>
-                        <div class="sketch-info">
-                            <h3>Técnica y Postura</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aquí irían diagramas y explicaciones sobre agarre, postura y fases del disparo.</p>
-                        </div>
-                    </article>
-                </div>
-            </section>
-            
-            <!-- Ejemplo de artículo completo -->
-            <article class="full-article" aria-label="Ejemplo de artículo completo">
-                <h2>Guía de Equipamiento: Arcos y Flechas</h2>
-                
-                <p class="article-intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a metus non purus facilisis imperdiet. Etiam porttitor diam non ex mattis, a fermentum nulla laoreet. Este artículo describe las características de distintos tipos de arcos y flechas, con comparaciones y recomendaciones para principiantes y avanzados.</p>
-                
-                <div class="article-visual main-visual">
-                    <div class="visual-placeholder">
-                        <i class="fas fa-image"></i>
-                        <span>Imagen Principal - Comparación de Arcos</span>
-                    </div>
-                </div>
-                
-                <div class="comparison-section">
-                    <h3>Tipos de Arcos</h3>
-                    <div class="comparison-grid">
-                        <div class="comparison-item" style="background: #50e3c2;">
-                            <h4>Arco Recurvo</h4>
-                            <p>Ideal para principiantes y competición olímpica</p>
-                        </div>
-                        <div class="comparison-item" style="background: #f5a623;">
-                            <h4>Arco Compuesto</h4>
-                            <p>Precisión superior con sistema de poleas</p>
-                        </div>
-                    </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aquí se comparan ventajas y desventajas de cada tipo de arco para distintos niveles de práctica.</p>
-                </div>
-                
-                <div class="comparison-section">
-                    <h3>Materiales de Flechas</h3>
-                    <div class="comparison-grid three-columns">
-                        <div class="comparison-item" style="background: #9013fe; color: white;">
-                            <h4>Carbono</h4>
-                            <p>Ligero y resistente</p>
-                        </div>
-                        <div class="comparison-item" style="background: #b8e986;">
-                            <h4>Madera</h4>
-                            <p>Tradicional y económico</p>
-                        </div>
-                        <div class="comparison-item" style="background: #f8e71c;">
-                            <h4>Aluminio</h4>
-                            <p>Durable y consistente</p>
-                        </div>
-                    </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Recomendaciones sobre el tipo de flecha según nivel de habilidad y tipo de arco.</p>
-                </div>
-                
-                <div class="steps-section">
-                    <h3>Guía Paso a Paso</h3>
-                    <div class="steps">
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div class="step-content">
-                                <h4>Selección del Equipo</h4>
-                                <p>Selecciona tu arco adecuado y verifica la longitud de flecha correspondiente.</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-content">
-                                <h4>Verificación de Seguridad</h4>
-                                <p>Revisa tus accesorios y realiza un chequeo de seguridad antes de practicar.</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-content">
-                                <h4>Ejecución de la Práctica</h4>
-                                <p>Ejecuta la práctica siguiendo la postura correcta, según las guías y diagramas del sitio.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="article-conclusion">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec feugiat, urna ac laoreet tincidunt, justo erat malesuada magna, nec posuere libero purus sed justo. Suspendisse potenti. Fusce volutpat velit ac metus fermentum, sit amet tincidunt justo fermentum. Praesent cursus elit nec tellus gravida vehicula.</p>
-                </div>
-            </article>
+                    <p class="form-note">Sin spam, solo contenido valioso sobre arquería.</p>
+                </form>
+            </div>
         </div>
-    </main>
+    </section>
 
     <!-- Footer -->
-    <footer class="footer" aria-label="Pie de página">
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="logo" aria-hidden="true">
-                        <span>SA</span>
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">🏹</div>
+                        <div>
+                            <h3>SmartArc</h3>
+                            <p>Biblioteca Digital de Arquería</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3>SmartArc</h3>
-                        <p>Biblioteca Digital de Arquería</p>
+                    <p class="footer-description">Un proyecto educativo creado con IA generativa para democratizar el acceso al conocimiento sobre arquería.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
                 
-                <div class="footer-links">
-                    <h4>Secciones</h4>
+                <div class="footer-section">
+                    <h4>Categorías</h4>
                     <ul>
-                        <li><a href="#inicio">Inicio</a></li>
-                        <li><a href="#tecnica">Técnica</a></li>
-                        <li><a href="#equipamiento">Equipamiento</a></li>
-                        <li><a href="#practica">Práctica</a></li>
+                        <li><a href="article.html?category=tecnica">Técnica</a></li>
+                        <li><a href="article.html?category=equipamiento">Equipamiento</a></li>
+                        <li><a href="article.html?category=historia">Historia</a></li>
+                        <li><a href="article.html?category=practica">Práctica</a></li>
+                        <li><a href="article.html?category=seguridad">Seguridad</a></li>
                     </ul>
                 </div>
                 
-                <div class="footer-contact">
-                    <h4>Proyecto</h4>
-                    <p>Wireframe diseñado para SmartArc — Biblioteca de arquería (versión entrega)</p>
-                    <p class="footer-note">Nota: esto es un boceto visual — el producto final será estático y sin interacción con IA en tiempo real.</p>
+                <div class="footer-section">
+                    <h4>Recursos</h4>
+                    <ul>
+                        <li><a href="#articulos">Artículos</a></li>
+                        <li><a href="#categorias">Categorías</a></li>
+                        <li><a href="about.html">Acerca de</a></li>
+                        <li><a href="#">Glosario</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <p><i class="fas fa-envelope"></i> contacto@smartarc.org</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Proyecto educativo virtual</p>
+                    <p><i class="fas fa-graduation-cap"></i> Grado Multimedia - UOC</p>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 SmartArc. Proyecto educativo creado con IA generativa.</p>
-                <p class="footer-meta">R2 | Diseño y Planificación | Nils Weigand | Grado Multimedia</p>
+                <p>&copy; 2025 SmartArc. Todos los derechos reservados.</p>
+                <p>Diseño y desarrollo con <i class="fas fa-heart" style="color: #ef4444;"></i> y IA generativa.</p>
+                <p class="credits">R2 | Diseño y Planificación | Nils Weigand</p>
             </div>
         </div>
     </footer>
 
+    <!-- Modal para búsqueda -->
+    <div class="modal" id="search-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Búsqueda avanzada</h3>
+                <button class="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Contenido de búsqueda avanzada -->
+            </div>
+        </div>
+    </div>
+
+    <script src="articles.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
