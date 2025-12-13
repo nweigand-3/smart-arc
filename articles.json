@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "title": "Fundamentos de la Postura en Arquería",
+    "category": "tecnica",
+    "date": "2024-01-15",
+    "readTime": 8,
+    "excerpt": "La postura correcta es la base de un tiro preciso y consistente. Aprende los principios fundamentales que todo arquero debe dominar.",
+    "content": "# Fundamentos de la Postura en Arquería\n\nLa postura correcta es el cimiento sobre el cual se construye cada tiro exitoso. En este artículo exploraremos los elementos esenciales de una postura adecuada.\n\n## 1. Posición de los Pies\n\nLos pies deben estar separados al ancho de los hombros, con el peso distribuido uniformemente. La línea de tiro debe pasar entre ambos pies.\n\n## 2. Alineación del Cuerpo\n\nEl cuerpo debe formar una línea perpendicular al objetivo. Los hombros deben estar relajados y alineados con la cadera.\n\n## 3. Estabilidad\n\nMantén una ligera flexión en las rodillas para absorber el movimiento y proporcionar estabilidad.\n\nRecuerda practicar estos fundamentos regularmente para desarrollar memoria muscular.",
+    "image": "https://images.unsplash.com/photo-1550747534-2a5c93d59d9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "tags": ["postura", "fundamentos", "técnica básica"]
+  },
+  {
+    "id": 2,
+    "title": "Mantenimiento Básico del Arco Recurvo",
+    "category": "equipamiento",
+    "date": "2024-01-20",
+    "readTime": 10,
+    "excerpt": "Guía completa para mantener tu arco recurvo en óptimas condiciones y prolongar su vida útil.",
+    "content": "# Mantenimiento Básico del Arco Recurvo\n\nUn arco bien mantenido no solo dura más tiempo, sino que también ofrece un rendimiento más consistente.\n\n## Limpieza Regular\n\n1. Limpia las palas con un paño suave y seco después de cada uso.\n2. Revisa periódicamente el estado de la cuerda.\n3. Comprueba que las flechas estén rectas y sin daños.\n\n## Almacenamiento\n\nGuarda el arco en un lugar seco y templado, preferiblemente en una funda protectora.\n\n## Inspección Visual\n\nRealiza una inspección mensual buscando:\n- Grietas en las palas\n- Desgaste en la cuerda\n- Tornillos flojos\n\nEl mantenimiento preventivo es clave para la seguridad y el rendimiento.",
+    "image": "https://images.unsplash.com/photo-1586972750140-4d680ae17e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "tags": ["mantenimiento", "recurvo", "equipamiento"]
+  },
+  {
+    "id": 3,
+    "title": "Historia del Arco Largo Inglés",
+    "category": "historia",
+    "date": "2024-01-25",
+    "readTime": 12,
+    "excerpt": "Descubre el legendario arco que cambió el curso de la historia medieval europea.",
+    "content": "# Historia del Arco Largo Inglés\n\nEl arco largo inglés es uno de los iconos más reconocibles de la historia militar medieval.\n\n## Orígenes\n\nSe desarrolló en Gales durante el siglo XII y fue adoptado por los ingleses tras la conquista de Gales.\n\n## Características Técnicas\n\n- Longitud: 1.8 a 2.1 metros\n- Material: Madera de tejo\n- Fuerza de tensión: 80-150 libras\n\n## Impacto Histórico\n\nEl arco largo fue decisivo en batallas como:\n- Batalla de Crécy (1346)\n- Batalla de Poitiers (1356)\n- Batalla de Azincourt (1415)\n\nSu alcance superior y poder de penetración cambiaron para siempre la guerra medieval.",
+    "image": "https://images.unsplash.com/photo-1594930078877-18ca0eaa8b29?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "tags": ["historia", "arco largo", "medieval"]
+  },
+  {
+    "id": 4,
+    "title": "Drills de Puntería para Principiantes",
+    "category": "practica",
+    "date": "2024-02-01",
+    "readTime": 6,
+    "excerpt": "Ejercicios prácticos para mejorar tu puntería desde cero.",
+    "content": "# Drills de Puntería para Principiantes\n\nLa puntería se mejora con práctica específica y deliberada. Estos drills te ayudarán a progresar rápidamente.\n\n## Drill 1: Puntería a Distancia Corta\n\nComienza a 5 metros del blanco. Concéntrate en:\n- Alineación corporal\n- Liberación suave\n- Follow-through\n\n## Drill 2: Ejercicio de Forma\n\nPractica el movimiento completo sin flechas:\n1. Posición de set\n2. Elevación\n3. Anclaje\n4. Liberación\n\n## Drill 3: Control de la Respiración\n\nCoordina tu respiración con el tiro:\n- Inhala al elevar el arco\n- Exhala durante la puntería\n- Aguanta la respiración al liberar\n\nPractica estos drills 3 veces por semana para ver mejoras significativas.",
+    "image": "https://images.unsplash.com/photo-1595871463386-5e27d5c6c0b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "tags": ["drills", "puntería", "entrenamiento"]
+  }
+]
