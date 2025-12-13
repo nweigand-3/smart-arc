@@ -1,29 +1,80 @@
-// Article display and interaction
-class ArticleDisplay {
+// Article Manager
+class ArticleManager {
     constructor() {
+        this.articles = [];
         this.currentCategory = 'all';
         this.articlesPerPage = 4;
         this.currentPage = 1;
-        this.init();
+        console.log('ArticleManager initialized');
     }
 
     async init() {
-        // Load articles from data manager
-        await window.dataManager.loadArticles();
+        console.log('Loading articles...');
         
-        // Set up event listeners
-        this.setupEventListeners();
-        
-        // Load initial articles
-        this.loadArticles();
-        
-        // Check if we're on article page
-        if (window.location.pathname.includes('article.html')) {
-            this.loadArticlePage();
+        try {
+            // Load articles from JSON file
+            await this.loadArticlesData();
+            
+            // Set up event listeners
+            this.setupEventListeners();
+            
+            // Load initial articles
+            this.loadArticles();
+            
+            // Update category counts
+            this.updateCategoryCounts();
+            
+            console.log('Articles loaded successfully:', this.articles.length);
+        } catch (error) {
+            console.error('Error loading articles:', error);
         }
     }
 
+    async loadArticlesData() {
+        try {
+            const response = await fetch('articles.json');
+            if (!response.ok) {
+                throw new Error('Failed to load articles.json');
+            }
+            this.articles = await response.json();
+            console.log('Articles data loaded:', this.articles.length, 'articles');
+        } catch (error) {
+            console.error('Error loading articles data:', error);
+            // Use fallback data if JSON fails
+            this.articles = this.getFallbackArticles();
+        }
+    }
+
+    getFallbackArticles() {
+        return [
+            {
+                id: 1,
+                title: "Fundamentos de la Postura en Arquería",
+                category: "tecnica",
+                date: "2024-01-15",
+                readTime: 8,
+                excerpt: "La postura correcta es la base de un tiro preciso y consistente.",
+                content: "Contenido del artículo sobre postura en arquería...",
+                image: "https://images.unsplash.com/photo-1550747534-2a5c93d59d9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                tags: ["postura", "fundamentos"]
+            },
+            {
+                id: 2,
+                title: "Mantenimiento Básico del Arco Recurvo",
+                category: "equipamiento",
+                date: "2024-01-20",
+                readTime: 10,
+                excerpt: "Guía completa para mantener tu arco recurvo en óptimas condiciones.",
+                content: "Contenido del artículo sobre mantenimiento...",
+                image: "https://images.unsplash.com/photo-1586972750140-4d680ae17e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                tags: ["mantenimiento", "recurvo"]
+            }
+        ];
+    }
+
     setupEventListeners() {
+        console.log('Setting up article event listeners...');
+        
         // Load more button
         const loadMoreBtn = document.getElementById('load-more');
         if (loadMoreBtn) {
@@ -35,24 +86,30 @@ class ArticleDisplay {
             card.addEventListener('click', (e) => {
                 e.preventDefault();
                 const category = card.getAttribute('data-category');
+                console.log('Category clicked:', category);
                 this.showCategory(category);
             });
         });
 
-        // Search input
+        // Search functionality
         const searchInput = document.querySelector('.search-input');
         if (searchInput) {
             searchInput.addEventListener('input', (e) => {
-                this.searchArticles(e.target.value);
+                const query = e.target.value.trim();
+                if (query) {
+                    this.searchArticles(query);
+                } else {
+                    this.loadArticles();
+                }
             });
         }
 
-        // Search submit
         const searchSubmit = document.querySelector('.search-submit');
         if (searchSubmit) {
-            searchSubmit.addEventListener('click', () => {
+            searchSubmit.addEventListener('click', (e) => {
+                e.preventDefault();
                 const searchInput = document.querySelector('.search-input');
-                if (searchInput.value.trim()) {
+                if (searchInput && searchInput.value.trim()) {
                     this.searchArticles(searchInput.value.trim());
                 }
             });
@@ -61,31 +118,39 @@ class ArticleDisplay {
 
     loadArticles() {
         const container = document.getElementById('articles-container');
-        if (!container) return;
+        if (!container) {
+            console.error('Articles container not found!');
+            return;
+        }
 
-        const allArticles = window.dataManager.articles;
-        const articlesToShow = allArticles.slice(0, this.articlesPerPage);
-        
+        console.log('Loading all articles...');
+        const articlesToShow = this.articles.slice(0, this.articlesPerPage);
         this.renderArticles(articlesToShow, container);
+        this.updateLoadMoreButton(this.articles.length);
         
-        // Update load more button
-        this.updateLoadMoreButton(allArticles.length);
+        // Reset section title
+        const sectionTitle = document.querySelector('.section-title');
+        if (sectionTitle && this.currentCategory === 'all') {
+            sectionTitle.textContent = 'Artículos Destacados';
+        }
     }
 
     showCategory(category) {
+        console.log('Showing category:', category);
         this.currentCategory = category;
         this.currentPage = 1;
         
         const container = document.getElementById('articles-container');
         if (!container) return;
 
-        const categoryArticles = window.dataManager.getArticlesByCategory(category);
+        const categoryArticles = this.articles.filter(article => article.category === category);
         const articlesToShow = categoryArticles.slice(0, this.articlesPerPage);
         
         // Update section title
         const sectionTitle = document.querySelector('.section-title');
         if (sectionTitle) {
-            sectionTitle.textContent = `Artículos de ${window.dataManager.getCategoryName(category)}`;
+            const categoryName = this.getCategoryName(category);
+            sectionTitle.textContent = `Artículos de ${categoryName}`;
         }
         
         this.renderArticles(articlesToShow, container);
@@ -104,9 +169,9 @@ class ArticleDisplay {
 
         let articles;
         if (this.currentCategory === 'all') {
-            articles = window.dataManager.articles;
+            articles = this.articles;
         } else {
-            articles = window.dataManager.getArticlesByCategory(this.currentCategory);
+            articles = this.articles.filter(article => article.category === this.currentCategory);
         }
 
         const start = this.currentPage * this.articlesPerPage;
@@ -114,7 +179,6 @@ class ArticleDisplay {
         const moreArticles = articles.slice(start, end);
         
         this.renderArticles(moreArticles, container, true);
-        
         this.currentPage++;
         this.updateLoadMoreButton(articles.length);
     }
@@ -126,8 +190,8 @@ class ArticleDisplay {
 
         if (articles.length === 0) {
             container.innerHTML = `
-                <div class="no-results" style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
-                    <i class="fas fa-inbox" style="font-size: 3rem; color: var(--text-light); margin-bottom: 1rem;"></i>
+                <div class="no-results">
+                    <i class="fas fa-inbox"></i>
                     <h3>No hay artículos para mostrar</h3>
                     <p>Prueba con otra categoría o búsqueda.</p>
                 </div>
@@ -147,11 +211,11 @@ class ArticleDisplay {
         card.innerHTML = `
             <div class="article-image">
                 <img src="${article.image}" alt="${article.title}" loading="lazy">
-                <span class="article-category">${window.dataManager.getCategoryName(article.category)}</span>
+                <span class="article-category">${this.getCategoryName(article.category)}</span>
             </div>
             <div class="article-content">
                 <h3 class="article-title">
-                    <a href="article.html?id=${article.id}" class="article-link">${article.title}</a>
+                    <a href="article.html?id=${article.id}">${article.title}</a>
                 </h3>
                 <p class="article-excerpt">${article.excerpt}</p>
                 <div class="article-meta">
@@ -170,15 +234,15 @@ class ArticleDisplay {
     }
 
     searchArticles(query) {
-        if (!query.trim()) {
-            this.loadArticles();
-            return;
-        }
-
+        console.log('Searching for:', query);
         const container = document.getElementById('articles-container');
         if (!container) return;
 
-        const results = window.dataManager.searchArticles(query);
+        const results = this.articles.filter(article =>
+            article.title.toLowerCase().includes(query.toLowerCase()) ||
+            article.excerpt.toLowerCase().includes(query.toLowerCase()) ||
+            article.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+        );
         
         // Update section title
         const sectionTitle = document.querySelector('.section-title');
@@ -207,77 +271,33 @@ class ArticleDisplay {
         }
     }
 
-    async loadArticlePage() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const articleId = urlParams.get('id');
+    updateCategoryCounts() {
+        const categories = ['tecnica', 'equipamiento', 'historia', 'practica', 'seguridad', 'competicion'];
         
-        if (!articleId) {
-            window.location.href = 'index.html';
-            return;
-        }
-        
-        // Wait for data to load
-        await window.dataManager.loadArticles();
-        
-        const article = window.dataManager.getArticleById(articleId);
-        
-        if (!article) {
-            window.location.href = 'index.html';
-            return;
-        }
-        
-        this.displayArticle(article);
+        categories.forEach(category => {
+            const count = this.articles.filter(article => article.category === category).length;
+            const countElement = document.querySelector(`[data-category="${category}"] .category-count`);
+            if (countElement) {
+                countElement.textContent = `${count} artículos`;
+            }
+        });
     }
 
-    displayArticle(article) {
-        const container = document.getElementById('article-content');
-        if (!container) return;
-        
-        container.innerHTML = `
-            <div class="article-header">
-                <nav class="breadcrumb">
-                    <a href="index.html">Inicio</a> / 
-                    <a href="index.html?category=${article.category}" class="category-link">${window.dataManager.getCategoryName(article.category)}</a> / 
-                    <span>${article.title}</span>
-                </nav>
-                <h1 class="article-title">${article.title}</h1>
-                <div class="article-meta">
-                    <span class="category-badge">${window.dataManager.getCategoryName(article.category)}</span>
-                    <span class="article-date">${article.date}</span>
-                    <span class="read-time">${article.readTime} min de lectura</span>
-                </div>
-            </div>
-            
-            <div class="article-hero">
-                <img src="${article.image}" alt="${article.title}">
-            </div>
-            
-            <div class="article-body">
-                ${article.content.split('\n').map(para => `<p>${para}</p>`).join('')}
-            </div>
-            
-            <div class="article-tags">
-                ${article.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-            </div>
-            
-            <div class="article-navigation">
-                <a href="index.html" class="btn btn-outline">
-                    <i class="fas fa-arrow-left"></i>
-                    Volver al inicio
-                </a>
-                <a href="index.html?category=${article.category}" class="btn btn-primary">
-                    <i class="fas fa-th-large"></i>
-                    Más de ${window.dataManager.getCategoryName(article.category)}
-                </a>
-            </div>
-        `;
-        
-        // Update page title
-        document.title = `${article.title} - SmartArc`;
+    getCategoryName(category) {
+        const categoryNames = {
+            'tecnica': 'Técnica',
+            'equipamiento': 'Equipamiento',
+            'historia': 'Historia',
+            'practica': 'Práctica',
+            'seguridad': 'Seguridad',
+            'competicion': 'Competición'
+        };
+        return categoryNames[category] || category;
     }
 }
 
-// Initialize article display
-document.addEventListener('DOMContentLoaded', () => {
-    window.articleDisplay = new ArticleDisplay();
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    window.articleManager = new ArticleManager();
+    window.articleManager.init();
 });
