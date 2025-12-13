@@ -1,4 +1,20 @@
 // Initialize theme
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+    initSearch();
+    initMobileMenu();
+    initNewsletter();
+    
+    // Initialize navigation
+    window.navigation = new Navigation();
+    
+    // Initialize article manager
+    if (typeof ArticleManager !== 'undefined') {
+        window.articleManager = new ArticleManager();
+    }
+});
+
 function initTheme() {
     const themeToggle = document.querySelector('.theme-toggle');
     const html = document.documentElement;
