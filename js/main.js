@@ -1,12 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // Página index
   const articlesContainer = document.getElementById("articles-container");
   if (articlesContainer) {
     renderIndex(articlesContainer);
   }
 
-  // Página artículo
   const articlePage = document.getElementById("article-page");
   if (articlePage) {
     renderArticle(articlePage);
@@ -37,13 +35,19 @@ function renderIndex(container) {
   });
 }
 
-
 /* =======================
    ARTICLE
 ======================= */
 
 function renderArticle(container) {
-  const id = Number(new URLSearchParams(window.location.search).get("id"));
+  const params = new URLSearchParams(window.location.search);
+  const id = Number(params.get("id"));
+
+  if (!id) {
+    container.innerHTML = "<p>Artículo no encontrado</p>";
+    return;
+  }
+
   const article = window.articles.find(a => a.id === id);
 
   if (!article) {
