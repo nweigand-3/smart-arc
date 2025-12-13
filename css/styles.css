@@ -906,3 +906,44 @@ a:hover {
 .no-results p {
     color: var(--text-light);
 }
+
+/* Navigation fixes */
+.nav-link.active {
+    background-color: var(--primary-color);
+    color: white !important;
+}
+
+.nav-link.active:hover {
+    background-color: var(--secondary-color);
+    color: white !important;
+}
+
+/* Category cards */
+.category-card {
+    cursor: pointer;
+}
+
+/* Article cards */
+.article-link {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.article-link:hover {
+    color: var(--primary-color);
+}
+
+.read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.read-more:hover {
+    gap: 0.75rem;
+    color: var(--secondary-color);
+}
