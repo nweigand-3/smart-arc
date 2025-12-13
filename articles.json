@@ -44,14 +44,14 @@
     "tags": ["drills", "puntería", "entrenamiento"]
   },
   {
-    "id": 5,  // MUST be unique number (next after your last one)
+    "id": 5,
     "title": "Título del Nuevo Artículo",
-    "category": "tecnica",  // Must match existing category
-    "date": "2024-02-10",  // Format: YYYY-MM-DD
-    "readTime": 7,  // Estimated minutes to read
+    "category": "tecnica",
+    "date": "2024-02-10",
+    "readTime": 7,
     "excerpt": "Breve descripción que aparece en la tarjeta del artículo.",
     "content": "# Título Principal\n\nTexto del artículo en **Markdown**.\n\n## Subtítulo\n\n- Lista con puntos\n- Segundo punto\n\n1. Lista numerada\n2. Segundo elemento\n\n**Negrita** y *cursiva* funcionan.",
-    "image": "https://images.unsplash.com/photo-...",  // URL de imagen
-    "tags": ["tag1", "tag2", "tag3"]  // Etiquetas para búsqueda
+    "image": "https://images.unsplash.com/photo-...",
+    "tags": ["tag1", "tag2", "tag3"]
   }
 ]
