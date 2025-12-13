@@ -3,7 +3,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('SmartArc cargado correctamente');
     console.log('Ruta actual:', window.location.pathname);
-    console.log('Repositorio:', window.location.hostname);
     
     // Inicializar tema
     initTheme();
@@ -13,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Cargar artículos en la página principal
     if (document.getElementById('articles-container')) {
+        console.log('Cargando artículos en página principal...');
         loadArticles();
     }
     
@@ -21,12 +21,19 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Cargar artículo específico si estamos en article.html
     if (window.location.pathname.includes('article.html')) {
-        console.log('Cargando artículo con ID:', new URLSearchParams(window.location.search).get('id'));
-        loadArticleContent();
+        console.log('Detectada página de artículo, cargando contenido...');
+        
+        // Esperar un momento para asegurar que articles.js se cargó
+        setTimeout(() => {
+            loadArticleContent();
+        }, 100);
     }
     
     // Inicializar formularios
     initForms();
+    
+    // Inicializar animaciones
+    initAnimations();
 });
 
 // ===== SISTEMA DE TEMAS =====
