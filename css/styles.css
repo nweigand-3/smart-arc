@@ -36,11 +36,44 @@ body {
     transition: var(--transition);
 }
 
-body.dark-mode {
-    --text-color: var(--dark-text-color);
-    --bg-color: var(--dark-bg-color);
-    --bg-secondary: var(--dark-bg-secondary);
-    --border-color: var(--dark-border-color);
+/* Dark Mode */
+.dark-mode {
+    --bg-color: #0a0a0a;
+    --bg-secondary: #1a1a1a;
+    --text-color: #f5f5f5;
+    --text-light: #b0b0b0;
+    --border-color: #333;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.dark-mode .category-card,
+.dark-mode .article-card,
+.dark-mode .feature-card {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+}
+
+.dark-mode .search-input {
+    background-color: var(--bg-secondary);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+.dark-mode .hero {
+    background: linear-gradient(135deg, #1a0a0a 0%, #0a2a1a 100%);
+}
+
+.dark-mode .newsletter {
+    background: linear-gradient(135deg, #1a0a0a 0%, #0a2a1a 100%);
+}
+
+.dark-mode .footer {
+    background-color: #000;
 }
 
 /* Typography */
