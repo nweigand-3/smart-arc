@@ -39,31 +39,42 @@ function renderIndex(container) {
    ARTICLE
 ======================= */
 
-function renderArticle(container) {
-  const params = new URLSearchParams(window.location.search);
-  const id = Number(params.get("id"));
+function renderArticles(list, container) {
+    container.innerHTML = '';
 
-  if (!id) {
-    container.innerHTML = "<p>Artículo no encontrado</p>";
-    return;
-  }
+    list.forEach(article => {
+        container.innerHTML += `
+        <article class="article-card animate-in">
+            <div class="article-image">
+                <img src="${article.image}" alt="${article.title}">
+                <span class="article-category">${article.category}</span>
+            </div>
 
-  const article = window.articles.find(a => a.id === id);
+            <div class="article-content">
+                <div class="article-meta">
+                    <span>📅 ${article.date}</span>
+                    <span>⏱ ${article.readTime}</span>
+                </div>
 
-  if (!article) {
-    container.innerHTML = "<p>Artículo no encontrado</p>";
-    return;
-  }
+                <h3 class="article-title">
+                    <a href="article.html?id=${article.id}">
+                        ${article.title}
+                    </a>
+                </h3>
 
-  document.title = article.title;
+                <p class="article-excerpt">
+                    ${article.excerpt}
+                </p>
 
-  container.innerHTML = `
-    <img src="${article.image}" alt="${article.title}">
-    <span>${article.category}</span>
-    <h1>${article.title}</h1>
-    <p>${article.author} · ${article.readTime} min · ${article.views} vistas</p>
-    <div>${article.content}</div>
-    <p>Tags: ${article.tags.join(", ")}</p>
-    <a href="index.html">← Volver</a>
-  `;
+                <div class="article-footer">
+                    <span class="read-time">${article.readTime}</span>
+                    <a class="read-more" href="article.html?id=${article.id}">
+                        Leer más →
+                    </a>
+                </div>
+            </div>
+        </article>
+        `;
+    });
 }
+
