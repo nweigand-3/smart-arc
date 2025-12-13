@@ -204,7 +204,7 @@ function loadArticleContent() {
     const articleId = urlParams.get('id');
     
     if (!articleId) {
-        // Si no hay ID, mostrar un artículo por defecto
+        // Si no hay ID, mostrar un artículo por defecto o redirigir
         displayArticle(articles[0]);
         return;
     }
@@ -217,17 +217,20 @@ function loadArticleContent() {
         loadRelatedArticles(article);
     } else {
         // Artículo no encontrado
-        document.querySelector('main').innerHTML = `
-            <div class="container" style="min-height: 50vh; display: flex; align-items: center; justify-content: center;">
-                <div class="error-message" style="text-align: center;">
-                    <h2>Artículo no encontrado</h2>
-                    <p>El artículo que buscas no existe o ha sido movido.</p>
-                    <a href="index.html" class="btn btn-primary">Volver al inicio</a>
+        const mainContent = document.querySelector('main') || document.querySelector('.article-page');
+        if (mainContent) {
+            mainContent.innerHTML = `
+                <div class="container" style="min-height: 50vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px;">
+                    <div class="error-message" style="text-align: center;">
+                        <h2>Artículo no encontrado</h2>
+                        <p>El artículo que buscas no existe o ha sido movido.</p>
+                        <a href="index.html" class="btn btn-primary" style="margin-top: 20px;">Volver al inicio</a>
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+        }
     }
-}
+}}
 
 function displayArticle(article) {
     // Actualizar título de la página
