@@ -9,23 +9,31 @@ class ArticleManager {
     }
 
     async init() {
-        console.log('Loading articles...');
+    console.log('Loading articles...');
+    
+    try {
+        // Load articles from JSON file
+        await this.loadArticlesData();
         
-        try {
-            // Load articles from JSON file
-            await this.loadArticlesData();
-            
-            // Set up event listeners
-            this.setupEventListeners();
-            
-            // Load initial articles
-            this.loadArticles();
-            
-            console.log('Articles loaded successfully:', this.articles.length);
-        } catch (error) {
-            console.error('Error loading articles:', error);
+        // Set up event listeners
+        this.setupEventListeners();
+        
+        // Load initial articles
+        this.loadArticles();
+        
+        // Check for search parameter in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('search');
+        if (searchQuery) {
+            console.log('Found search parameter:', searchQuery);
+            this.searchArticles(searchQuery);
         }
+        
+        console.log('Articles loaded successfully:', this.articles.length);
+    } catch (error) {
+        console.error('Error loading articles:', error);
     }
+}
 
     async loadArticlesData() {
         try {
