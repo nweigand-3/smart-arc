@@ -3,59 +3,61 @@ class ArticleManager {
     constructor() {
         this.articles = [];
         this.currentCategory = 'all';
-        this.articlesPerPage = 8;  // Increased to show more initially
-        this.currentPage = 0;      // Start at 0 for better pagination
+        this.articlesPerPage = 8;  // Show more initially
+        this.currentPage = 0;      // Start at 0 for pagination
         console.log('ArticleManager initialized');
     }
 
     async init() {
-    console.log('Loading articles...');
-    
-    try {
-        // Load articles from JSON file
-        await this.loadArticlesData();
-        
-        // Set up event listeners
-        this.setupEventListeners();
-        
-        // Load initial articles
-        this.loadArticles();
-        
-        // Check for search parameter in URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const searchQuery = urlParams.get('search');
-        if (searchQuery) {
-            console.log('Found search parameter:', searchQuery);
-            this.searchArticles(searchQuery);
+        console.log('Loading articles...');
+
+        try {
+            // Load articles from JSON
+            await this.loadArticlesData();
+
+            // Setup listeners for category clicks, search, load more
+            this.setupEventListeners();
+
+            // Load initial articles
+            this.loadArticles();
+
+            // Attach "Ver todos los artículos" button listener
+            const viewAllBtn = document.getElementById('view-all-articles');
+            if (viewAllBtn) {
+                viewAllBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.currentCategory = 'all';
+                    this.loadArticles();
+                });
+            }
+
+            // Handle search query in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchQuery = urlParams.get('search');
+            if (searchQuery) {
+                console.log('Found search parameter:', searchQuery);
+                this.searchArticles(searchQuery);
+            }
+
+            console.log('Articles loaded successfully:', this.articles.length);
+        } catch (error) {
+            console.error('Error loading articles:', error);
         }
-        
-        console.log('Articles loaded successfully:', this.articles.length);
-    } catch (error) {
-        console.error('Error loading articles:', error);
     }
-}
 
     async loadArticlesData() {
         try {
             console.log('Loading articles from JSON file...');
             const response = await fetch('articles.json');
-            
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             this.articles = await response.json();
-            console.log('Successfully loaded', this.articles.length, 'articles from JSON');
-            
-            // Process categories for the homepage
+            console.log('Loaded', this.articles.length, 'articles');
+
             this.processCategories();
-            
             return this.articles;
         } catch (error) {
-            console.error('Error loading articles.json:', error);
-            console.log('Using local fallback articles instead...');
-            
-            // Use these fallback articles
+            console.error('Error loading articles.json, using fallback', error);
+            // Fallback articles
             this.articles = [
                 {
                     id: 1,
@@ -80,156 +82,113 @@ class ArticleManager {
                     tags: ["mantenimiento", "recurvo"]
                 }
             ];
-            
             this.processCategories();
             return this.articles;
         }
     }
 
-    // Process categories and update counts
     processCategories() {
         const categories = ['tecnica', 'equipamiento', 'historia', 'practica', 'seguridad', 'competicion'];
         const counts = {};
-        
-        // Count articles per category
-        this.articles.forEach(article => {
-            counts[article.category] = (counts[article.category] || 0) + 1;
-        });
-        
-        // Update category cards in the UI
+        this.articles.forEach(article => counts[article.category] = (counts[article.category] || 0) + 1);
         categories.forEach(category => {
             const countElement = document.querySelector(`[data-category="${category}"] .category-count`);
-            if (countElement) {
-                countElement.textContent = `${counts[category] || 0} artículos`;
-            }
+            if (countElement) countElement.textContent = `${counts[category] || 0} artículos`;
         });
-        
         console.log('Category counts updated:', counts);
     }
 
     setupEventListeners() {
         console.log('Setting up article event listeners...');
-        
+
         // Load more button
         const loadMoreBtn = document.getElementById('load-more');
-        if (loadMoreBtn) {
-            loadMoreBtn.addEventListener('click', () => this.loadMoreArticles());
-        }
+        if (loadMoreBtn) loadMoreBtn.addEventListener('click', () => this.loadMoreArticles());
 
         // Category cards
         document.querySelectorAll('.category-card').forEach(card => {
             card.addEventListener('click', (e) => {
                 e.preventDefault();
                 const category = card.getAttribute('data-category');
-                console.log('Category clicked:', category);
                 this.showCategory(category);
             });
         });
 
-        // Search functionality
+        // Search input
         const searchInput = document.querySelector('.search-input');
         if (searchInput) {
             searchInput.addEventListener('input', (e) => {
                 const query = e.target.value.trim();
-                if (query) {
-                    this.searchArticles(query);
-                } else {
-                    this.loadArticles();
-                }
+                if (query) this.searchArticles(query);
+                else this.loadArticles();
             });
         }
 
+        // Search submit
         const searchSubmit = document.querySelector('.search-submit');
         if (searchSubmit) {
             searchSubmit.addEventListener('click', (e) => {
                 e.preventDefault();
-                const searchInput = document.querySelector('.search-input');
-                if (searchInput && searchInput.value.trim()) {
-                    this.searchArticles(searchInput.value.trim());
-                }
+                const query = document.querySelector('.search-input').value.trim();
+                if (query) this.searchArticles(query);
             });
         }
-
-        // View all articles button
-const viewAllBtn = document.getElementById('view-all-articles');
-if (viewAllBtn) {
-    viewAllBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.currentCategory = 'all';
-        this.loadArticles();
-    });
-}
-
     }
 
     loadArticles() {
         const container = document.getElementById('articles-container');
-        if (!container) {
-            console.error('Articles container not found!');
-            return;
-        }
+        if (!container) return;
 
-        console.log('Loading all articles...');
-        this.currentPage = 0; // Reset to first page
+        this.currentPage = 0;
         const articlesToShow = this.articles.slice(0, this.articlesPerPage);
         this.renderArticles(articlesToShow, container);
         this.updateLoadMoreButton();
-        
-        // Reset section title
+
         const sectionTitle = document.querySelector('.section-title');
-        if (sectionTitle && this.currentCategory === 'all') {
-            sectionTitle.textContent = 'Artículos Destacados';
-        }
+        if (sectionTitle) sectionTitle.textContent = 'Artículos Destacados';
+
+        const viewAllBtn = document.getElementById('view-all-articles');
+        if (viewAllBtn) viewAllBtn.style.display = 'none';
     }
 
     showCategory(category) {
-        console.log('Showing category:', category);
         this.currentCategory = category;
         this.currentPage = 0;
-        
+
         const container = document.getElementById('articles-container');
         if (!container) return;
 
-        const categoryArticles = this.articles.filter(article => article.category === category);
+        const categoryArticles = this.articles.filter(a => a.category === category);
         const articlesToShow = categoryArticles.slice(0, this.articlesPerPage);
-        
-        // Update section title
-        const sectionTitle = document.querySelector('.section-title');
-        if (sectionTitle) {
-            const categoryName = this.getCategoryName(category);
-            sectionTitle.textContent = `Artículos de ${categoryName}`;
-        }
-        
         this.renderArticles(articlesToShow, container);
         this.updateLoadMoreButton();
-        
-        // Scroll to articles section
+
+        const sectionTitle = document.querySelector('.section-title');
+        if (sectionTitle) sectionTitle.textContent = `Artículos de ${this.getCategoryName(category)}`;
+
+        const viewAllBtn = document.getElementById('view-all-articles');
+        if (viewAllBtn) viewAllBtn.style.display = 'inline-flex';
+
         const articlesSection = document.getElementById('articulos');
-        if (articlesSection) {
-            articlesSection.scrollIntoView({ behavior: 'smooth' });
-        }
+        if (articlesSection) articlesSection.scrollIntoView({ behavior: 'smooth' });
     }
 
     loadMoreArticles() {
         const container = document.getElementById('articles-container');
         if (!container) return;
 
-        let articles;
-        if (this.currentCategory === 'all') {
-            articles = this.articles;
-        } else {
-            articles = this.articles.filter(article => article.category === this.currentCategory);
-        }
+        const articles = this.currentCategory === 'all'
+            ? this.articles
+            : this.articles.filter(a => a.category === this.currentCategory);
 
         const start = (this.currentPage + 1) * this.articlesPerPage;
         const end = start + this.articlesPerPage;
         const moreArticles = articles.slice(start, end);
-        
+
         if (moreArticles.length > 0) {
             this.renderArticles(moreArticles, container, true);
             this.currentPage++;
         }
-        
         this.updateLoadMoreButton();
     }
 
@@ -237,15 +196,12 @@ if (viewAllBtn) {
         const loadMoreBtn = document.getElementById('load-more');
         if (!loadMoreBtn) return;
 
-        let articles;
-        if (this.currentCategory === 'all') {
-            articles = this.articles;
-        } else {
-            articles = this.articles.filter(article => article.category === this.currentCategory);
-        }
+        const articles = this.currentCategory === 'all'
+            ? this.articles
+            : this.articles.filter(a => a.category === this.currentCategory);
 
         const loadedCount = (this.currentPage + 1) * this.articlesPerPage;
-        
+
         if (loadedCount >= articles.length) {
             loadMoreBtn.style.display = 'none';
             loadMoreBtn.innerHTML = '<i class="fas fa-check"></i> Todos los artículos cargados';
@@ -257,9 +213,7 @@ if (viewAllBtn) {
     }
 
     renderArticles(articles, container, append = false) {
-        if (!append) {
-            container.innerHTML = '';
-        }
+        if (!append) container.innerHTML = '';
 
         if (articles.length === 0) {
             container.innerHTML = `
@@ -272,10 +226,7 @@ if (viewAllBtn) {
             return;
         }
 
-        articles.forEach(article => {
-            const card = this.createArticleCard(article);
-            container.appendChild(card);
-        });
+        articles.forEach(article => container.appendChild(this.createArticleCard(article)));
     }
 
     createArticleCard(article) {
@@ -303,58 +254,50 @@ if (viewAllBtn) {
                 </div>
             </div>
         `;
-        
-        // Add click handler for the entire card
-        card.addEventListener('click', (e) => {
-            // Don't navigate if clicking on a link (let the link handle it)
-            if (!e.target.closest('a')) {
-                window.location.href = `article.html?id=${article.id}`;
-            }
+
+        card.addEventListener('click', e => {
+            if (!e.target.closest('a')) window.location.href = `article.html?id=${article.id}`;
         });
-        
+
         return card;
     }
 
     searchArticles(query) {
-    console.log('Searching for:', query);
-    const container = document.getElementById('articles-container');
-    if (!container) return [];
+        const container = document.getElementById('articles-container');
+        if (!container) return [];
 
-    const results = this.articles.filter(article =>
-        article.title.toLowerCase().includes(query.toLowerCase()) ||
-        article.excerpt.toLowerCase().includes(query.toLowerCase()) ||
-        article.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
-    );
+        const results = this.articles.filter(a =>
+            a.title.toLowerCase().includes(query.toLowerCase()) ||
+            a.excerpt.toLowerCase().includes(query.toLowerCase()) ||
+            a.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+        );
 
-    const sectionTitle = document.querySelector('.section-title');
-    if (sectionTitle) {
-        sectionTitle.textContent = `Resultados para "${query}"`;
+        const sectionTitle = document.querySelector('.section-title');
+        if (sectionTitle) sectionTitle.textContent = `Resultados para "${query}"`;
+
+        this.renderArticles(results, container);
+
+        const loadMoreBtn = document.getElementById('load-more');
+        if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+
+        return results;
     }
-
-    this.renderArticles(results, container);
-
-    const loadMoreBtn = document.getElementById('load-more');
-    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
-
-    return results; // <-- important
-}
-
 
     getCategoryName(category) {
-        const categoryNames = {
-            'tecnica': 'Técnica',
-            'equipamiento': 'Equipamiento',
-            'historia': 'Historia',
-            'practica': 'Práctica',
-            'seguridad': 'Seguridad',
-            'competicion': 'Competición'
+        const names = {
+            tecnica: 'Técnica',
+            equipamiento: 'Equipamiento',
+            historia: 'Historia',
+            practica: 'Práctica',
+            seguridad: 'Seguridad',
+            competicion: 'Competición'
         };
-        return categoryNames[category] || category;
+        return names[category] || category;
     }
 }
 
-// Initialize when page loads
-document.addEventListener('DOMContentLoaded', function() {
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
     window.articleManager = new ArticleManager();
     window.articleManager.init();
 });
