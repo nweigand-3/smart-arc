@@ -305,30 +305,29 @@ class ArticleManager {
     }
 
     searchArticles(query) {
-        console.log('Searching for:', query);
-        const container = document.getElementById('articles-container');
-        if (!container) return;
+    console.log('Searching for:', query);
+    const container = document.getElementById('articles-container');
+    if (!container) return [];
 
-        const results = this.articles.filter(article =>
-            article.title.toLowerCase().includes(query.toLowerCase()) ||
-            article.excerpt.toLowerCase().includes(query.toLowerCase()) ||
-            article.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
-        );
-        
-        // Update section title
-        const sectionTitle = document.querySelector('.section-title');
-        if (sectionTitle) {
-            sectionTitle.textContent = `Resultados para "${query}"`;
-        }
-        
-        this.renderArticles(results, container);
-        
-        // Hide load more button for search results
-        const loadMoreBtn = document.getElementById('load-more');
-        if (loadMoreBtn) {
-            loadMoreBtn.style.display = 'none';
-        }
+    const results = this.articles.filter(article =>
+        article.title.toLowerCase().includes(query.toLowerCase()) ||
+        article.excerpt.toLowerCase().includes(query.toLowerCase()) ||
+        article.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+    );
+
+    const sectionTitle = document.querySelector('.section-title');
+    if (sectionTitle) {
+        sectionTitle.textContent = `Resultados para "${query}"`;
     }
+
+    this.renderArticles(results, container);
+
+    const loadMoreBtn = document.getElementById('load-more');
+    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+
+    return results; // <-- important
+}
+
 
     getCategoryName(category) {
         const categoryNames = {
