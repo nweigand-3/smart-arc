@@ -28,6 +28,27 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Fix scrollbar and body overflow */
+html, body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Make sure the body can scroll */
+body {
+    position: relative;
+    overflow-y: scroll !important;
+}
+
+/* Fix for the main container */
+.container {
+    overflow: visible !important;
+}
+
 body {
     font-family: 'Inter', 'Segoe UI', sans-serif;
     line-height: 1.6;
