@@ -26,19 +26,17 @@
 
 html {
     scroll-behavior: smooth;
-    overflow-y: scroll; /* Always show scrollbar to prevent layout shift */
 }
 
 body {
-    position: relative;
-    overflow-x: hidden; /* Only hide horizontal overflow */
-    min-height: 100vh;
     font-family: 'Inter', 'Segoe UI', sans-serif;
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--bg-color);
     transition: var(--transition);
-    padding-top: 80px; /* Account for fixed navbar height */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
 /* Dark Mode */
@@ -110,7 +108,7 @@ a:hover {
     padding: 0 1.5rem;
 }
 
-/* Navigation - FIXED FOR SCROLLING */
+/* Navigation */
 .main-nav {
     background-color: var(--bg-color);
     box-shadow: var(--shadow);
@@ -120,7 +118,7 @@ a:hover {
     right: 0;
     z-index: 1000;
     transition: var(--transition);
-    height: 80px; /* Fixed height for consistency */
+    height: 80px;
 }
 
 .nav-container {
@@ -209,10 +207,10 @@ a:hover {
     display: none;
 }
 
-/* Search Bar - FIXED POSITIONING */
+/* Search Bar */
 .search-bar {
-    position: fixed; /* Changed from absolute to fixed */
-    top: 80px; /* Position below the navbar */
+    position: fixed;
+    top: 80px; /* Position below navbar */
     left: 0;
     right: 0;
     background-color: var(--bg-color);
@@ -222,7 +220,7 @@ a:hover {
     opacity: 0;
     visibility: hidden;
     transition: var(--transition);
-    z-index: 999; /* Below navbar but above content */
+    z-index: 999;
 }
 
 .search-bar.active {
@@ -273,13 +271,13 @@ a:hover {
     color: white;
 }
 
-/* Hero Section */
+/* Hero Section - FIXED to show content properly */
 .hero {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: white;
-    padding: 4rem 0; /* Adjusted since we have body padding-top */
+    padding: 8rem 0 4rem;
     position: relative;
-    margin-top: 0; /* Ensure no margin-top */
+    margin-top: 80px; /* Add margin to push content below fixed nav */
 }
 
 .hero-container {
@@ -585,7 +583,7 @@ a:hover {
 
 /* Article Page */
 .article-page {
-    padding: 4rem 0; /* Adjusted since we have body padding-top */
+    padding: 8rem 0 4rem;
 }
 
 .article-header {
@@ -861,7 +859,7 @@ a:hover {
 @media (max-width: 768px) {
     .nav-menu {
         position: fixed;
-        top: 80px; /* Start below navbar */
+        top: 80px;
         left: 0;
         right: 0;
         background-color: var(--bg-color);
@@ -872,8 +870,8 @@ a:hover {
         opacity: 0;
         visibility: hidden;
         transition: var(--transition);
-        max-height: calc(100vh - 80px); /* Account for navbar */
-        overflow-y: auto; /* Make mobile menu scrollable */
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
     }
     
     .nav-menu.active {
@@ -906,9 +904,10 @@ a:hover {
         flex-direction: column;
     }
     
-    /* Fix search bar position on mobile */
-    .search-bar {
-        top: 80px; /* Same as desktop */
+    /* Adjust hero padding for mobile */
+    .hero {
+        padding: 6rem 0 3rem;
+        margin-top: 80px;
     }
 }
 
@@ -927,6 +926,10 @@ a:hover {
     
     .footer-content {
         grid-template-columns: 1fr;
+    }
+    
+    .hero {
+        padding: 5rem 0 2.5rem;
     }
 }
 
@@ -1078,7 +1081,7 @@ a:hover {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     margin-top: 0.5rem;
     max-height: 500px;
-    overflow-y: auto; /* Make dropdown scrollable */
+    overflow-y: auto;
     display: none;
     z-index: 1001;
     border: 1px solid var(--border-color);
@@ -1230,23 +1233,34 @@ a:hover {
 
 /* Fix for anchor links with fixed header */
 :target {
-    scroll-margin-top: 100px; /* Adjust based on your header height */
+    scroll-margin-top: 100px;
 }
 
-/* Ensure all content sections have proper spacing */
-main, section, .container, .articles-grid, .categories-grid {
-    overflow: visible !important;
-    position: static !important;
+/* Olas decorativas - Add these styles for the wave */
+.wave-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
 }
 
-/* Ensure hero section is properly visible */
-.hero {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+.wave {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 150px;
+    fill: var(--bg-secondary);
 }
 
-/* Emergency fix for content visibility */
+/* Ensure body scrolls properly */
+html {
+    overflow-y: scroll;
+}
+
+/* Fix for content visibility */
 main {
-    min-height: calc(100vh - 80px - 200px); /* Viewport minus header minus footer estimate */
+    display: block;
+    width: 100%;
 }
