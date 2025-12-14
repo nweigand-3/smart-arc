@@ -26,35 +26,19 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-y: scroll; /* Always show scrollbar to prevent layout shift */
 }
 
-/* Fix scrollbar and body overflow */
-html, body {
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-/* Make sure the body can scroll */
 body {
     position: relative;
-    overflow-y: scroll !important;
-}
-
-/* Fix for the main container */
-.container {
-    overflow: visible !important;
-}
-
-body {
+    overflow-x: hidden; /* Only hide horizontal overflow */
+    min-height: 100vh;
     font-family: 'Inter', 'Segoe UI', sans-serif;
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--bg-color);
     transition: var(--transition);
+    padding-top: 80px; /* Account for fixed navbar height */
 }
 
 /* Dark Mode */
@@ -136,6 +120,7 @@ a:hover {
     right: 0;
     z-index: 1000;
     transition: var(--transition);
+    height: 80px; /* Fixed height for consistency */
 }
 
 .nav-container {
@@ -145,6 +130,7 @@ a:hover {
     padding: 1rem 1.5rem;
     max-width: 1200px;
     margin: 0 auto;
+    height: 100%;
 }
 
 .nav-logo {
@@ -290,9 +276,8 @@ a:hover {
 .hero {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: white;
-    padding: 8rem 0 4rem;
+    padding: 4rem 0; /* Adjusted since we have body padding-top */
     position: relative;
-    margin-top: 60px;
 }
 
 .hero-container {
@@ -598,7 +583,7 @@ a:hover {
 
 /* Article Page */
 .article-page {
-    padding: 8rem 0 4rem;
+    padding: 4rem 0; /* Adjusted since we have body padding-top */
 }
 
 .article-header {
@@ -874,7 +859,7 @@ a:hover {
 @media (max-width: 768px) {
     .nav-menu {
         position: fixed;
-        top: 60px;
+        top: 80px; /* Start below navbar */
         left: 0;
         right: 0;
         background-color: var(--bg-color);
@@ -885,6 +870,8 @@ a:hover {
         opacity: 0;
         visibility: hidden;
         transition: var(--transition);
+        max-height: calc(100vh - 80px); /* Account for navbar */
+        overflow-y: auto; /* Make mobile menu scrollable */
     }
     
     .nav-menu.active {
@@ -915,6 +902,10 @@ a:hover {
     
     .article-navigation {
         flex-direction: column;
+    }
+    
+    body {
+        padding-top: 80px; /* Keep consistent on mobile */
     }
 }
 
@@ -999,7 +990,6 @@ a:hover {
     color: var(--secondary-color);
 }
 
-
 /* Error message */
 .error-message {
     text-align: center;
@@ -1024,7 +1014,6 @@ a:hover {
     margin-bottom: 2rem;
     font-size: 1.125rem;
 }
-
 
 /* Article body formatting */
 .article-body {
@@ -1086,7 +1075,7 @@ a:hover {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     margin-top: 0.5rem;
     max-height: 500px;
-    overflow-y: auto;
+    overflow-y: auto; /* Make dropdown scrollable */
     display: none;
     z-index: 1001;
     border: 1px solid var(--border-color);
@@ -1162,7 +1151,7 @@ a:hover {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    /**overflow: hidden;**/
+    overflow: hidden;
 }
 
 .search-result-meta {
@@ -1234,4 +1223,15 @@ a:hover {
 
 .dark-mode .search-result-excerpt {
     color: var(--text-light);
+}
+
+/* Fix for anchor links with fixed header */
+:target {
+    scroll-margin-top: 100px; /* Adjust based on your header height */
+}
+
+/* Ensure all content sections have proper spacing */
+main, section, .container, .articles-grid, .categories-grid {
+    overflow: visible !important;
+    position: static !important;
 }
