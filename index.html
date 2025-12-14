@@ -56,19 +56,36 @@
         </div>
     </div>
     
-    <!-- Barra de búsqueda -->
-    <div class="search-bar">
-        <div class="search-container">
-            <input type="text" placeholder="Buscar artículos, técnicas, equipamiento..." class="search-input">
-            <button class="search-submit">
+    <!-- Barra de búsqueda mejorada -->
+<div class="search-bar">
+    <div class="search-container">
+        <form class="search-form" id="search-form">
+            <input type="text" placeholder="Buscar artículos, técnicas, equipamiento..." class="search-input" autocomplete="off">
+            <button type="submit" class="search-submit">
                 <i class="fas fa-search"></i>
             </button>
-            <button class="search-close">
+            <button type="button" class="search-close">
                 <i class="fas fa-times"></i>
             </button>
+        </form>
+        
+        <!-- Search results dropdown -->
+        <div class="search-results" id="search-results">
+            <div class="search-results-header">
+                <h4>Resultados de búsqueda</h4>
+                <span class="search-count" id="search-count">0 resultados</span>
+            </div>
+            <div class="search-results-list" id="search-results-list">
+                <!-- Results will be inserted here -->
+            </div>
+            <div class="search-results-footer">
+                <a href="#articulos" class="view-all-results" id="view-all-results">
+                    Ver todos los resultados <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
         </div>
     </div>
-</nav>
+</div>
     <!-- Hero Section - Rediseñada -->
     <header class="hero" id="inicio">
         <div class="hero-container">
