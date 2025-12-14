@@ -359,3 +359,20 @@ function initNavigation() {
         });
     });
 }
+
+// Force scrollbar to be visible
+function ensureScrollbar() {
+    // Check if body is scrollable
+    if (document.body.scrollHeight <= window.innerHeight) {
+        // Add some minimum height
+        document.body.style.minHeight = 'calc(100vh + 1px)';
+    }
+    
+    // Ensure overflow is not hidden
+    document.body.style.overflowY = 'auto';
+    document.documentElement.style.overflowY = 'auto';
+}
+
+// Call on load and resize
+window.addEventListener('load', ensureScrollbar);
+window.addEventListener('resize', ensureScrollbar);
