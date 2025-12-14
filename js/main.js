@@ -20,6 +20,42 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('SmartArc initialized successfully');
 });
 
+// Fix for navigation scrolling with fixed header
+document.addEventListener('DOMContentLoaded', function() {
+    // Fix anchor link scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            // Skip if it's just "#"
+            if (href === '#') return;
+            
+            // Only handle internal anchor links
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                
+                const targetId = href.substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    // Calculate position with header offset
+                    const headerHeight = document.querySelector('.main-nav').offsetHeight;
+                    const targetPosition = targetElement.offsetTop - headerHeight;
+                    
+                    // Scroll to position
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update URL without scrolling
+                    history.pushState(null, null, href);
+                }
+            }
+        });
+    });
+});
+
 // Theme toggle function
 function initTheme() {
     const themeToggle = document.querySelector('.theme-toggle');
