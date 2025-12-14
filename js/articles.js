@@ -263,25 +263,32 @@ class ArticleManager {
     }
 
     searchArticles(query) {
-        const container = document.getElementById('articles-container');
-        if (!container) return [];
+    const container = document.getElementById('articles-container');
+    if (!container) return [];
 
-        const results = this.articles.filter(a =>
-            a.title.toLowerCase().includes(query.toLowerCase()) ||
-            a.excerpt.toLowerCase().includes(query.toLowerCase()) ||
-            a.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
-        );
+    const results = this.articles.filter(a =>
+        a.title.toLowerCase().includes(query.toLowerCase()) ||
+        a.excerpt.toLowerCase().includes(query.toLowerCase()) ||
+        a.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+    );
 
-        const sectionTitle = document.querySelector('.section-title');
-        if (sectionTitle) sectionTitle.textContent = `Resultados para "${query}"`;
+    const sectionTitle = document.querySelector('.section-title');
+    if (sectionTitle) sectionTitle.textContent = `Resultados para "${query}"`;
 
-        this.renderArticles(results, container);
+    this.renderArticles(results, container);
 
-        const loadMoreBtn = document.getElementById('load-more');
-        if (loadMoreBtn) loadMoreBtn.style.display = 'none';
-
-        return results;
+    // Always show the "Ver todos los artículos" button if not viewing all
+    const viewAllBtn = document.getElementById('view-all-articles');
+    if (viewAllBtn) {
+        viewAllBtn.style.display = 'inline-flex';
     }
+
+    const loadMoreBtn = document.getElementById('load-more');
+    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+
+    return results;
+}
+
 
     getCategoryName(category) {
         const names = {
