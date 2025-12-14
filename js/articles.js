@@ -149,6 +149,17 @@ class ArticleManager {
                 }
             });
         }
+
+        // View all articles button
+const viewAllBtn = document.getElementById('view-all-articles');
+if (viewAllBtn) {
+    viewAllBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.currentCategory = 'all';
+        this.loadArticles();
+    });
+}
+
     }
 
     loadArticles() {
