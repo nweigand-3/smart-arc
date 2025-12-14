@@ -1,24 +1,14 @@
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('SmartArc initializing...');
-    
-    // Initialize theme
     initTheme();
-    
-    // Initialize search
     initSearch();
-    
-    // Initialize mobile menu
     initMobileMenu();
-    
-    // Initialize newsletter
     initNewsletter();
-    
-    // Initialize navigation
     initNavigation();
-    
     console.log('SmartArc initialized successfully');
 });
+
 
 // Fix for navigation scrolling with fixed header
 document.addEventListener('DOMContentLoaded', function() {
