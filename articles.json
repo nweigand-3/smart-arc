@@ -1,14 +1,14 @@
 [
   {
     "id": 1,
-    "title": "Fundamentos de la Postura en Arquería",
-    "category": "tecnica",
+    "title": "Listado de Arcos: Comparación y Características",
+    "category": "equipamiento",
     "date": "Dec 2025",
-    "readTime": 8,
-    "excerpt": "La postura correcta es la base de un tiro preciso y consistente. Aprende los principios fundamentales que todo arquero debe dominar.",
-    "content": "# Fundamentos de la Postura en Arquería\n\nLa postura correcta es el cimiento sobre el cual se construye cada tiro exitoso. En este artículo exploraremos los elementos esenciales de una postura adecuada.\n\n## 1. Posición de los Pies\n\nLos pies deben estar separados al ancho de los hombros, con el peso distribuido uniformemente. La línea de tiro debe pasar entre ambos pies.\n\n## 2. Alineación del Cuerpo\n\nEl cuerpo debe formar una línea perpendicular al objetivo. Los hombros deben estar relajados y alineados con la cadera.\n\n## 3. Estabilidad\n\nMantén una ligera flexión en las rodillas para absorber el movimiento y proporcionar estabilidad.\n\nRecuerda practicar estos fundamentos regularmente para desarrollar memoria muscular.",
-    "image": "https://images.unsplash.com/photo-1550747534-2a5c93d59d9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    "tags": ["postura", "fundamentos", "técnica básica"]
+    "readTime": 12,
+    "excerpt": "Explora los cinco tipos de arcos más interesantes, desde el recurvo hasta el longbow, y conoce sus características, ventajas y usos principales.",
+    "content": "# Listado de Arcos: Comparación y Características\n\nEl mundo de la arquería ofrece una gran variedad de arcos, cada uno diseñado con un propósito específico. Este artículo presenta los cinco tipos de arcos más relevantes, destacando sus características, ventajas y desventajas.\n\n## 1. Arco Recurvo\n\nEl arco recurvo es clásico en la arquería moderna y olímpica. Sus extremos curvados hacia adelante permiten almacenar más energía y generar disparos más potentes.\n\n- **Ventajas:** Buena precisión, fácil de transportar, excelente para principiantes y competidores.\n- **Desventajas:** Menor velocidad comparado con arcos compuestos.\n\n![Arco Recurvo](images/recuerdo.jpg)\n\n## 2. Arco Compuesto\n\nEl arco compuesto utiliza un sistema de poleas y cables para reducir el esfuerzo en la cuerda y aumentar la velocidad de la flecha.\n\n- **Ventajas:** Mayor potencia y velocidad, permite disparos más largos sin fatiga.\n- **Desventajas:** Mayor complejidad y costo, requiere mantenimiento regular.\n\n![Arco Compuesto](images/compuesto.jpg)\n\n## 3. Longbow\n\nEl longbow es el arco tradicional inglés, de forma larga y ligeramente curvada, usado históricamente en batallas y caza.\n\n- **Ventajas:** Simple y duradero, sensación clásica de tiro.\n- **Desventajas:** Requiere fuerza física, menos preciso que arcos modernos.\n\n![Longbow](images/longbow.jpg)\n\n## 4. Arco de Caza\n\nDiseñado específicamente para caza, el arco de caza combina potencia y portabilidad. Puede ser recurvo o compuesto.\n\n- **Ventajas:** Compacto, ideal para entornos de caza.\n- **Desventajas:** No siempre optimizado para tiro competitivo.\n\n![Arco de Caza](images/caza.jpg)\n\n## 5. Arco de Poleas Tradicional\n\nSimilar al compuesto, pero con poleas más simples y enfoque en la comodidad del tirador.\n\n- **Ventajas:** Reduce esfuerzo al sostener la cuerda, adecuado para principiantes y práctica recreativa.\n- **Desventajas:** Menos potencia que un arco compuesto avanzado.\n\n![Arco de Poleas Tradicional](images/poleas_tradicional.jpg)\n\nConocer las diferencias entre estos arcos permite al arquero seleccionar el que mejor se adapte a su estilo, objetivos y nivel de experiencia. La elección correcta puede marcar la diferencia entre un tiro promedio y uno excepcional.",
+    "image": "images/arcos_comparativa.jpg",
+    "tags": ["arcos", "equipamiento", "tipos de arcos", "comparativa"]
   },
   {
     "id": 2,
