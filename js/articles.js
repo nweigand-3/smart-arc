@@ -266,28 +266,37 @@ class ArticleManager {
     const container = document.getElementById('articles-container');
     if (!container) return [];
 
-    const results = this.articles.filter(a =>
-        a.title.toLowerCase().includes(query.toLowerCase()) ||
-        a.excerpt.toLowerCase().includes(query.toLowerCase()) ||
-        a.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+    const results = this.articles.filter(article =>
+        article.title.toLowerCase().includes(query.toLowerCase()) ||
+        article.excerpt.toLowerCase().includes(query.toLowerCase()) ||
+        article.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
     );
 
+    // Update section title
     const sectionTitle = document.querySelector('.section-title');
     if (sectionTitle) sectionTitle.textContent = `Resultados para "${query}"`;
 
+    // Render results
     this.renderArticles(results, container);
 
-    // Always show the "Ver todos los artículos" button if not viewing all
+    // Show the "Ver todos los artículos" button no matter what
     const viewAllBtn = document.getElementById('view-all-articles');
     if (viewAllBtn) {
         viewAllBtn.style.display = 'inline-flex';
+        viewAllBtn.onclick = (e) => {
+            e.preventDefault();
+            this.currentCategory = 'all';
+            this.loadArticles();
+        };
     }
 
+    // Hide load more because search results are paginated separately
     const loadMoreBtn = document.getElementById('load-more');
     if (loadMoreBtn) loadMoreBtn.style.display = 'none';
 
     return results;
 }
+
 
 
     getCategoryName(category) {
