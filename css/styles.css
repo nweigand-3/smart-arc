@@ -11,28 +11,28 @@
 }
 
 :root {
-    /* Color System */
+    /* Color System - MEJORADO CONTRASTE */
     --color-primary: #8b0000;
     --color-primary-dark: #6a0000;
     --color-secondary: #2c5530;
     --color-accent: #d4af37;
     --color-accent-light: #e6c158;
     
-    /* Light Mode */
-    --color-text: #222;
-    --color-text-light: #555;
+    /* Light Mode - MEJORADO CONTRASTE */
+    --color-text: #222222;  /* Más oscuro para mejor contraste */
+    --color-text-light: #555555;
     --color-bg: #ffffff;
-    --color-bg-secondary: #f8f9fa;
-    --color-border: #e1e1e1;
+    --color-bg-secondary: #f5f5f5;  /* Más claro para mejor contraste */
+    --color-border: #dddddd;
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     
-    /* Dark Mode */
-    --color-dark-text: #e0e0e0;
-    --color-dark-text-light: #b0b0b0;
-    --color-dark-bg: #121212;
-    --color-dark-bg-secondary: #1e1e1e;
-    --color-dark-border: #333;
-    --shadow-dark: 0 4px 12px rgba(0, 0, 0, 0.3);
+    /* Dark Mode - MEJORADO CONTRASTE */
+    --color-dark-text: #f0f0f0;  /* Más claro para mejor contraste */
+    --color-dark-text-light: #cccccc;
+    --color-dark-bg: #1a1a1a;  /* No tan oscuro */
+    --color-dark-bg-secondary: #2a2a2a;  /* Más claro para mejor contraste */
+    --color-dark-border: #444444;
+    --shadow-dark: 0 4px 12px rgba(0, 0, 0, 0.4);
     
     /* Transitions */
     --transition-base: 0.2s ease;
@@ -57,6 +57,7 @@ body {
     color: var(--color-text);
     background-color: var(--color-bg);
     transition: background-color var(--transition-base), color var(--transition-base);
+    overflow-x: hidden; /* Previene overflow horizontal */
 }
 
 /* ==========================================================================
@@ -119,7 +120,7 @@ a:hover {
 }
 
 /* ==========================================================================
-   Navigation - Fixed
+   Navigation - Fixed - CORREGIDO CENTRADO
    ========================================================================== */
 
 .main-nav {
@@ -132,6 +133,8 @@ a:hover {
     box-shadow: var(--shadow);
     z-index: 1000;
     transition: all var(--transition-base);
+    display: flex;
+    justify-content: center; /* Centra todo el header */
 }
 
 .nav-container {
@@ -140,8 +143,9 @@ a:hover {
     align-items: center;
     height: 100%;
     max-width: 1200px;
-    margin: 0 auto;
+    width: 100%; /* Añadido para ocupar todo el ancho disponible */
     padding: 0 1.5rem;
+    margin: 0 auto; /* Centrado horizontal */
 }
 
 /* Logo */
@@ -165,6 +169,8 @@ a:hover {
     display: flex;
     gap: 1rem;
     list-style: none;
+    margin: 0 auto; /* Centrado automático */
+    padding: 0;
 }
 
 .nav-link {
@@ -398,6 +404,91 @@ a:hover {
 }
 
 /* ==========================================================================
+   Images - Control de tamaño - NUEVA SECCIÓN
+   ========================================================================== */
+
+/* Imágenes en tarjetas de artículo */
+.article-card img {
+    width: 100%;
+    height: 200px; /* Altura fija para uniformidad */
+    object-fit: cover; /* Mantiene proporciones y recorta si es necesario */
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    transition: transform var(--transition-smooth);
+}
+
+.article-card:hover img {
+    transform: scale(1.03);
+}
+
+/* Imágenes dentro del contenido del artículo */
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 2rem auto;
+    display: block;
+    box-shadow: var(--shadow);
+}
+
+/* Para imágenes grandes dentro de artículos */
+.article-content img.full-width {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+}
+
+/* Para imágenes medianas dentro de artículos */
+.article-content img.medium {
+    max-width: 600px;
+    max-height: 300px;
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Para imágenes pequeñas dentro de artículos */
+.article-content img.small {
+    max-width: 300px;
+    max-height: 200px;
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Imágenes en cards de categoría */
+.category-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+/* Contenedor para imágenes responsivas */
+.image-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-smooth);
+}
+
+/* Clase utilitaria para imágenes responsivas */
+.img-responsive {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ==========================================================================
    Grid Systems
    ========================================================================== */
 
@@ -414,7 +505,42 @@ a:hover {
 }
 
 /* ==========================================================================
-   Footer - Proper Layout
+   Article Content - Fix para overflow - NUEVA SECCIÓN
+   ========================================================================== */
+
+.article-content {
+    margin-top: 100px; /* Espacio para la navbar fija */
+    padding-top: 2rem;
+    word-wrap: break-word; /* Previene overflow horizontal */
+    overflow-wrap: break-word;
+}
+
+.article-content p,
+.article-content li,
+.article-content blockquote {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.article-content pre,
+.article-content code {
+    max-width: 100%;
+    overflow-x: auto; /* Scroll horizontal solo si es necesario */
+    white-space: pre-wrap; /* Permite que el código se ajuste */
+    word-wrap: break-word;
+}
+
+.article-content .code-block {
+    background: var(--color-bg-secondary);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+}
+
+/* ==========================================================================
+   Footer - Proper Layout - CORREGIDO CENTRADO
    ========================================================================== */
 
 .footer {
@@ -458,6 +584,7 @@ a:hover {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    padding: 0;
 }
 
 .footer-links a {
@@ -480,12 +607,17 @@ a:hover {
     padding-top: 2rem;
     border-top: 1px solid #333;
     text-align: center;
-    color: #777;
+    color: #ccc; /* Mejor contraste */
     font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .footer-bottom p {
     margin-bottom: 0;
+    color: #ccc; /* Mejor contraste */
 }
 
 /* Social Links */
@@ -547,7 +679,7 @@ a:hover {
 }
 
 /* ==========================================================================
-   Dark Mode
+   Dark Mode - MEJORADO CONTRASTE
    ========================================================================== */
 
 body.dark-mode {
@@ -601,7 +733,7 @@ body.dark-mode .article-title a {
 }
 
 body.dark-mode .article-title a:hover {
-    color: var(--color-accent);
+    color: var(--color-accent-light); /* Más claro para mejor contraste */
 }
 
 body.dark-mode .text-light {
@@ -622,12 +754,46 @@ body.dark-mode .search-result-item {
 }
 
 body.dark-mode .search-result-item:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.08); /* Mejor contraste */
+}
+
+body.dark-mode .hero {
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-secondary) 100%);
+}
+
+body.dark-mode .article-content .code-block {
+    background: var(--color-dark-bg);
+    border: 1px solid var(--color-dark-border);
+}
+
+body.dark-mode .footer {
+    background-color: #050505; /* Un poco más oscuro para contraste */
+}
+
+body.dark-mode .footer-section p {
+    color: #bbb; /* Mejor contraste en modo oscuro */
+}
+
+body.dark-mode .footer-links a {
+    color: #ddd; /* Mejor contraste */
+}
+
+body.dark-mode .footer-bottom {
+    color: #aaa; /* Mejor contraste */
 }
 
 /* ==========================================================================
    Responsive Design
    ========================================================================== */
+
+@media (max-width: 1200px) {
+    .nav-container,
+    .container,
+    .footer-container {
+        max-width: 100%;
+        padding: 0 2rem;
+    }
+}
 
 @media (max-width: 992px) {
     .section {
@@ -641,6 +807,15 @@ body.dark-mode .search-result-item:hover {
     .footer-container {
         grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
+    }
+    
+    .nav-links {
+        gap: 0.5rem;
+    }
+    
+    .nav-link {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
     }
 }
 
@@ -677,6 +852,35 @@ body.dark-mode .search-result-item:hover {
         width: 280px;
         right: -50px;
     }
+    
+    /* Responsive images */
+    .article-card img {
+        height: 180px;
+    }
+    
+    .category-card img {
+        height: 120px;
+    }
+    
+    .article-content img.full-width {
+        max-height: 300px;
+    }
+    
+    .article-content img.medium {
+        max-width: 100%;
+        max-height: 250px;
+    }
+    
+    .article-content img.small {
+        max-width: 100%;
+        max-height: 200px;
+    }
+    
+    /* Ajustes para móvil */
+    .article-content {
+        margin-top: 80px;
+        padding-top: 1rem;
+    }
 }
 
 @media (max-width: 576px) {
@@ -704,6 +908,33 @@ body.dark-mode .search-result-item:hover {
     .search-bar {
         width: calc(100vw - 2rem);
         right: 0;
+    }
+    
+    /* Responsive images para móvil */
+    .article-card img {
+        height: 150px;
+    }
+    
+    .category-card img {
+        height: 100px;
+    }
+    
+    .article-content img.full-width {
+        max-height: 200px;
+    }
+    
+    /* Footer mejorado para móvil */
+    .footer-section {
+        text-align: center;
+        align-items: center;
+    }
+    
+    .footer-links {
+        align-items: center;
+    }
+    
+    .social-links {
+        justify-content: center;
     }
 }
 
@@ -740,6 +971,11 @@ body.dark-mode .search-result-item:hover {
     .hero-title {
         color: #000;
     }
+    
+    .article-content {
+        margin-top: 0;
+        padding-top: 0;
+    }
 }
 
 /* Search bar visibility - ONLY when active */
@@ -747,5 +983,38 @@ body.dark-mode .search-result-item:hover {
     display: none;
 }
 
-/* Alternative approach for search bar - use JavaScript to toggle */
-/* This ensures it's completely removed from flow when hidden */
+/* Mejoras de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Enfoque visible para teclado */
+:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+/* Mejora de legibilidad */
+.article-content p {
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3 {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Previene que el contenido se esconda bajo la navbar */
+.main-content {
+    margin-top: 80px;
+    min-height: calc(100vh - 80px);
+}
