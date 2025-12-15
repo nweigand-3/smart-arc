@@ -201,23 +201,27 @@ class ArticlePage {
         .replace(/^## (.*$)/gm, '<h2>$1</h2>')
         .replace(/^### (.*$)/gm, '<h3>$1</h3>');
 
-    // Step 1.5: Handle inline markdown
+    // Step 1.5: Handle inline markdown (bold, images, audio)
     html = html
         // Bold **text**
         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
 
         // Images ![alt](src)
-        .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">')
+        .replace(
+            /!\[([^\]]*)\]\(([^)]+)\)/g,
+            '\n<img src="$2" alt="$1">\n'
+        )
 
         // Audio [audio](src)
-        .replace(/\[audio\]\(([^)]+)\)/g, 
-            `<audio controls>
-                <source src="$1" type="audio/mpeg">
-                Tu navegador no soporta audio.
-            </audio>`
+        .replace(
+            /\[audio\]\(([^)]+)\)/g,
+            '\n<audio controls preload="metadata">\n' +
+            '  <source src="$1" type="audio/mpeg">\n' +
+            '  Tu navegador no soporta audio.\n' +
+            '</audio>\n'
         );
 
-    // Step 2: Handle lists
+    // Step 2: Handle lists and paragraphs
     const lines = html.split('\n');
     let inList = false;
     let listType = '';
@@ -255,7 +259,7 @@ class ArticlePage {
             listItems.push(`<li>${listItem}</li>`);
         }
 
-        // Regular line
+        // Regular content
         else {
             if (inList) {
                 result.push(this.closeList(listType, listItems));
@@ -264,15 +268,22 @@ class ArticlePage {
                 listItems = [];
             }
 
-            if (trimmed) {
-                if (trimmed.startsWith('<h')) {
-                    result.push(trimmed);
-                } else if (trimmed.startsWith('<img') || trimmed.startsWith('<audio')) {
-                    // Don’t wrap images or audios in <p> tags
-                    result.push(trimmed);
-                } else {
-                    result.push(`<p>${trimmed}</p>`);
-                }
+            if (!trimmed) return;
+
+            // Headers
+            if (trimmed.startsWith('<h')) {
+                result.push(trimmed);
+            }
+            // Media blocks (images, audio)
+            else if (
+                trimmed.startsWith('<img') ||
+                trimmed.startsWith('<audio')
+            ) {
+                result.push(trimmed);
+            }
+            // Everything else
+            else {
+                result.push(`<p>${trimmed}</p>`);
             }
         }
     });
@@ -284,6 +295,7 @@ class ArticlePage {
 
     return result.join('\n');
 }
+
 
 
 closeList(type, items) {
