@@ -19,18 +19,18 @@
     --color-accent-light: #e6c158;
     
     /* Light Mode - MEJORADO CONTRASTE */
-    --color-text: #222222;  /* Más oscuro para mejor contraste */
+    --color-text: #222222;
     --color-text-light: #555555;
     --color-bg: #ffffff;
-    --color-bg-secondary: #f5f5f5;  /* Más claro para mejor contraste */
+    --color-bg-secondary: #f5f5f5;
     --color-border: #dddddd;
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     
     /* Dark Mode - MEJORADO CONTRASTE */
-    --color-dark-text: #f0f0f0;  /* Más claro para mejor contraste */
+    --color-dark-text: #f0f0f0;
     --color-dark-text-light: #cccccc;
-    --color-dark-bg: #1a1a1a;  /* No tan oscuro */
-    --color-dark-bg-secondary: #2a2a2a;  /* Más claro para mejor contraste */
+    --color-dark-bg: #1a1a1a;
+    --color-dark-bg-secondary: #2a2a2a;
     --color-dark-border: #444444;
     --shadow-dark: 0 4px 12px rgba(0, 0, 0, 0.4);
     
@@ -57,7 +57,7 @@ body {
     color: var(--color-text);
     background-color: var(--color-bg);
     transition: background-color var(--transition-base), color var(--transition-base);
-    overflow-x: hidden; /* Previene overflow horizontal */
+    overflow-x: hidden;
 }
 
 /* ==========================================================================
@@ -120,7 +120,7 @@ a:hover {
 }
 
 /* ==========================================================================
-   Navigation - Fixed - CORREGIDO CENTRADO
+   Navigation - Fixed - MEJORADO CENTRADO
    ========================================================================== */
 
 .main-nav {
@@ -133,8 +133,6 @@ a:hover {
     box-shadow: var(--shadow);
     z-index: 1000;
     transition: all var(--transition-base);
-    display: flex;
-    justify-content: center; /* Centra todo el header */
 }
 
 .nav-container {
@@ -143,9 +141,8 @@ a:hover {
     align-items: center;
     height: 100%;
     max-width: 1200px;
-    width: 100%; /* Añadido para ocupar todo el ancho disponible */
+    margin: 0 auto;
     padding: 0 1.5rem;
-    margin: 0 auto; /* Centrado horizontal */
 }
 
 /* Logo */
@@ -169,8 +166,6 @@ a:hover {
     display: flex;
     gap: 1rem;
     list-style: none;
-    margin: 0 auto; /* Centrado automático */
-    padding: 0;
 }
 
 .nav-link {
@@ -294,7 +289,7 @@ a:hover {
     color: var(--color-primary-dark);
 }
 
-/* Mobile Menu Toggle (if needed) */
+/* Mobile Menu Toggle */
 .mobile-menu-toggle {
     display: none;
     background: none;
@@ -306,7 +301,7 @@ a:hover {
 }
 
 /* ==========================================================================
-   Hero Section
+   Hero Section - CORREGIDO CENTRADO
    ========================================================================== */
 
 .hero {
@@ -314,6 +309,14 @@ a:hover {
     color: white;
     padding: 10rem 0 6rem;
     margin-top: 80px;
+    text-align: center; /* Añadido para centrar texto */
+}
+
+.hero .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente si es necesario */
 }
 
 .hero-title {
@@ -321,13 +324,54 @@ a:hover {
     line-height: 1.2;
     margin-bottom: 1.5rem;
     color: white;
+    text-align: center;
+    max-width: 800px; /* Limita el ancho del título */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .hero-description {
     font-size: clamp(1.125rem, 2vw, 1.25rem);
     opacity: 0.95;
     max-width: 600px;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem; /* Centrado automático */
+    text-align: center;
+}
+
+/* Contenedor de botones del hero */
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    justify-content: center; /* Centra los botones */
+    flex-wrap: wrap; /* Permite que se ajusten en móvil */
+}
+
+/* Contenedor de estadísticas */
+.hero-stats {
+    display: flex;
+    justify-content: center; /* Centra las estadísticas */
+    gap: 3rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-accent);
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    opacity: 0.9;
 }
 
 /* ==========================================================================
@@ -404,14 +448,14 @@ a:hover {
 }
 
 /* ==========================================================================
-   Images - Control de tamaño - NUEVA SECCIÓN
+   Images - Control de tamaño mejorado
    ========================================================================== */
 
 /* Imágenes en tarjetas de artículo */
 .article-card img {
     width: 100%;
-    height: 200px; /* Altura fija para uniformidad */
-    object-fit: cover; /* Mantiene proporciones y recorta si es necesario */
+    height: 200px;
+    object-fit: cover;
     border-radius: 8px;
     margin-bottom: 1rem;
     transition: transform var(--transition-smooth);
@@ -421,7 +465,7 @@ a:hover {
     transform: scale(1.03);
 }
 
-/* Imágenes dentro del contenido del artículo */
+/* Imágenes dentro del contenido del artículo - TAMAÑOS AJUSTADOS */
 .article-content img {
     max-width: 100%;
     height: auto;
@@ -431,17 +475,17 @@ a:hover {
     box-shadow: var(--shadow);
 }
 
-/* Para imágenes grandes dentro de artículos */
+/* Para imágenes grandes dentro de artículos - REDUCIDO */
 .article-content img.full-width {
     width: 100%;
-    max-height: 400px;
+    max-height: 300px; /* Reducido de 400px */
     object-fit: cover;
 }
 
-/* Para imágenes medianas dentro de artículos */
+/* Para imágenes medianas dentro de artículos - REDUCIDO */
 .article-content img.medium {
-    max-width: 600px;
-    max-height: 300px;
+    max-width: 500px; /* Reducido de 600px */
+    max-height: 250px; /* Reducido de 300px */
     object-fit: cover;
     margin-left: auto;
     margin-right: auto;
@@ -449,8 +493,8 @@ a:hover {
 
 /* Para imágenes pequeñas dentro de artículos */
 .article-content img.small {
-    max-width: 300px;
-    max-height: 200px;
+    max-width: 250px; /* Reducido de 300px */
+    max-height: 150px; /* Reducido de 200px */
     object-fit: cover;
     margin-left: auto;
     margin-right: auto;
@@ -488,6 +532,15 @@ a:hover {
     display: block;
 }
 
+/* Imágenes en línea dentro de texto */
+.article-content p img {
+    display: inline-block;
+    vertical-align: middle;
+    max-height: 1.2em;
+    width: auto;
+    margin: 0 0.25rem;
+}
+
 /* ==========================================================================
    Grid Systems
    ========================================================================== */
@@ -505,14 +558,22 @@ a:hover {
 }
 
 /* ==========================================================================
-   Article Content - Fix para overflow - NUEVA SECCIÓN
+   Article Content - Fix para overflow
    ========================================================================== */
 
+.main-content {
+    margin-top: 100px;
+    min-height: calc(100vh - 80px);
+}
+
 .article-content {
-    margin-top: 100px; /* Espacio para la navbar fija */
     padding-top: 2rem;
-    word-wrap: break-word; /* Previene overflow horizontal */
+    word-wrap: break-word;
     overflow-wrap: break-word;
+    max-width: 800px; /* Limita el ancho del contenido */
+    margin: 0 auto; /* Centra el contenido */
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .article-content p,
@@ -526,8 +587,8 @@ a:hover {
 .article-content pre,
 .article-content code {
     max-width: 100%;
-    overflow-x: auto; /* Scroll horizontal solo si es necesario */
-    white-space: pre-wrap; /* Permite que el código se ajuste */
+    overflow-x: auto;
+    white-space: pre-wrap;
     word-wrap: break-word;
 }
 
@@ -540,7 +601,7 @@ a:hover {
 }
 
 /* ==========================================================================
-   Footer - Proper Layout - CORREGIDO CENTRADO
+   Footer - Proper Layout
    ========================================================================== */
 
 .footer {
@@ -607,7 +668,7 @@ a:hover {
     padding-top: 2rem;
     border-top: 1px solid #333;
     text-align: center;
-    color: #ccc; /* Mejor contraste */
+    color: #ccc;
     font-size: 0.9rem;
     display: flex;
     flex-direction: column;
@@ -617,7 +678,7 @@ a:hover {
 
 .footer-bottom p {
     margin-bottom: 0;
-    color: #ccc; /* Mejor contraste */
+    color: #ccc;
 }
 
 /* Social Links */
@@ -733,7 +794,7 @@ body.dark-mode .article-title a {
 }
 
 body.dark-mode .article-title a:hover {
-    color: var(--color-accent-light); /* Más claro para mejor contraste */
+    color: var(--color-accent-light);
 }
 
 body.dark-mode .text-light {
@@ -754,7 +815,7 @@ body.dark-mode .search-result-item {
 }
 
 body.dark-mode .search-result-item:hover {
-    background-color: rgba(255, 255, 255, 0.08); /* Mejor contraste */
+    background-color: rgba(255, 255, 255, 0.08);
 }
 
 body.dark-mode .hero {
@@ -767,19 +828,19 @@ body.dark-mode .article-content .code-block {
 }
 
 body.dark-mode .footer {
-    background-color: #050505; /* Un poco más oscuro para contraste */
+    background-color: #050505;
 }
 
 body.dark-mode .footer-section p {
-    color: #bbb; /* Mejor contraste en modo oscuro */
+    color: #bbb;
 }
 
 body.dark-mode .footer-links a {
-    color: #ddd; /* Mejor contraste */
+    color: #ddd;
 }
 
 body.dark-mode .footer-bottom {
-    color: #aaa; /* Mejor contraste */
+    color: #aaa;
 }
 
 /* ==========================================================================
@@ -817,6 +878,29 @@ body.dark-mode .footer-bottom {
         padding: 0.5rem 0.75rem;
         font-size: 0.9rem;
     }
+    
+    /* Reducir imágenes en tablet */
+    .article-card img {
+        height: 180px;
+    }
+    
+    .category-card img {
+        height: 130px;
+    }
+    
+    .article-content img.full-width {
+        max-height: 250px;
+    }
+    
+    .article-content img.medium {
+        max-width: 400px;
+        max-height: 200px;
+    }
+    
+    .article-content img.small {
+        max-width: 200px;
+        max-height: 120px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -841,7 +925,7 @@ body.dark-mode .footer-bottom {
     }
     
     .nav-links {
-        display: none; /* Will be shown via mobile menu */
+        display: none;
     }
     
     .mobile-menu-toggle {
@@ -853,33 +937,62 @@ body.dark-mode .footer-bottom {
         right: -50px;
     }
     
-    /* Responsive images */
+    /* Hero responsive */
+    .hero-title {
+        font-size: 2rem;
+        line-height: 1.3;
+    }
+    
+    .hero-description {
+        font-size: 1.125rem;
+        line-height: 1.5;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .hero-buttons .btn {
+        width: 100%;
+    }
+    
+    .hero-stats {
+        gap: 2rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    /* Imágenes responsive para móvil */
     .article-card img {
-        height: 180px;
+        height: 150px;
     }
     
     .category-card img {
-        height: 120px;
+        height: 100px;
+    }
+    
+    .article-content {
+        margin-top: 80px;
+        padding-top: 1rem;
+        max-width: 100%;
     }
     
     .article-content img.full-width {
-        max-height: 300px;
+        max-height: 200px;
     }
     
     .article-content img.medium {
         max-width: 100%;
-        max-height: 250px;
+        max-height: 180px;
     }
     
     .article-content img.small {
-        max-width: 100%;
-        max-height: 200px;
-    }
-    
-    /* Ajustes para móvil */
-    .article-content {
-        margin-top: 80px;
-        padding-top: 1rem;
+        max-width: 150px;
+        max-height: 100px;
     }
 }
 
@@ -893,7 +1006,16 @@ body.dark-mode .footer-bottom {
     }
     
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.75rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 1.5rem;
     }
     
     .btn {
@@ -910,19 +1032,6 @@ body.dark-mode .footer-bottom {
         right: 0;
     }
     
-    /* Responsive images para móvil */
-    .article-card img {
-        height: 150px;
-    }
-    
-    .category-card img {
-        height: 100px;
-    }
-    
-    .article-content img.full-width {
-        max-height: 200px;
-    }
-    
     /* Footer mejorado para móvil */
     .footer-section {
         text-align: center;
@@ -935,6 +1044,25 @@ body.dark-mode .footer-bottom {
     
     .social-links {
         justify-content: center;
+    }
+    
+    /* Imágenes más pequeñas en móvil */
+    .article-card img {
+        height: 120px;
+    }
+    
+    .category-card img {
+        height: 80px;
+    }
+    
+    .article-content img.full-width {
+        max-height: 150px;
+    }
+    
+    .article-content img.medium,
+    .article-content img.small {
+        max-width: 100%;
+        max-height: 150px;
     }
 }
 
@@ -976,9 +1104,15 @@ body.dark-mode .footer-bottom {
         margin-top: 0;
         padding-top: 0;
     }
+    
+    /* Imágenes en print */
+    .article-content img {
+        max-width: 100% !important;
+        max-height: none !important;
+    }
 }
 
-/* Search bar visibility - ONLY when active */
+/* Search bar visibility */
 .search-bar:not(.active) {
     display: none;
 }
@@ -1011,10 +1145,4 @@ body.dark-mode .footer-bottom {
 .article-content h3 {
     margin-top: 2.5rem;
     margin-bottom: 1rem;
-}
-
-/* Previene que el contenido se esconda bajo la navbar */
-.main-content {
-    margin-top: 80px;
-    min-height: calc(100vh - 80px);
 }
