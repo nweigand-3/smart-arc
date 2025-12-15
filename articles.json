@@ -10,48 +10,16 @@
     "image": "images/arcos_comparativa.jpg",
     "tags": ["arcos", "equipamiento", "tipos de arcos", "comparativa"]
   },
-  {
-    "id": 2,
-    "title": "Mantenimiento Básico del Arco Recurvo",
-    "category": "equipamiento",
-    "date": "Dec 2025",
-    "readTime": 10,
-    "excerpt": "Guía completa para mantener tu arco recurvo en óptimas condiciones y prolongar su vida útil.",
-    "content": "# Mantenimiento Básico del Arco Recurvo\n\nUn arco bien mantenido no solo dura más tiempo, sino que también ofrece un rendimiento más consistente.\n\n## Limpieza Regular\n\n1. Limpia las palas con un paño suave y seco después de cada uso.\n2. Revisa periódicamente el estado de la cuerda.\n3. Comprueba que las flechas estén rectas y sin daños.\n\n## Almacenamiento\n\nGuarda el arco en un lugar seco y templado, preferiblemente en una funda protectora.\n\n## Inspección Visual\n\nRealiza una inspección mensual buscando:\n- Grietas en las palas\n- Desgaste en la cuerda\n- Tornillos flojos\n\nEl mantenimiento preventivo es clave para la seguridad y el rendimiento.",
-    "image": "https://images.unsplash.com/photo-1586972750140-4d680ae17e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    "tags": ["mantenimiento", "recurvo", "equipamiento"]
-  },
-  {
-    "id": 3,
-    "title": "Historia del Arco Largo Inglés",
-    "category": "historia",
-    "date": "Dec 2025",
-    "readTime": 12,
-    "excerpt": "Descubre el legendario arco que cambió el curso de la historia medieval europea.",
-    "content": "# Historia del Arco Largo Inglés\n\nEl arco largo inglés es uno de los iconos más reconocibles de la historia militar medieval.\n\n## Orígenes\n\nSe desarrolló en Gales durante el siglo XII y fue adoptado por los ingleses tras la conquista de Gales.\n\n## Características Técnicas\n\n- Longitud: 1.8 a 2.1 metros\n- Material: Madera de tejo\n- Fuerza de tensión: 80-150 libras\n\n## Impacto Histórico\n\nEl arco largo fue decisivo en batallas como:\n- Batalla de Crécy (1346)\n- Batalla de Poitiers (1356)\n- Batalla de Azincourt (1415)\n\nSu alcance superior y poder de penetración cambiaron para siempre la guerra medieval.",
-    "image": "https://images.unsplash.com/photo-1594930078877-18ca0eaa8b29?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    "tags": ["historia", "arco largo", "medieval"]
-  },
-  {
-    "id": 4,
-    "title": "Drills de Puntería para Principiantes",
-    "category": "practica",
-    "date": "2024-02-01",
-    "readTime": 6,
-    "excerpt": "Ejercicios prácticos para mejorar tu puntería desde cero.",
-    "content": "# Drills de Puntería para Principiantes\n\nLa puntería se mejora con práctica específica y deliberada. Estos drills te ayudarán a progresar rápidamente.\n\n## Drill 1: Puntería a Distancia Corta\n\nComienza a 5 metros del blanco. Concéntrate en:\n- Alineación corporal\n- Liberación suave\n- Follow-through\n\n## Drill 2: Ejercicio de Forma\n\nPractica el movimiento completo sin flechas:\n1. Posición de set\n2. Elevación\n3. Anclaje\n4. Liberación\n\n## Drill 3: Control de la Respiración\n\nCoordina tu respiración con el tiro:\n- Inhala al elevar el arco\n- Exhala durante la puntería\n- Aguanta la respiración al liberar\n\nPractica estos drills 3 veces por semana para ver mejoras significativas.",
-    "image": "https://images.unsplash.com/photo-1595871463386-5e27d5c6c0b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    "tags": ["drills", "puntería", "entrenamiento"]
-  },
-  {
-    "id": 5,
-    "title": "Título del Nuevo Artículo",
-    "category": "tecnica",
-    "date": "2024-02-10",
-    "readTime": 7,
-    "excerpt": "Breve descripción que aparece en la tarjeta del artículo.",
-    "content": "# Título Principal\n\nTexto del artículo en **Markdown**.\n\n## Subtítulo\n\n- Lista con puntos\n- Segundo punto\n\n1. Lista numerada\n2. Segundo elemento\n\n**Negrita** y *cursiva* funcionan.",
-    "image": "https://images.unsplash.com/photo-...",
-    "tags": ["tag1", "tag2", "tag3"]
-  }
+{
+  "id": 2,
+  "title": "Guía Completa de Flechas: Tubos, Puntas, Plumas y Nocks",
+  "category": "equipamiento",
+  "date": "Dec 2025",
+  "readTime": 18,
+  "excerpt": "Las flechas son tan importantes como el arco. Conoce los distintos tipos de tubos, puntas, plumas y nocks, y cómo influyen en el rendimiento, la seguridad y la precisión.",
+  "content": "# Guía Completa de Flechas: Tubos, Puntas, Plumas y Nocks\n\nEn arquería, una flecha mal elegida puede arruinar el mejor arco y la mejor técnica. Aunque a primera vista parezcan simples, las flechas están formadas por varios componentes que determinan su comportamiento en vuelo, su resistencia y su uso específico. En este artículo analizamos en detalle cada uno de ellos.\n\n## Tubos de Flecha\n\nEl tubo es el cuerpo principal de la flecha. Define su peso, rigidez (spine), durabilidad y compatibilidad con distintos estilos de tiro.\n\n### Madera\n\nLas flechas de madera son las más antiguas y tradicionales.\n\n- Fabricadas normalmente en cedro, pino o abeto.\n- Uso común en longbow y arquería histórica.\n- Requieren selección cuidadosa del spine.\n\n**Ventajas:** Estética clásica, sensación tradicional, fácil reparación.\n**Desventajas:** Menor durabilidad, sensibles a la humedad, menos consistentes.\n\n![Tubos de madera](images/tubos.jpg)\n\n### Aluminio\n\nDurante décadas fueron el estándar en tiro olímpico y recreativo.\n\n- Tubos rectos y muy consistentes.\n- Spine claramente identificado.\n\n**Ventajas:** Precisión uniforme, fáciles de cortar y montar.\n**Desventajas:** Se doblan con impactos fuertes, mayor peso.\n\n### Carbono\n\nEl material más utilizado actualmente.\n\n- Muy ligeros y resistentes.\n- Gran variedad de spines y diámetros.\n\n**Ventajas:** Alta durabilidad, mayor velocidad, excelente consistencia.\n**Desventajas:** Precio más elevado, daños menos visibles.\n\n## Puntas de Flecha\n\nLa punta determina el propósito de la flecha. No es un detalle menor: usar la punta incorrecta es una receta segura para problemas.\n\n### Target\n\nDiseñadas para tiro a dianas de espuma o papel.\n\n- Perfil afilado pero simple.\n- Fácil extracción del blanco.\n\n![Puntas target](images/puntas.jpg)\n\n### Field\n\nPuntas cónicas más robustas.\n\n- Uso recreativo y práctica en campo.\n- Simulan el peso de puntas de caza.\n\n### Broadhead\n\nPuntas de caza con hojas cortantes.\n\n- Diseñadas para máxima penetración.\n- Requieren arcos potentes y experiencia.\n\n### Blunt\n\nPuntas romas.\n\n- Uso tradicional y recreativo.\n- Ideales para tiro a blancos duros o pequeños objetivos.\n\n## Plumas y Vains\n\nLas plumas estabilizan la flecha en vuelo. Su elección afecta directamente la precisión y el comportamiento aerodinámico.\n\n### Pluma Natural\n\nFabricadas con plumas reales, normalmente de pavo.\n\n- Muy tolerantes a errores de tiro.\n- Uso tradicional y olímpico.\n\n**Ventajas:** Excelente estabilización.\n**Desventajas:** Sensibles al agua y al desgaste.\n\n![Plumas naturales](images/plumas.jpg)\n\n### Plastic Vains\n\nPlumas sintéticas modernas.\n\n- Resistentes y duraderas.\n- Uso común en arcos compuestos.\n\n**Ventajas:** Larga vida útil, uniformidad.\n**Desventajas:** Menor tolerancia a errores iniciales.\n\n### Flu-Flu\n\nPlumas sobredimensionadas.\n\n- Diseñadas para frenar rápidamente la flecha.\n- Uso en tiro recreativo y caza aérea tradicional.",
+  "image": "images/flechas_comparativa.jpg",
+  "tags": ["flechas", "tubos", "puntas", "plumas", "nocks", "equipamiento"]
+}
+
 ]
