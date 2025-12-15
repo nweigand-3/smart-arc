@@ -192,7 +192,7 @@ class ArticlePage {
     }
 
     // Markdown to HTML converter - IMPROVED VERSION
-   markdownToHtml(markdown) {
+  markdownToHtml(markdown) {
     if (!markdown) return '';
 
     // Step 0: Normalize unicode dashes (CRITICAL)
@@ -204,72 +204,99 @@ class ArticlePage {
         .replace(/^## (.*$)/gm, '<h2>$1</h2>')
         .replace(/^### (.*$)/gm, '<h3>$1</h3>');
 
-    // Step 1.5: Inline markdown
+    // Step 1.5: Inline markdown (más robusto)
     html = html
         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
         .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '\n<img src="$2" alt="$1">\n')
         .replace(
             /\[audio\]\(([^)]+)\)/g,
-            '\n<audio controls preload="metadata">\n' +
-            '  <source src="$1" type="audio/mpeg">\n' +
-            '  Tu navegador no soporta audio.\n' +
-            '</audio>\n'
+            '\n<div class="audio-player">\n' +
+            '  <audio controls preload="metadata">\n' +
+            '    <source src="$1" type="audio/mpeg">\n' +
+            '    <source src="$1" type="audio/ogg">\n' +
+            '    Tu navegador no soporta el elemento de audio.\n' +
+            '  </audio>\n' +
+            '  <div class="audio-time">0:00</div>\n' +
+            '</div>\n'
         );
 
-    // Step 2: Lists and paragraphs
+    // Step 2: Lists and paragraphs - VERSIÓN CORREGIDA
     const lines = html.split('\n');
     let inList = false;
     let listType = '';
     let listItems = [];
     let result = [];
 
-    lines.forEach(line => {
-        const trimmed = line.trim();
-        if (!trimmed) return;
+    // Función interna para cerrar listas
+    const closeCurrentList = () => {
+        if (inList && listItems.length > 0) {
+            const listHtml = listType === 'ol' 
+                ? `<ol>${listItems.join('')}</ol>` 
+                : `<ul>${listItems.join('')}</ul>`;
+            result.push(listHtml);
+            inList = false;
+            listType = '';
+            listItems = [];
+        }
+    };
 
+    for (let i = 0; i < lines.length; i++) {
+        let line = lines[i];
+        const trimmed = line.trim();
+        
+        // Si la línea está vacía, cierra cualquier lista activa
+        if (!trimmed) {
+            closeCurrentList();
+            continue;
+        }
+
+        // Manejar listas ordenadas
         if (/^\d+\.\s+/.test(trimmed)) {
             if (!inList || listType !== 'ol') {
-                if (inList) {
-                    result.push(this.closeList(listType, listItems));
-                    listItems = [];
-                }
+                closeCurrentList();
                 inList = true;
                 listType = 'ol';
             }
-            listItems.push(`<li>${trimmed.replace(/^\d+\.\s+/, '')}</li>`);
+            // Extraer contenido después del número
+            const content = trimmed.replace(/^\d+\.\s+/, '');
+            listItems.push(`<li>${content}</li>`);
+            continue;
         }
-        else if (/^[-*•]\s+/.test(trimmed)) {
+
+        // Manejar listas no ordenadas (corregido para manejar múltiples tipos)
+        if (/^[-*•]\s+/.test(trimmed)) {
             if (!inList || listType !== 'ul') {
-                if (inList) {
-                    result.push(this.closeList(listType, listItems));
-                    listItems = [];
-                }
+                closeCurrentList();
                 inList = true;
                 listType = 'ul';
             }
-            listItems.push(`<li>${trimmed.replace(/^[-*•]\s+/, '')}</li>`);
+            // Extraer contenido después del marcador
+            const content = trimmed.replace(/^[-*•]\s+/, '');
+            listItems.push(`<li>${content}</li>`);
+            continue;
         }
-        else {
-            if (inList) {
-                result.push(this.closeList(listType, listItems));
-                inList = false;
-                listType = '';
-                listItems = [];
-            }
 
-            if (trimmed.startsWith('<h') ||
-                trimmed.startsWith('<img') ||
-                trimmed.startsWith('<audio')) {
-                result.push(trimmed);
-            } else {
+        // Si no es una lista pero hay una lista activa, ciérrala
+        if (inList) {
+            closeCurrentList();
+        }
+
+        // Manejar elementos que ya son HTML
+        if (trimmed.startsWith('<h') || 
+            trimmed.startsWith('<img') || 
+            trimmed.startsWith('<audio') ||
+            trimmed.startsWith('<div class="audio-player"')) {
+            result.push(trimmed);
+        } else {
+            // Solo agregar <p> si no está vacío
+            if (trimmed.length > 0) {
                 result.push(`<p>${trimmed}</p>`);
             }
         }
-    });
-
-    if (inList) {
-        result.push(this.closeList(listType, listItems));
     }
+
+    // Cerrar cualquier lista pendiente al final
+    closeCurrentList();
 
     return result.join('\n');
 }
