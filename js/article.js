@@ -192,7 +192,7 @@ class ArticlePage {
     }
 
     // Markdown to HTML converter - IMPROVED VERSION
-    markdownToHtml(markdown) {
+   markdownToHtml(markdown) {
     if (!markdown) return '';
 
     // Step 1: Handle headers
@@ -201,13 +201,21 @@ class ArticlePage {
         .replace(/^## (.*$)/gm, '<h2>$1</h2>')
         .replace(/^### (.*$)/gm, '<h3>$1</h3>');
 
-    // Step 1.5: Handle inline markdown (THIS was missing)
+    // Step 1.5: Handle inline markdown
     html = html
         // Bold **text**
         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
 
         // Images ![alt](src)
-        .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+        .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">')
+
+        // Audio [audio](src)
+        .replace(/\[audio\]\(([^)]+)\)/g, 
+            `<audio controls>
+                <source src="$1" type="audio/mpeg">
+                Tu navegador no soporta audio.
+            </audio>`
+        );
 
     // Step 2: Handle lists
     const lines = html.split('\n');
@@ -259,8 +267,8 @@ class ArticlePage {
             if (trimmed) {
                 if (trimmed.startsWith('<h')) {
                     result.push(trimmed);
-                } else if (trimmed.startsWith('<img')) {
-                    // Don’t wrap images in <p> tags
+                } else if (trimmed.startsWith('<img') || trimmed.startsWith('<audio')) {
+                    // Don’t wrap images or audios in <p> tags
                     result.push(trimmed);
                 } else {
                     result.push(`<p>${trimmed}</p>`);
@@ -276,6 +284,7 @@ class ArticlePage {
 
     return result.join('\n');
 }
+
 
 closeList(type, items) {
     return type === 'ol'
