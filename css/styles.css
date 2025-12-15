@@ -1146,3 +1146,33 @@ body.dark-mode .footer-bottom {
     margin-top: 2.5rem;
     margin-bottom: 1rem;
 }
+
+.audio-player {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.audio-player audio {
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.audio-time {
+    font-size: 0.85rem;
+    color: #6c757d;
+    text-align: right;
+}
+
+/* Mejorar visualización de listas */
+ul, ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+li {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+}
