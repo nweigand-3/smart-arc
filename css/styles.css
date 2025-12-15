@@ -242,3 +242,75 @@ a:hover { color: var(--accent-color); }
     .categories-grid { grid-template-columns: 1fr; }
     .features-grid { grid-template-columns: 1fr; }
 }
+
+/* Stronger body text contrast */
+body {
+    color: #222;
+}
+
+.article-excerpt,
+.category-description,
+.section-subtitle,
+.text-light {
+    color: #555;
+}
+
+/* Headings reclaim authority */
+.section-title,
+.article-title a {
+    color: #1a1a1a;
+}
+
+.article-title a:hover {
+    color: var(--primary-color);
+}
+
+/* Card presence without circus tricks */
+.category-card,
+.article-card {
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.category-card:hover,
+.article-card:hover {
+    transform: translateY(-4px);
+}
+
+/* Reduce gold overuse */
+.highlight,
+.stat-number {
+    color: var(--accent-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-color);
+}
+
+/* Make category badges calmer */
+.article-category,
+.category-badge {
+    background-color: rgba(139, 0, 0, 0.9);
+}
+
+/* Search results clarity */
+.search-result-title {
+    font-weight: 600;
+}
+
+/* Dark mode contrast fix */
+body.dark-mode {
+    --text-color: #e6e6e6;
+    --text-light: #b5b5b5;
+}
+
+body.dark-mode .article-title a {
+    color: #f0f0f0;
+}
+
+/* Footer readability */
+.footer-section a {
+    opacity: 0.9;
+}
+.footer-section a:hover {
+    opacity: 1;
+}
