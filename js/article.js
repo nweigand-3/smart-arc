@@ -193,102 +193,96 @@ class ArticlePage {
 
     // Markdown to HTML converter - IMPROVED VERSION
     markdownToHtml(markdown) {
-        if (!markdown) return '';
-        
-        console.log('Converting markdown to HTML...');
-        
-        // Step 1: Handle headers
-        let html = markdown
-            // Convert headers
-            .replace(/^# (.*$)/gm, '<h1>$1</h1>')
-            .replace(/^## (.*$)/gm, '<h2>$1</h2>')
-            .replace(/^### (.*$)/gm, '<h3>$1</h3>');
-        
-        // Step 2: Handle lists
-        const lines = html.split('\n');
-        let inList = false;
-        let listType = ''; // 'ul' or 'ol'
-        let listItems = [];
-        let result = [];
-        
-        lines.forEach(line => {
-            const trimmed = line.trim();
-            
-            // Check for numbered list (1., 2., etc.)
-            if (/^\d+\.\s+/.test(trimmed)) {
-                if (!inList || listType !== 'ol') {
-                    // Close previous list if any
-                    if (inList) {
-                        result.push(this.closeList(listType, listItems));
-                        listItems = [];
-                    }
-                    inList = true;
-                    listType = 'ol';
-                }
-                // Remove the number and add to list items
-                const listItem = trimmed.replace(/^\d+\.\s+/, '');
-                listItems.push(`<li>${listItem}</li>`);
-            }
-            // Check for unordered list (- or *)
-            else if (/^[-*•]\s+/.test(trimmed)) {
-                if (!inList || listType !== 'ul') {
-                    // Close previous list if any
-                    if (inList) {
-                        result.push(this.closeList(listType, listItems));
-                        listItems = [];
-                    }
-                    inList = true;
-                    listType = 'ul';
-                }
-                // Remove the bullet and add to list items
-                const listItem = trimmed.replace(/^[-*•]\s+/, '');
-                listItems.push(`<li>${listItem}</li>`);
-            }
-            // Regular line
-            else {
-                // Close any open list
+    if (!markdown) return '';
+
+    // Step 1: Handle headers
+    let html = markdown
+        .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+        .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+        .replace(/^### (.*$)/gm, '<h3>$1</h3>');
+
+    // Step 1.5: Handle inline markdown (THIS was missing)
+    html = html
+        // Bold **text**
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+
+        // Images ![alt](src)
+        .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+
+    // Step 2: Handle lists
+    const lines = html.split('\n');
+    let inList = false;
+    let listType = '';
+    let listItems = [];
+    let result = [];
+
+    lines.forEach(line => {
+        const trimmed = line.trim();
+
+        // Numbered list
+        if (/^\d+\.\s+/.test(trimmed)) {
+            if (!inList || listType !== 'ol') {
                 if (inList) {
                     result.push(this.closeList(listType, listItems));
-                    inList = false;
-                    listType = '';
                     listItems = [];
                 }
-                
-                // Add the line if it's not empty
-                if (trimmed) {
-                    // Check if it's already a header tag
-                    if (trimmed.startsWith('<h')) {
-                        result.push(trimmed);
-                    } else {
-                        // Wrap in paragraph if not empty
-                        result.push(`<p>${trimmed}</p>`);
-                    }
+                inList = true;
+                listType = 'ol';
+            }
+            const listItem = trimmed.replace(/^\d+\.\s+/, '');
+            listItems.push(`<li>${listItem}</li>`);
+        }
+
+        // Unordered list
+        else if (/^[-*•]\s+/.test(trimmed)) {
+            if (!inList || listType !== 'ul') {
+                if (inList) {
+                    result.push(this.closeList(listType, listItems));
+                    listItems = [];
+                }
+                inList = true;
+                listType = 'ul';
+            }
+            const listItem = trimmed.replace(/^[-*•]\s+/, '');
+            listItems.push(`<li>${listItem}</li>`);
+        }
+
+        // Regular line
+        else {
+            if (inList) {
+                result.push(this.closeList(listType, listItems));
+                inList = false;
+                listType = '';
+                listItems = [];
+            }
+
+            if (trimmed) {
+                if (trimmed.startsWith('<h')) {
+                    result.push(trimmed);
+                } else if (trimmed.startsWith('<img')) {
+                    // Don’t wrap images in <p> tags
+                    result.push(trimmed);
+                } else {
+                    result.push(`<p>${trimmed}</p>`);
                 }
             }
-        });
-        
-        // Close any remaining list
-        if (inList) {
-            result.push(this.closeList(listType, listItems));
         }
-        
-        // Join everything
-        html = result.join('\n');
-        
-        // Step 3: Handle multiple consecutive newlines (paragraph breaks)
-        // Replace multiple </p> tags with a single one
-        html = html.replace(/<\/p>\s*<p>/g, '</p>\n<p>');
-        
-        return html;
+    });
+
+    // Close any remaining list
+    if (inList) {
+        result.push(this.closeList(listType, listItems));
     }
-    
-    closeList(type, items) {
-        if (type === 'ol') {
-            return `<ol>\n${items.join('\n')}\n</ol>`;
-        } else {
-            return `<ul>\n${items.join('\n')}\n</ul>`;
-        }
-    }
+
+    return result.join('\n');
+}
+
+closeList(type, items) {
+    return type === 'ol'
+        ? `<ol>\n${items.join('\n')}\n</ol>`
+        : `<ul>\n${items.join('\n')}\n</ul>`;
+}
+
 
     showError(message) {
         const container = document.getElementById('article-content');
