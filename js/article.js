@@ -195,24 +195,19 @@ class ArticlePage {
    markdownToHtml(markdown) {
     if (!markdown) return '';
 
+    // Step 0: Normalize unicode dashes (CRITICAL)
+    let html = markdown.replace(/[–—]/g, '-');
+
     // Step 1: Handle headers
-    let html = markdown
+    html = html
         .replace(/^# (.*$)/gm, '<h1>$1</h1>')
         .replace(/^## (.*$)/gm, '<h2>$1</h2>')
         .replace(/^### (.*$)/gm, '<h3>$1</h3>');
 
-    // Step 1.5: Handle inline markdown (bold, images, audio)
+    // Step 1.5: Inline markdown
     html = html
-        // Bold **text**
         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-
-        // Images ![alt](src)
-        .replace(
-            /!\[([^\]]*)\]\(([^)]+)\)/g,
-            '\n<img src="$2" alt="$1">\n'
-        )
-
-        // Audio [audio](src)
+        .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '\n<img src="$2" alt="$1">\n')
         .replace(
             /\[audio\]\(([^)]+)\)/g,
             '\n<audio controls preload="metadata">\n' +
@@ -221,7 +216,7 @@ class ArticlePage {
             '</audio>\n'
         );
 
-    // Step 2: Handle lists and paragraphs
+    // Step 2: Lists and paragraphs
     const lines = html.split('\n');
     let inList = false;
     let listType = '';
@@ -230,8 +225,8 @@ class ArticlePage {
 
     lines.forEach(line => {
         const trimmed = line.trim();
+        if (!trimmed) return;
 
-        // Numbered list
         if (/^\d+\.\s+/.test(trimmed)) {
             if (!inList || listType !== 'ol') {
                 if (inList) {
@@ -241,11 +236,8 @@ class ArticlePage {
                 inList = true;
                 listType = 'ol';
             }
-            const listItem = trimmed.replace(/^\d+\.\s+/, '');
-            listItems.push(`<li>${listItem}</li>`);
+            listItems.push(`<li>${trimmed.replace(/^\d+\.\s+/, '')}</li>`);
         }
-
-        // Unordered list
         else if (/^[-*•]\s+/.test(trimmed)) {
             if (!inList || listType !== 'ul') {
                 if (inList) {
@@ -255,11 +247,8 @@ class ArticlePage {
                 inList = true;
                 listType = 'ul';
             }
-            const listItem = trimmed.replace(/^[-*•]\s+/, '');
-            listItems.push(`<li>${listItem}</li>`);
+            listItems.push(`<li>${trimmed.replace(/^[-*•]\s+/, '')}</li>`);
         }
-
-        // Regular content
         else {
             if (inList) {
                 result.push(this.closeList(listType, listItems));
@@ -268,33 +257,23 @@ class ArticlePage {
                 listItems = [];
             }
 
-            if (!trimmed) return;
-
-            // Headers
-            if (trimmed.startsWith('<h')) {
-                result.push(trimmed);
-            }
-            // Media blocks (images, audio)
-            else if (
+            if (trimmed.startsWith('<h') ||
                 trimmed.startsWith('<img') ||
-                trimmed.startsWith('<audio')
-            ) {
+                trimmed.startsWith('<audio')) {
                 result.push(trimmed);
-            }
-            // Everything else
-            else {
+            } else {
                 result.push(`<p>${trimmed}</p>`);
             }
         }
     });
 
-    // Close any remaining list
     if (inList) {
         result.push(this.closeList(listType, listItems));
     }
 
     return result.join('\n');
 }
+
 
 
 
