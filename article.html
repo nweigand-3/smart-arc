@@ -10,19 +10,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏹</text></svg>">
+    <link rel="icon" type="image/png" href="/images/SA Logo Small.png">
 </head>
 <body>
-    <!-- Navegación principal -->
+    <!-- Navegación Principal -->
     <nav class="main-nav">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="index.html" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit;">
-                    <div class="logo-icon">🏹</div>
-                    <div class="logo-text">
-                        <h1>SmartArc</h1>
-                        <span class="logo-subtitle">Biblioteca de Arquería</span>
-                    </div>
+                <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+                    <img src="/images/SA Logo Big.png" alt="SmartArc - Biblioteca de Arquería" style="height: 48px; width: auto;">
                 </a>
             </div>
             
@@ -45,16 +41,13 @@
                 <button class="search-btn">
                     <i class="fas fa-search"></i>
                 </button>
-                <button class="theme-toggle">
-                    <i class="fas fa-moon"></i>
-                </button>
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
         
-       <!-- Barra de búsqueda mejorada -->
+       <!-- Barra de Búsqueda -->
 <div class="search-bar">
     <div class="search-container">
         <form class="search-form" id="search-form">
@@ -67,14 +60,14 @@
             </button>
         </form>
         
-        <!-- Search results dropdown -->
+        <!-- Dropdown de Resultados -->
         <div class="search-results" id="search-results">
             <div class="search-results-header">
                 <h4>Resultados de búsqueda</h4>
                 <span class="search-count" id="search-count">0 resultados</span>
             </div>
             <div class="search-results-list" id="search-results-list">
-                <!-- Results will be inserted here -->
+                <!-- Insertar Resultados aquí -->
             </div>
             <div class="search-results-footer">
                 <a href="#articulos" class="view-all-results" id="view-all-results">
@@ -85,10 +78,10 @@
     </div>
 </div>
     </nav>
-    <!-- Article Content -->
+    <!-- Contenido de Artículos -->
     <main class="article-page container">
         <div class="article-full" id="article-content">
-            <!-- Article content will be loaded by JavaScript -->
+            <!-- Insertar Contenido aquí -->
             <div class="loading">
                 <i class="fas fa-spinner fa-spin"></i>
                 <p>Cargando artículo...</p>
@@ -102,24 +95,23 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <div class="logo-icon">🏹</div>
                         <div>
                             <h3>SmartArc</h3>
                             <p>Biblioteca Digital de Arquería</p>
                         </div>
                     </div>
-                    <p class="footer-description">Un proyecto educativo creado con IA generativa para democratizar el acceso al conocimiento sobre arquería.</p>
+                    <p class="footer-description">Un proyecto educativo creado con IA Generativa para democratizar el acceso al conocimiento sobre arquería.</p>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>Contacto</h4>
-                    <p><i class="fas fa-envelope"></i> nweigand@uoc.edu</p>
+                    <h4>Escríbeme</h4>
+                    <a href="mailto:nweigand@uoc.edu"><i class="fas fa-envelope"></i> nweigand@uoc.edu</a>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 SmartArc. Todos los derechos reservados.</p>
-                <p class="credits">R3 | Desarrollo e Implementación | Nils Weigand</p>
+                <p>&copy; 2025-2026 SmartArc. Todos los derechos reservados.</p>
+                <p class="credits">R4 | Compleción, Refinamiento y Presentación | Nils Weigand</p>
             </div>
         </div>
     </footer>
