@@ -90,94 +90,83 @@ class ArticlePage
     }
 
     markdownToHtml(markdown)
+{
+    if(!markdown) return '';
+
+    let html = markdown.replace(/[–—]/g, '-');
+
+    html = html
+        .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gm, '<h1>$1</h1>');
+
+    html = html.replace(/([^\n])\s(-\s+)/g, '$1\n$2');
+
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+    html = html.replace(
+        /!\[([^\]]*)\]\(([^)]+)\)/g,
+        '<img src="$2" alt="$1">'
+    );
+
+    html = html.replace(
+        /\[audio\]\(([^)]+)\)/g,
+        '<div class="audio-player"><audio controls preload="metadata"><source src="$1" type="audio/mpeg"></audio><div class="audio-info"><span class="audio-current-time">0:00</span> / <span class="audio-duration">0:00</span></div></div>'
+    );
+
+    const lines = html.split('\n');
+    let result = [];
+    let inList = false;
+    let listItems = [];
+
+    const closeList = () =>
     {
-        if(!markdown) return '';
-
-        let html = markdown.replace(/[–—]/g, '-');
-
-        html = html
-            .replace(/^### (.*$)/gm, '<h3>$1</h3>')
-            .replace(/^## (.*$)/gm, '<h2>$1</h2>')
-            .replace(/^# (.*$)/gm, '<h1>$1</h1>');
-
-        html = html.replace(/([^\n])\s(-\s+)/g, '$1\n$2');
-
-        html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-
-        html = html.replace(
-            /!\[([^\]]*)\]\(([^)]+)\)/g,
-            '<img src="$2" alt="$1">'
-        );
-
-        html = html.replace(
-            /\[audio\]\(([^)]+)\)/g,
-            `
-            <div class="audio-player">
-                <audio controls preload="metadata">
-                    <source src="$1" type="audio/mpeg">
-                </audio>
-                <div class="audio-info">
-                    <span class="audio-current-time">0:00</span> /
-                    <span class="audio-duration">0:00</span>
-                </div>
-            </div>
-            `
-        );
-
-        const lines = html.split('\n');
-        let result = [];
-        let inList = false;
-        let listItems = [];
-
-        const closeList = () =>
+        if(inList)
         {
-            if(inList)
-            {
-                result.push(`<ul>${listItems.join('')}</ul>`);
-                inList = false;
-                listItems = [];
-            }
-        };
+            result.push(`<ul>${listItems.join('')}</ul>`);
+            inList = false;
+            listItems = [];
+        }
+    };
 
-        for(const line of lines)
+    for(const line of lines)
+    {
+        const trimmed = line.trim();
+
+        if(!trimmed)
         {
-            const trimmed = line.trim();
-
-            if(!trimmed)
-            {
-                closeList();
-                continue;
-            }
-
-            if(trimmed.startsWith('- '))
-            {
-                inList = true;
-                listItems.push(`<li>${trimmed.substring(2)}</li>`);
-                continue;
-            }
-
             closeList();
+            continue;
+        }
 
-            if(
-                trimmed.startsWith('<h') ||
-                trimmed.startsWith('<img') ||
-                trimmed.startsWith('<div class="audio-player"') ||
-                trimmed.startsWith('<audio') ||
-                trimmed.startsWith('<source')
-            )
-            {
-                result.push(trimmed);
-            }
-            else
-            {
-                result.push(`<p>${trimmed}</p>`);
-            }
+        if(trimmed.startsWith('- '))
+        {
+            inList = true;
+            listItems.push(`<li>${trimmed.substring(2)}</li>`);
+            continue;
         }
 
         closeList();
 
-        return result.join('\n');
+        if(
+            trimmed.startsWith('<h') ||
+            trimmed.startsWith('<img') ||
+            trimmed.startsWith('<div class="audio-player"')
+        )
+        {
+            result.push(trimmed);
+        }
+        else
+        {
+            result.push(`<p>${trimmed}</p>`);
+        }
     }
+
+    closeList();
+
+    return result.join('\n');
+}
+
 
     initializeAudioPlayers()
     {
