@@ -1,44 +1,34 @@
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('SmartArc initializing...');
+document.addEventListener('DOMContentLoaded', function()
+{
     initTheme();
     initSearch();
     initMobileMenu();
-    initNewsletter();
     initNavigation();
-    console.log('SmartArc initialized successfully');
 });
 
-
-// Fix for navigation scrolling with fixed header
-document.addEventListener('DOMContentLoaded', function() {
-    // Fix anchor link scrolling
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+document.addEventListener('DOMContentLoaded', function()
+{
+    document.querySelectorAll('a[href^="#"]').forEach(anchor =>
+    {
+        anchor.addEventListener('click', function(e)
+        {
             const href = this.getAttribute('href');
             
-            // Skip if it's just "#"
-            if (href === '#') return;
+            if(href === '#') return;
             
-            // Only handle internal anchor links
-            if (href.startsWith('#')) {
+            if(href.startsWith('#'))
+            {
                 e.preventDefault();
                 
                 const targetId = href.substring(1);
                 const targetElement = document.getElementById(targetId);
                 
-                if (targetElement) {
-                    // Calculate position with header offset
+                if(targetElement)
+                {
                     const headerHeight = document.querySelector('.main-nav').offsetHeight;
                     const targetPosition = targetElement.offsetTop - headerHeight;
                     
-                    // Scroll to position
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Update URL without scrolling
+                    window.scrollTo({top: targetPosition, behavior: 'smooth'});
                     history.pushState(null, null, href);
                 }
             }
@@ -46,157 +36,133 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Theme toggle function
-function initTheme() {
+function initTheme()
+{
+    document.body.classList.add('dark-mode');
+    
     const themeToggle = document.querySelector('.theme-toggle');
-    if (!themeToggle) {
-        console.error('Theme toggle button not found!');
-        return;
+    if(themeToggle)
+    {
+        themeToggle.style.display = 'none';
+        themeToggle.remove();
     }
     
-    // Check saved theme
-    const savedTheme = localStorage.getItem('theme');
-    
-    // Set initial theme
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        console.log('Dark mode enabled');
-    } else {
-        document.body.classList.remove('dark-mode');
-        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-        console.log('Light mode enabled');
-    }
-    
-    // Theme toggle functionality
-    themeToggle.addEventListener('click', function() {
-        if (document.body.classList.contains('dark-mode')) {
-            document.body.classList.remove('dark-mode');
-            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            localStorage.setItem('theme', 'light');
-            console.log('Switched to light mode');
-        } else {
-            document.body.classList.add('dark-mode');
-            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            localStorage.setItem('theme', 'dark');
-            console.log('Switched to dark mode');
-        }
-    });
+    localStorage.removeItem('theme');
 }
 
-// Search functionality
-// Search functionality - Enhanced with dropdown
-function initSearch() {
+function initSearch()
+{
     const searchBtn = document.querySelector('.search-btn');
     const searchBar = document.querySelector('.search-bar');
     const searchClose = document.querySelector('.search-close');
     const searchInput = document.querySelector('.search-input');
     const searchForm = document.querySelector('.search-form');
-    const searchResults = document.getElementById('search-results');
     
-    if (!searchBtn || !searchBar) return;
+    if(!searchBtn || !searchBar) return;
     
-    console.log('Search initialized');
-    
-    // Toggle search bar
-    searchBtn.addEventListener('click', (e) => {
+    searchBtn.addEventListener('click', (e) =>
+    {
         e.stopPropagation();
         searchBar.classList.toggle('active');
-        console.log('Search bar toggled:', searchBar.classList.contains('active'));
         
-        if (searchBar.classList.contains('active')) {
+        if(searchBar.classList.contains('active'))
+        {
             searchInput.focus();
-        } else {
+        }
+        else
+        {
             clearSearchResults();
         }
     });
     
-    // Close search
-    if (searchClose) {
-        searchClose.addEventListener('click', () => {
+    if(searchClose)
+    {
+        searchClose.addEventListener('click', () =>
+        {
             searchBar.classList.remove('active');
             clearSearchResults();
-            console.log('Search bar closed');
         });
     }
     
-    // Handle search form submission
-    if (searchForm) {
-        searchForm.addEventListener('submit', (e) => {
+    if(searchForm)
+    {
+        searchForm.addEventListener('submit', (e) =>
+        {
             e.preventDefault();
             const query = searchInput.value.trim();
             
-            if (query) {
-                console.log('Search form submitted:', query);
+            if(query)
+            {
                 performSearch(query);
             }
         });
     }
     
-    // Handle search input with debounce
-    if (searchInput) {
+    if(searchInput)
+    {
         let searchTimeout;
-        searchInput.addEventListener('input', (e) => {
+        searchInput.addEventListener('input', (e) =>
+        {
             const query = e.target.value.trim();
             
-            // Clear previous timeout
             clearTimeout(searchTimeout);
             
-            // Set new timeout for debouncing
-            searchTimeout = setTimeout(() => {
-                if (query) {
-                    console.log('Search input (debounced):', query);
+            searchTimeout = setTimeout(() =>
+            {
+                if(query)
+                {
                     performSearch(query);
-                } else {
+                }
+                else
+                {
                     clearSearchResults();
                 }
-            }, 300); // 300ms debounce
+            }, 300);
         });
     }
     
-    // Close search when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!searchBar.contains(e.target) && !searchBtn.contains(e.target)) {
+    document.addEventListener('click', (e) =>
+    {
+        if(!searchBar.contains(e.target) && !searchBtn.contains(e.target))
+        {
             searchBar.classList.remove('active');
             clearSearchResults();
         }
     });
     
-    // Close search on escape
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && searchBar.classList.contains('active')) {
+    document.addEventListener('keydown', (e) =>
+    {
+        if(e.key === 'Escape' && searchBar.classList.contains('active'))
+        {
             searchBar.classList.remove('active');
             clearSearchResults();
         }
     });
     
-    // Function to perform search
-    function performSearch(query) {
-        console.log('Performing search for:', query);
-        
-        // Check if we're on the index page and ArticleManager exists
-        const isIndexPage = window.location.pathname.includes('index.html') || 
+    function performSearch(query)
+    {
+        const isIndexPage = window.location.pathname.includes('index.html') ||
                            window.location.pathname === '/' ||
                            window.location.pathname.endsWith('/');
         
-        if (isIndexPage && window.articleManager) {
-            // Use ArticleManager's search if available
+        if(isIndexPage && window.articleManager)
+        {
             const results = window.articleManager.searchArticles(query);
             displaySearchResults(results, query);
-        } else {
-            // Fetch and search from JSON directly
+        }
+        else
+        {
             fetchAndSearch(query);
         }
     }
     
-    // Function to fetch articles and search
-    async function fetchAndSearch(query) {
-        try {
-            console.log('Fetching articles for search...');
+    async function fetchAndSearch(query)
+    {
+        try
+        {
             const response = await fetch('articles.json');
             const articles = await response.json();
             
-            // Perform search
             const results = articles.filter(article =>
                 article.title.toLowerCase().includes(query.toLowerCase()) ||
                 article.excerpt.toLowerCase().includes(query.toLowerCase()) ||
@@ -204,28 +170,27 @@ function initSearch() {
             );
             
             displaySearchResults(results, query);
-        } catch (error) {
-            console.error('Error fetching articles for search:', error);
+        }
+        catch(error)
+        {
             showSearchError();
         }
     }
     
-    // Function to display search results in dropdown
-    function displaySearchResults(results, query) {
+    function displaySearchResults(results, query)
+    {
         const resultsList = document.getElementById('search-results-list');
         const searchCount = document.getElementById('search-count');
         const viewAllLink = document.getElementById('view-all-results');
         
-        if (!resultsList || !searchCount || !viewAllLink) return;
+        if(!resultsList || !searchCount || !viewAllLink) return;
         
-        // Update count
         searchCount.textContent = `${results.length} resultado${results.length !== 1 ? 's' : ''}`;
         
-        // Clear previous results
         resultsList.innerHTML = '';
         
-        if (results.length === 0) {
-            // Show no results message
+        if(results.length === 0)
+        {
             resultsList.innerHTML = `
                 <div class="no-search-results">
                     <i class="fas fa-search"></i>
@@ -236,10 +201,10 @@ function initSearch() {
             return;
         }
         
-        // Show results (limit to 5 in dropdown)
         const displayResults = results.slice(0, 5);
         
-        displayResults.forEach(article => {
+        displayResults.forEach(article =>
+        {
             const resultItem = document.createElement('a');
             resultItem.href = `article.html?id=${article.id}`;
             resultItem.className = 'search-result-item';
@@ -259,21 +224,23 @@ function initSearch() {
             resultsList.appendChild(resultItem);
         });
         
-        // Update "View all" link
-        if (results.length > 5) {
+        if(results.length > 5)
+        {
             viewAllLink.style.display = 'block';
             viewAllLink.href = `index.html?search=${encodeURIComponent(query)}`;
             viewAllLink.textContent = `Ver todos los ${results.length} resultados`;
-        } else {
+        }
+        else
+        {
             viewAllLink.style.display = 'none';
         }
         
-        // Show results dropdown
-        searchResults.style.display = 'block';
+        const searchResults = document.getElementById('search-results');
+        if(searchResults) searchResults.style.display = 'block';
     }
     
-    // Helper function to get category name
-    function getCategoryName(category) {
+    function getCategoryName(category)
+    {
         const categoryNames = {
             'tecnica': 'Técnica',
             'equipamiento': 'Equipamiento',
@@ -285,24 +252,25 @@ function initSearch() {
         return categoryNames[category] || category;
     }
     
-    // Function to clear search results
-    function clearSearchResults() {
+    function clearSearchResults()
+    {
         const resultsList = document.getElementById('search-results-list');
         const searchCount = document.getElementById('search-count');
         
-        if (resultsList) resultsList.innerHTML = '';
-        if (searchCount) searchCount.textContent = '0 resultados';
+        if(resultsList) resultsList.innerHTML = '';
+        if(searchCount) searchCount.textContent = '0 resultados';
         
-        if (searchInput) searchInput.value = '';
+        if(searchInput) searchInput.value = '';
         
         const searchResults = document.getElementById('search-results');
-        if (searchResults) searchResults.style.display = 'none';
+        if(searchResults) searchResults.style.display = 'none';
     }
     
-    // Function to show search error
-    function showSearchError() {
+    function showSearchError()
+    {
         const resultsList = document.getElementById('search-results-list');
-        if (resultsList) {
+        if(resultsList)
+        {
             resultsList.innerHTML = `
                 <div class="no-search-results">
                     <i class="fas fa-exclamation-triangle"></i>
@@ -313,23 +281,25 @@ function initSearch() {
     }
 }
 
-// Mobile menu
-function initMobileMenu() {
+function initMobileMenu()
+{
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navMenu = document.querySelector('.nav-menu');
     
-    if (!mobileMenuBtn || !navMenu) return;
+    if(!mobileMenuBtn || !navMenu) return;
     
-    mobileMenuBtn.addEventListener('click', function() {
+    mobileMenuBtn.addEventListener('click', function()
+    {
         navMenu.classList.toggle('active');
         mobileMenuBtn.classList.toggle('active');
-        console.log('Mobile menu toggled');
     });
     
-    // Close mobile menu when clicking a link
-    document.querySelectorAll('.nav-link').forEach(function(link) {
-        link.addEventListener('click', function() {
-            if (window.innerWidth <= 768) {
+    document.querySelectorAll('.nav-link').forEach(function(link)
+    {
+        link.addEventListener('click', function()
+        {
+            if(window.innerWidth <= 768)
+            {
                 navMenu.classList.remove('active');
                 mobileMenuBtn.classList.remove('active');
             }
@@ -337,45 +307,29 @@ function initMobileMenu() {
     });
 }
 
-// Newsletter form
-function initNewsletter() {
-    const newsletterForm = document.querySelector('.newsletter-form');
-    if (!newsletterForm) return;
-    
-    newsletterForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const emailInput = newsletterForm.querySelector('input[type="email"]');
-        const email = emailInput.value;
-        
-        if (email) {
-            alert('¡Gracias por suscribirte con ' + email + '! Te notificaremos sobre nuevos artículos.');
-            newsletterForm.reset();
-        }
-    });
-}
-
-// Navigation active state
-function initNavigation() {
+function initNavigation()
+{
     const navLinks = document.querySelectorAll('.nav-link');
     
-    navLinks.forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            // Only handle internal navigation
-            if (link.getAttribute('href').startsWith('#')) {
+    navLinks.forEach(function(link)
+    {
+        link.addEventListener('click', function(e)
+        {
+            if(link.getAttribute('href').startsWith('#'))
+            {
                 e.preventDefault();
                 
-                // Remove active class from all links
-                navLinks.forEach(function(l) {
+                navLinks.forEach(function(l)
+                {
                     l.classList.remove('active');
                 });
                 
-                // Add active class to clicked link
                 link.classList.add('active');
                 
-                // Scroll to section
                 const targetId = link.getAttribute('href').substring(1);
                 const target = document.getElementById(targetId);
-                if (target) {
+                if(target)
+                {
                     window.scrollTo({
                         top: target.offsetTop - 80,
                         behavior: 'smooth'
@@ -386,19 +340,16 @@ function initNavigation() {
     });
 }
 
-// Force scrollbar to be visible
-function ensureScrollbar() {
-    // Check if body is scrollable
-    if (document.body.scrollHeight <= window.innerHeight) {
-        // Add some minimum height
+function ensureScrollbar()
+{
+    if(document.body.scrollHeight <= window.innerHeight)
+    {
         document.body.style.minHeight = 'calc(100vh + 1px)';
     }
     
-    // Ensure overflow is not hidden
     document.body.style.overflowY = 'auto';
     document.documentElement.style.overflowY = 'auto';
 }
 
-// Call on load and resize
 window.addEventListener('load', ensureScrollbar);
 window.addEventListener('resize', ensureScrollbar);
